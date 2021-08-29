@@ -1,1 +1,2 @@
-game-point-calculator
+# game points calculator
+
