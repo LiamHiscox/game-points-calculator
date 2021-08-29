@@ -1,0 +1,19 @@
+.app {
+  display: flex;
+  flex-direction: column;
+  width: 100vw;
+  height: 100vh;
+
+  .player-table {
+    display: flex;
+    flex-direction: row;
+  }
+  .player-scores {
+    display: flex;
+    flex-direction: row;
+
+    .player-score {
+      flex: 1;
+    }
+  }
+}

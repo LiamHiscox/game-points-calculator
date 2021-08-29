@@ -1,0 +1,16 @@
+.player-container {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  .player-name {
+    font-weight: bold;
+  }
+  .player-points {
+    .points-input {
+      width: 100%;
+      box-sizing: border-box;
+      height: 100%;
+      border: 0;
+    }
+  }
+}
