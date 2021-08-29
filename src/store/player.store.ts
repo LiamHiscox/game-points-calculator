@@ -1,5 +1,6 @@
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {PlayerModel} from "../models/player.model";
+import {Simulate} from "react-dom/test-utils";
 
 const defaultState: PlayerModel[] = [];
 const playersKey = 'players';

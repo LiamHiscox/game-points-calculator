@@ -14,11 +14,13 @@ function Player({player, onPointsChange}: PlayerProps) {
   }
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>, index: number) => {
-    const newPoints = player.points.map((p, i) => i === index ? +e.target.value : p);
-    if (index === player.points.length-1) {
-      onPointsChange(newPoints.concat(null));
-    } else {
-      onPointsChange(newPoints);
+    if (e.target.value) {
+      const newPoints = player.points.map((p, i) => i === index ? +e.target.value : p);
+      if (index === player.points.length-1) {
+        onPointsChange(newPoints.concat(null));
+      } else {
+        onPointsChange(newPoints);
+      }
     }
   }
 
@@ -28,11 +30,11 @@ function Player({player, onPointsChange}: PlayerProps) {
         {player.name}
       </div>
       { player.points.map((p, i) => (
-        <div className="player-points">
+        <div className="player-points" key={i}>
           <input className="points-input"
                  type="number"
-                 value={p || undefined}
-                 onChange={(e) => handleChange(e, i)}/>
+                 defaultValue={p || undefined}
+                 onBlur={(e) => handleChange(e, i)}/>
         </div>
       )) }
     </div>

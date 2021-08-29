@@ -23,13 +23,14 @@ function App() {
     <div className="app">
       <div className="player-table">
         {players.map((player, index) => (
-          <Player player={player}
+          <Player key={index}
+                  player={player}
                   onPointsChange={(points) => handlePointsChange(points, index)} />
         ))}
       </div>
       <div className="player-scores">
-        { players.map(player =>
-            <div className="player-score">
+        { players.map((player, i) =>
+            <div className="player-score" key={i}>
               {player.points.reduce((a: number, b: Points) => a + (b || 0), 0)}
             </div>
         ) }
