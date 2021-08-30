@@ -1,16 +1,25 @@
+@import "../variables";
+
 .player-container {
   display: flex;
   flex-direction: column;
   flex: 1;
-  .player-name {
-    font-weight: bold;
+
+  .player-input-cell {
+    min-width: $min-width;
+    text-align: center;
   }
   .player-points {
     .points-input {
+      padding: 0;
       width: 100%;
       box-sizing: border-box;
-      height: 100%;
       border: 0;
+      height: 2.5rem;
+      text-align: center;
+    }
+    .empty-input {
+      background-color: aliceblue;
     }
   }
 }

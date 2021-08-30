@@ -26,20 +26,14 @@ function Player({player, onPointsChange}: PlayerProps) {
 
   return (
     <div className="player-container">
-      <div className="player-name">
-        {player.name}
-      </div>
       { player.points.map((p, i) => (
-        <div className="player-points" key={i}>
-          <input className="points-input"
+        <div className="player-points player-input-cell" key={i}>
+          <input className={p !== null ? "points-input" : "points-input empty-input"}
                  type="number"
                  defaultValue={p !== null ? p : undefined}
                  onBlur={(e) => handleChange(e, i)}/>
         </div>
       )) }
-      <div className="player-scores">
-        { player.points.reduce((a: number, b: Points) => a + (b || 0), 0) }
-      </div>
     </div>
   );
 }
