@@ -1,6 +1,6 @@
+import React from "react";
 import './Player.scss';
 import {PlayerModel, Points} from "../models/player.model";
-import React from "react";
 
 interface PlayerProps {
   player: PlayerModel;
@@ -33,10 +33,13 @@ function Player({player, onPointsChange}: PlayerProps) {
         <div className="player-points" key={i}>
           <input className="points-input"
                  type="number"
-                 defaultValue={p || undefined}
+                 defaultValue={p !== null ? p : undefined}
                  onBlur={(e) => handleChange(e, i)}/>
         </div>
       )) }
+      <div className="player-scores">
+        { player.points.reduce((a: number, b: Points) => a + (b || 0), 0) }
+      </div>
     </div>
   );
 }

@@ -3,21 +3,28 @@ import './App.scss';
 import {Points} from "./models/player.model";
 import Player from "./player/Player";
 import {usePlayersState} from "./store/player.store";
+import {PlayersMenu} from "./players-menu/PlayersMenu";
 
 function App() {
   const [players, setPlayers] = usePlayersState();
 
-  if(players.length === 0) {
-    setPlayers([
-      {name: "Liam", points: [null]}
-    ])
+  if (players.length === 0) {
+    setPlayers([{name: "Liam", points: [null]}]);
   }
 
   const handlePointsChange = (points: Points[], index: number) => {
     setPlayers(
-      players.map((player, i) => i === index ? {...player, points} : player)
-    );
+      players.map((player, i) => i === index ? {...player, points} : player));
   }
+
+  const addPlayer = () => {
+    setPlayers(players.concat({name: `Player ${players.length + 1}`, points: [null]}));
+  }
+
+  const clearPoints = () => {
+    setPlayers(players.map(player => ({...player, points: []})));
+  }
+
 
   return (
     <div className="app">
@@ -28,13 +35,8 @@ function App() {
                   onPointsChange={(points) => handlePointsChange(points, index)} />
         ))}
       </div>
-      <div className="player-scores">
-        { players.map((player, i) =>
-            <div className="player-score" key={i}>
-              {player.points.reduce((a: number, b: Points) => a + (b || 0), 0)}
-            </div>
-        ) }
-      </div>
+      <PlayersMenu onAddPlayer={addPlayer}
+                   onClearPoints={clearPoints}/>
     </div>
   );
 }

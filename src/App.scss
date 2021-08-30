@@ -4,16 +4,8 @@
   width: 100vw;
   height: 100vh;
 
-  .player-table {
+  .player-table-container {
     display: flex;
     flex-direction: row;
-  }
-  .player-scores {
-    display: flex;
-    flex-direction: row;
-
-    .player-score {
-      flex: 1;
-    }
   }
 }

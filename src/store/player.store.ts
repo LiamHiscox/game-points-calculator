@@ -1,8 +1,7 @@
 import {useEffect, useState} from "react";
 import {PlayerModel} from "../models/player.model";
-import {Simulate} from "react-dom/test-utils";
 
-const defaultState: PlayerModel[] = [];
+// const defaultState: PlayerModel[] = [];
 const playersKey = 'players';
 
 export const usePlayersState = (): [PlayerModel[], (players: PlayerModel[]) => void] => {
@@ -11,9 +10,14 @@ export const usePlayersState = (): [PlayerModel[], (players: PlayerModel[]) => v
   };
 
   const setPlayers = (players: PlayerModel[]) => {
-    localStorage.setItem(playersKey, JSON.stringify(players));
+    // localStorage.setItem(playersKey, JSON.stringify(players));
     setStatePlayers(players);
   }
+
+  useEffect(() => {
+    const timeout = setTimeout(() => localStorage.setItem(playersKey, JSON.stringify(players)), 1000);
+    return () => clearTimeout(timeout);
+  });
 
   const [players, setStatePlayers] = useState<PlayerModel[]>(getPlayers());
 
