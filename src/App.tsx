@@ -1,14 +1,16 @@
-import React from 'react';
+import React, {useState} from 'react';
 import './App.scss';
 import {Points} from "./models/player.model";
 import Player from "./player/Player";
 import {usePlayersState} from "./store/player.store";
 import {PlayersMenu} from "./players-menu/PlayersMenu";
-import MoreVertIcon from '@material-ui/icons/MoreVert';
 import {DeletePlayersDialog} from "./delete-players-dialog/DeletePlayersDialog";
+import {useSnackbar} from "notistack";
 
 function App() {
   const [players, setPlayers] = usePlayersState();
+  const [deleteOpen, setDeleteOpen] = useState(false);
+  const { enqueueSnackbar } = useSnackbar();
 
   if (players.length === 0) {
     setPlayers([{name: "Liam", points: [null]}]);
@@ -21,6 +23,7 @@ function App() {
 
   const addPlayer = () => {
     setPlayers(players.concat({name: `Player ${players.length + 1}`, points: [null]}));
+    enqueueSnackbar(`${players.length+1} players`);
   }
 
   const clearPoints = () => {
@@ -30,6 +33,10 @@ function App() {
   const setPlayerName = (name: string, index: number) => {
     setPlayers(
       players.map((player, i) => i === index ? {...player, name} : player));
+  }
+
+  const deletePlayer = (index: number) => {
+    setPlayers(players.filter((player, i) => i !== index));
   }
 
   return (
@@ -61,8 +68,13 @@ function App() {
         </div>
       </div>
       <PlayersMenu onAddPlayer={addPlayer}
-                   onClearPoints={clearPoints}/>
-      <DeletePlayersDialog players={players} open={true} />
+                   onClearPoints={clearPoints}
+                   onOpenDelete={() => setDeleteOpen(true)}
+      />
+      <DeletePlayersDialog players={players}
+                           open={deleteOpen}
+                           onDelete={deletePlayer}
+                           onClose={() => setDeleteOpen(false)} />
     </div>
   );
 }

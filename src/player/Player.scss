@@ -4,6 +4,12 @@
   display: flex;
   flex-direction: column;
   flex: 1;
+  padding-bottom: 5rem;
+  border-right: 1px solid #e6eef5;
+
+  &:last-child {
+    border-right: 0;
+  }
 
   .player-input-cell {
     min-width: $min-width;
@@ -17,6 +23,7 @@
       border: 0;
       height: 2.5rem;
       text-align: center;
+      color: $primary;
     }
     .empty-input {
       background-color: aliceblue;
