@@ -5,15 +5,17 @@ import MoreVertIcon from '@material-ui/icons/MoreVert';
 import AddIcon from '@material-ui/icons/Add';
 import DeleteIcon from '@material-ui/icons/Delete';
 import RotateLeftIcon from '@material-ui/icons/RotateLeft';
-import PeopleIcon from '@material-ui/icons/People';
+// import PeopleIcon from '@material-ui/icons/People';
+import GradeIcon from '@material-ui/icons/Grade';
 
 interface PlayersMenuProps {
   onAddPlayer: () => void;
   onClearPoints: () => void;
   onOpenDelete: () => void;
+  onOpenLeaderBoard: () => void;
 }
 
-export function PlayersMenu({onAddPlayer, onClearPoints, onOpenDelete}: PlayersMenuProps) {
+export function PlayersMenu({onAddPlayer, onClearPoints, onOpenDelete, onOpenLeaderBoard}: PlayersMenuProps) {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -55,10 +57,16 @@ export function PlayersMenu({onAddPlayer, onClearPoints, onOpenDelete}: PlayersM
           <ListItemIcon> <AddIcon color="secondary"/> </ListItemIcon>
           <ListItemText primary={<Typography color="primary"> Add Player </Typography> } />
         </MenuItem>
+        <MenuItem onClick={onOpenLeaderBoard}>
+          <ListItemIcon> <GradeIcon color="secondary"/> </ListItemIcon>
+          <ListItemText primary={<Typography color="primary"> Show Leaderboard </Typography>} />
+        </MenuItem>
+        {/*
         <MenuItem onClick={() => {}}>
           <ListItemIcon> <PeopleIcon color="secondary"/> </ListItemIcon>
           <ListItemText primary={<Typography color="primary"> Set Number of Players </Typography>} />
         </MenuItem>
+        */}
       </Popover>
     </>
   );

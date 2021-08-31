@@ -31,7 +31,9 @@ function Player({player, onPointsChange}: PlayerProps) {
           <input className={p !== null ? "points-input" : "points-input empty-input"}
                  type="number"
                  defaultValue={p !== null ? p : undefined}
-                 onBlur={(e) => handleChange(e, i)}/>
+                 onBlur={(e) => handleChange(e, i)}
+                 onClick={(e) => {e.currentTarget.select()}}
+          />
         </div>
       )) }
     </div>

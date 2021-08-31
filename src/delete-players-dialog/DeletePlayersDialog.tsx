@@ -20,7 +20,7 @@ export function DeletePlayersDialog({players, open, onClose, onDelete}: DeletePl
             <ListItemText primary={player.name}/>
             <ListItemSecondaryAction>
               <IconButton onClick={() => onDelete(index)}>
-                <DeleteIcon/>
+                <DeleteIcon color="primary"/>
               </IconButton>
             </ListItemSecondaryAction>
           </ListItem>

@@ -1,0 +1,23 @@
+@import "../variables";
+
+.place-1 {
+  .MuiAvatar-colorDefault {
+    background-color: gold;
+  }
+}
+.place-2 {
+  .MuiAvatar-colorDefault {
+    background-color: silver;
+  }
+}
+.place-3 {
+  .MuiAvatar-colorDefault {
+    background-color: #CD7F32;
+  }
+}
+.default-place {
+  .MuiAvatar-colorDefault {
+    background-color: white;
+    color: $primary;
+  }
+}

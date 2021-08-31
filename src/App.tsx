@@ -6,11 +6,13 @@ import {usePlayersState} from "./store/player.store";
 import {PlayersMenu} from "./players-menu/PlayersMenu";
 import {DeletePlayersDialog} from "./delete-players-dialog/DeletePlayersDialog";
 import {useSnackbar} from "notistack";
+import {LeaderboardDialog} from "./leaderbord-dialog/LeaderboardDialog";
 
 function App() {
   const [players, setPlayers] = usePlayersState();
   const [deleteOpen, setDeleteOpen] = useState(false);
-  const { enqueueSnackbar } = useSnackbar();
+  const [leaderboardOpen, setLeaderboardOpen] = useState(false);
+  const {enqueueSnackbar} = useSnackbar();
 
   if (players.length === 0) {
     setPlayers([{name: "Liam", points: [null]}]);
@@ -23,7 +25,7 @@ function App() {
 
   const addPlayer = () => {
     setPlayers(players.concat({name: `Player ${players.length + 1}`, points: [null]}));
-    enqueueSnackbar(`${players.length+1} players`);
+    enqueueSnackbar(`${players.length + 1} players`);
   }
 
   const clearPoints = () => {
@@ -45,11 +47,12 @@ function App() {
         <div className="player-names">
           {players.map((player, index) => (
             <input key={index}
-                     className="player-name"
-                     type="text"
-                     defaultValue={player.name}
-                     onBlur={(event) => setPlayerName(event.target.value, index)}
-              />
+                   className="player-name"
+                   type="text"
+                   defaultValue={player.name}
+                   onBlur={(event) => setPlayerName(event.target.value, index)}
+                   onClick={(e) => {e.currentTarget.select()}}
+            />
           ))}
         </div>
         <div className="player-table">
@@ -70,11 +73,17 @@ function App() {
       <PlayersMenu onAddPlayer={addPlayer}
                    onClearPoints={clearPoints}
                    onOpenDelete={() => setDeleteOpen(true)}
+                   onOpenLeaderBoard={() => setLeaderboardOpen(true)}
       />
       <DeletePlayersDialog players={players}
                            open={deleteOpen}
                            onDelete={deletePlayer}
-                           onClose={() => setDeleteOpen(false)} />
+                           onClose={() => setDeleteOpen(false)}
+      />
+      <LeaderboardDialog players={players}
+                         open={leaderboardOpen}
+                         onClose={() => setLeaderboardOpen(false)}
+      />
     </div>
   );
 }
