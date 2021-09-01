@@ -7,6 +7,7 @@ import {PlayersMenu} from "./players-menu/PlayersMenu";
 import {DeletePlayersDialog} from "./delete-players-dialog/DeletePlayersDialog";
 import {useSnackbar} from "notistack";
 import {LeaderboardDialog} from "./leaderbord-dialog/LeaderboardDialog";
+import { v4 as uuidv4 } from 'uuid';
 
 function App() {
   const [players, setPlayers] = usePlayersState();
@@ -15,16 +16,16 @@ function App() {
   const {enqueueSnackbar} = useSnackbar();
 
   if (players.length === 0) {
-    setPlayers([{name: "Liam", points: [null]}]);
+    setPlayers([{id: uuidv4(), name: "Liam", points: [null]}]);
   }
 
-  const handlePointsChange = (points: Points[], index: number) => {
+  const handlePointsChange = (points: Points[], id: string) => {
     setPlayers(
-      players.map((player, i) => i === index ? {...player, points} : player));
+      players.map(player => player.id === id ? {...player, points} : player));
   }
 
   const addPlayer = () => {
-    setPlayers(players.concat({name: `Player ${players.length + 1}`, points: [null]}));
+    setPlayers(players.concat({id: uuidv4(), name: `Player ${players.length + 1}`, points: [null]}));
     enqueueSnackbar(`${players.length + 1} players`);
   }
 
@@ -32,13 +33,13 @@ function App() {
     setPlayers(players.map(player => ({...player, points: []})));
   }
 
-  const setPlayerName = (name: string, index: number) => {
+  const setPlayerName = (name: string, id: string) => {
     setPlayers(
-      players.map((player, i) => i === index ? {...player, name} : player));
+      players.map(player => player.id === id ? {...player, name} : player));
   }
 
-  const deletePlayer = (index: number) => {
-    setPlayers(players.filter((player, i) => i !== index));
+  const deletePlayer = (id: string) => {
+    setPlayers(players.filter(player => player.id !== id));
   }
 
   return (
@@ -49,17 +50,18 @@ function App() {
             <input key={index}
                    className="player-name"
                    type="text"
-                   defaultValue={player.name}
-                   onBlur={(event) => setPlayerName(event.target.value, index)}
+                   value={player.name}
+                   onChange={(e) => setPlayerName(e.target.value, player.id)}
                    onClick={(e) => {e.currentTarget.select()}}
+                   onSubmit={e => {e.preventDefault(); console.log('submited')}}
             />
           ))}
         </div>
         <div className="player-table">
-          {players.map((player, index) => (
-            <Player key={index}
+          {players.map((player, i) => (
+            <Player key={i}
                     player={player}
-                    onPointsChange={(points) => handlePointsChange(points, index)}/>
+                    onPointsChange={(points) => handlePointsChange(points, player.id)}/>
           ))}
         </div>
         <div className="player-scores">

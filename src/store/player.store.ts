@@ -1,16 +1,11 @@
 import {useEffect, useState} from "react";
 import {PlayerModel} from "../models/player.model";
 
-// const defaultState: PlayerModel[] = [];
 const playersKey = 'players';
+const initialPlayers: PlayerModel[] = JSON.parse(localStorage.getItem(playersKey) || '[]') as PlayerModel[];
 
 export const usePlayersState = (): [PlayerModel[], (players: PlayerModel[]) => void] => {
-  const getPlayers = (): PlayerModel[] => {
-    return JSON.parse(localStorage.getItem(playersKey) || '[]') as PlayerModel[];
-  };
-
   const setPlayers = (players: PlayerModel[]) => {
-    // localStorage.setItem(playersKey, JSON.stringify(players));
     setStatePlayers(players);
   }
 
@@ -19,7 +14,7 @@ export const usePlayersState = (): [PlayerModel[], (players: PlayerModel[]) => v
     return () => clearTimeout(timeout);
   });
 
-  const [players, setStatePlayers] = useState<PlayerModel[]>(getPlayers());
+  const [players, setStatePlayers] = useState<PlayerModel[]>(initialPlayers);
 
   return [players, setPlayers];
 }

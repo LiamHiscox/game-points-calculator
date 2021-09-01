@@ -8,18 +8,18 @@ interface DeletePlayersDialogProps {
   players: PlayerModel[];
   open: boolean;
   onClose: () => void;
-  onDelete: (index: number) => void;
+  onDelete: (id: string) => void;
 }
 
 export function DeletePlayersDialog({players, open, onClose, onDelete}: DeletePlayersDialogProps) {
   return (
     <Dialog open={open} fullWidth onClose={onClose}>
       <List>
-        {players.map((player, index) => (
-          <ListItem key={index}>
+        {players.map((player, i) => (
+          <ListItem key={i}>
             <ListItemText primary={player.name}/>
             <ListItemSecondaryAction>
-              <IconButton onClick={() => onDelete(index)}>
+              <IconButton onClick={() => onDelete(player.id)}>
                 <DeleteIcon color="primary"/>
               </IconButton>
             </ListItemSecondaryAction>
