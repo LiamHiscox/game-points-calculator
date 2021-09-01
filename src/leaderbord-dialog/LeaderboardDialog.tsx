@@ -21,6 +21,7 @@ interface LeaderboardDialogProps {
 }
 
 interface PlayerScores {
+  position: number;
   name: string;
   score: number;
 }
@@ -30,14 +31,18 @@ export function LeaderboardDialog({players, open, onClose}: LeaderboardDialogPro
 
   let sortedPlayers = players
     .map<PlayerScores>(player => ({
+      position: 0,
       name: player.name,
       score: player.points.reduce((a: number, b: Points) => a + (b || 0), 0)
     }))
-    .sort((a, b) => a.score - b.score);
-
-  if (sortOrder === 'desc') {
-    sortedPlayers.reverse();
-  }
+    .sort((a, b) => sortOrder === 'asc' ? (a.score - b.score) : (b.score - a.score))
+    .reduce((acc, cur, i) => {
+      if (i > 0 && acc[i-1].score === cur.score) {
+        return acc.concat({...cur, position: acc[i-1].position});
+      } else {
+        return acc.concat({...cur, position: i+1});
+      }
+    }, Array<PlayerScores>());
 
   return (
     <Dialog open={open} fullWidth onClose={onClose}>
@@ -64,7 +69,7 @@ export function LeaderboardDialog({players, open, onClose}: LeaderboardDialogPro
       <List>
         {sortedPlayers.map((player, index) => (
           <ListItem key={index}>
-            <ListItemAvatar className={index < 3 ? 'place-' + (index + 1) : 'default-place'}>
+            <ListItemAvatar className={player.position <= 3 ? ('place-' + player.position) : 'default-place'}>
               <Avatar> {player.score} </Avatar>
             </ListItemAvatar>
             <ListItemText primary={player.name}/>
