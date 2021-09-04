@@ -1,5 +1,5 @@
 import "./LeaderboardDialog.scss";
-import {PlayerModel, Points} from "../models/player.model";
+import {PlayerModel, Points} from "../../models/player.model";
 import React, {useState} from "react";
 import Dialog from "@material-ui/core/Dialog";
 import {

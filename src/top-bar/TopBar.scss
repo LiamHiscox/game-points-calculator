@@ -1,0 +1,25 @@
+@import "../variables";
+
+.top-bar {
+  width: 100vw;
+  background-color: $secondary;
+  display: flex;
+
+  .empty-container {
+    height: 3rem;
+    width: 3rem;
+  }
+  .game-name-input {
+    color: white;
+    background-color: $secondary;
+    border: 0;
+    flex: 1;
+    height: 3rem;
+    font-weight: bold;
+    text-align: center;
+    padding: 0;
+  }
+  .top-bar-icon {
+    color: white;
+  }
+}

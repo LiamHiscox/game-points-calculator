@@ -1,0 +1,49 @@
+@import "../variables";
+
+.player-names {
+  position: sticky;
+  top: 0;
+  display: flex;
+  flex-direction: row;
+}
+.player-name {
+  background-color: $primary;
+  color: $primaryText;
+  flex: 1;
+  height: 2.5rem;
+  border: 0;
+  font-weight: bold;
+  min-width: $min-width;
+  text-align: center;
+  padding: 0;
+}
+.player-header-cell {
+  font-weight: bold;
+  min-width: $min-width;
+  text-align: center;
+  padding: .75rem;
+  box-sizing: border-box;
+}
+.player-table-container {
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+.player-table {
+  display: flex;
+  flex-direction: row;
+  flex: 1;
+}
+.player-scores {
+  display: flex;
+  flex-direction: row;
+  position: sticky;
+  bottom: 0;
+}
+.player-score {
+  // background: linear-gradient(0deg, $primary, $secondary);
+  background-color: $secondary;
+  color: $secondaryText;
+  flex: 1;
+}

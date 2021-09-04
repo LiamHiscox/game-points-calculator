@@ -1,10 +1,9 @@
-@import "../variables";
+@import "src/variables";
 
 .player-container {
   display: flex;
   flex-direction: column;
   flex: 1;
-  padding-bottom: 5rem;
   box-sizing: border-box;
   min-width: $min-width;
   border-right: 1px solid #e6eef5;

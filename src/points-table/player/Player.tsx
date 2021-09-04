@@ -1,6 +1,6 @@
 import React from "react";
 import './Player.scss';
-import {PlayerModel, Points} from "../models/player.model";
+import {PlayerModel, Points} from "../../models/player.model";
 
 interface PlayerProps {
   player: PlayerModel;
@@ -14,13 +14,12 @@ function Player({player, onPointsChange}: PlayerProps) {
   }
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>, index: number) => {
-    if (e.target.value) {
-      const newPoints = player.points.map((p, i) => i === index ? +e.target.value : p);
-      if (index === player.points.length-1) {
-        onPointsChange(newPoints.concat(null));
-      } else {
-        onPointsChange(newPoints);
-      }
+    const newValue = e.target.value ? +e.target.value : null;
+    const newPoints = player.points.map((p, i) => i === index ? newValue : p);
+    if (index === player.points.length-1) {
+      onPointsChange(newPoints.concat(null));
+    } else {
+      onPointsChange(newPoints);
     }
   }
 
@@ -30,7 +29,7 @@ function Player({player, onPointsChange}: PlayerProps) {
         <div className="player-points player-input-cell" key={i}>
           <input className={p !== null ? "points-input" : "points-input empty-input"}
                  type="number"
-                 value={p !== null ? p : undefined}
+                 value={p !== null ? p : ""}
                  onChange={(e) => handleChange(e, i)}
                  onClick={(e) => {e.currentTarget.select()}}
           />
