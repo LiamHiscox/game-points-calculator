@@ -3,6 +3,7 @@ import {
   Button,
   Dialog,
   Divider,
+  Fade,
   IconButton,
   List,
   ListItem,
@@ -84,17 +85,19 @@ export function NewGameDialog({open, players, onClose, onSubmit}: NewGameDialogP
           <Typography style={{fontWeight: "bold"}}> Players </Typography>
         </ListItem>
         {newGame.players.map((player, index) => (
-          <ListItem key={index}>
-            <TextField label="Player Name" variant="outlined"
-                       value={player.name}
-                       style={{flex: "1"}}
-                       onChange={(e) => handleNameChange(e.target.value, index)}
-                       error={!player.name}
-            />
-            <IconButton onClick={() => handleDelete(index)}>
-              <DeleteIcon color="primary"/>
-            </IconButton>
-          </ListItem>
+          <Fade key={index} in>
+            <ListItem>
+              <TextField label="Player Name" variant="outlined"
+                         value={player.name}
+                         style={{flex: "1"}}
+                         onChange={(e) => handleNameChange(e.target.value, index)}
+                         error={!player.name}
+              />
+              <IconButton onClick={() => handleDelete(index)}>
+                <DeleteIcon color="primary"/>
+              </IconButton>
+            </ListItem>
+          </Fade>
         ))}
         <ListItem button style={{justifyContent: "center"}} onClick={addPlayer}>
           <AddIcon color="primary"/>
