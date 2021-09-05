@@ -13,9 +13,8 @@ import {
   AccordionActions,
   IconButton
 } from "@material-ui/core";
-import {useEffect, useState} from "react";
+import {useState} from "react";
 import {GameModel} from "../../models/game.model";
-import {getAllGames, openGamesDB} from "../../store/game.db";
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import {Points} from "../../models/player.model";
 import ZoomInIcon from '@material-ui/icons/ZoomIn';
@@ -30,27 +29,15 @@ interface NewGameDialogProps {
   onClose: () => void;
   onReturnPlaying: (game: GameModel) => void;
   onDeleteGame: (id: string) => void;
+  games: GameModel[];
 }
 
-export function HistoryDialog({open, onClose, onReturnPlaying, onDeleteGame}: NewGameDialogProps) {
-  const [games, setGames] = useState<GameModel[] | null>(null);
+export function HistoryDialog({open, onClose, onReturnPlaying, onDeleteGame, games}: NewGameDialogProps) {
   const [game, setGame] = useState<GameModel | null>(null);
   const [showGame, setShowGame] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
   const [showConfirmReplay, setShowConfirmReplay] = useState(false);
   const {enqueueSnackbar} = useSnackbar();
-
-  useEffect(() => {
-    if (open) {
-      (async () => {
-        const db = await openGamesDB();
-        const storedGames = await getAllGames(db);
-        setGames(storedGames);
-      })()
-    }
-    return () => {
-    };
-  }, [open]);
 
   const handleDetailClick = (game: GameModel) => {
     setGame(game);

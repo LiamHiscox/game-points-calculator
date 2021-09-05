@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import './App.scss';
-import {PlayerModel, Points} from "./models/player.model";
+import {Points} from "./models/player.model";
 import {useGameState} from "./store/game.store";
 import {DeletePlayersDialog} from "./components/delete-players-dialog/DeletePlayersDialog";
 import {useSnackbar} from "notistack";
@@ -10,11 +10,12 @@ import {PointsTable} from "./points-table/PointsTable";
 import {TopBar} from "./top-bar/TopBar";
 import {NewGameDialog} from "./components/new-game-dialog/NewGameDialog";
 import {HistoryDialog} from "./components/history-dialog/HistoryDialog";
-import {deleteGame, saveGame} from "./store/game.db";
+import {useGamesState} from "./store/games.store";
 import {GameModel} from "./models/game.model";
 
 function App() {
   const [game, setGame] = useGameState();
+  const {games, deleteGame, addGame} = useGamesState();
   const [deleteOpen, setDeleteOpen] = useState(false);
   const [leaderboardOpen, setLeaderboardOpen] = useState(false);
   const [newGameOpen, setNewGameOpen] = useState(false);
@@ -32,32 +33,27 @@ function App() {
     setGame({...game, name})
   }
 
-  const setNewGame = (newPlayers: PlayerModel[]) => {
-    if (
-      game
-        .players
-        .map(player => player.points.filter(points => points !== null)).filter(points => points.length > 0)
-        .length > 0
-    ) {
-      saveGame(game);
+  const canSaveGame = (game: GameModel): boolean => {
+    return game
+      .players
+      .map(player => player.points.filter(points => points !== null)).filter(points => points.length > 0)
+      .length > 0;
+  }
+
+  const setNewGame = (newGame: GameModel) => {
+    if (canSaveGame(game)) {
+      addGame(game);
     }
-    const timestamp = new Date();
-    const name = `Game ${timestamp.toLocaleDateString()}`;
-    setGame({id: uuidv4(), name, timestamp, players: newPlayers});
+    setGame({id: uuidv4(), name: game.name, timestamp: new Date(), players: newGame.players});
     setNewGameOpen(false);
   }
 
   const setOldGame = (oldGame: GameModel) => {
-    deleteGame(oldGame.id);
-    if (
-      game
-        .players
-        .map(player => player.points.filter(points => points !== null)).filter(points => points.length > 0)
-        .length > 0
-    ) {
-      saveGame(game);
+    if (canSaveGame(game)) {
+      addGame(game);
     }
-    setGame(oldGame);
+    deleteGame(oldGame.id);
+    setGame({...oldGame, timestamp: new Date()});
     setHistoryOpen(false);
   }
 
@@ -84,7 +80,7 @@ function App() {
   const clearPoints = () => {
     setGame({
       ...game,
-      players: game.players.map(player => ({...player, points: []}))
+      players: game.players.map(player => ({...player, points: [null]}))
     });
   }
 
@@ -136,6 +132,7 @@ function App() {
                      onClose={() => setHistoryOpen(false)}
                      onReturnPlaying={(game) => setOldGame(game)}
                      onDeleteGame={(id) => {deleteOldGame(id)}}
+                     games={games}
       />
     </div>
   );

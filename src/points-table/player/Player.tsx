@@ -28,13 +28,15 @@ function Player({player, onPointsChange, readonly}: PlayerProps) {
     <div className="player-container">
       { player.points.map((p, i) => (
         <div className="player-points player-input-cell" key={i}>
-          <input className={p !== null ? "points-input" : "points-input empty-input"}
-                 type="number"
-                 value={p !== null ? p : ""}
-                 onChange={(e) => handleChange(e, i)}
-                 onClick={(e) => {e.currentTarget.select()}}
-                 disabled={readonly}
-          />
+          {(!readonly || p !== null) && (
+            <input className={p !== null ? "points-input" : "points-input empty-input"}
+                   type="number"
+                   value={p !== null ? p : ""}
+                   onChange={(e) => handleChange(e, i)}
+                   onClick={(e) => {e.currentTarget.select()}}
+                   disabled={readonly}
+            />
+          )}
         </div>
       )) }
     </div>
