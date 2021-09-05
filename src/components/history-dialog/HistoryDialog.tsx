@@ -11,7 +11,6 @@ import {
   Typography,
   AccordionDetails,
   AccordionActions,
-  Button,
   IconButton
 } from "@material-ui/core";
 import {useEffect, useState} from "react";
@@ -20,6 +19,8 @@ import {getAllGames, openGamesDB} from "../../store/game.db";
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import {Points} from "../../models/player.model";
 import ZoomInIcon from '@material-ui/icons/ZoomIn';
+import DeleteIcon from '@material-ui/icons/Delete';
+import ReplayIcon from '@material-ui/icons/Replay';
 import {PointsTable} from "../../points-table/PointsTable";
 import {ConfirmationDialog} from "../confirmation-dialog/ConfirmationDialog";
 import {useSnackbar} from "notistack";
@@ -83,7 +84,7 @@ export function HistoryDialog({open, onClose, onReturnPlaying, onDeleteGame}: Ne
               </Typography>
             </div>
           </AccordionSummary>
-          <AccordionDetails>
+          <AccordionDetails style={{overflow: "auto"}}>
             <Table size="small">
               <TableHead>
                 <TableRow>
@@ -105,10 +106,12 @@ export function HistoryDialog({open, onClose, onReturnPlaying, onDeleteGame}: Ne
           </AccordionDetails>
           <AccordionActions>
             <div className="history-actions">
-              <div>
-                <Button color="primary" variant="contained" onClick={() => onReturnPlaying(game)}> Return Playing </Button>
-                <Button color="primary" onClick={() => handleDeleteClick(game)}> Delete </Button>
-              </div>
+              <IconButton onClick={() => handleDeleteClick(game)}>
+                <DeleteIcon color="primary"/>
+              </IconButton>
+              <IconButton onClick={() => onReturnPlaying(game)}>
+                <ReplayIcon color="primary"/>
+              </IconButton>
               <IconButton onClick={() => handleDetailClick(game)}>
                 <ZoomInIcon color="primary"/>
               </IconButton>
@@ -119,8 +122,10 @@ export function HistoryDialog({open, onClose, onReturnPlaying, onDeleteGame}: Ne
       <Dialog open={showGame}
               onClose={() => setShowGame(false)}>
         <PointsTable players={game?.players || []}
-                     onPlayerNameChange={() => {}}
-                     onPointsChange={() => {}}
+                     onPlayerNameChange={() => {
+                     }}
+                     onPointsChange={() => {
+                     }}
                      readonly={true}
         />
       </Dialog>
