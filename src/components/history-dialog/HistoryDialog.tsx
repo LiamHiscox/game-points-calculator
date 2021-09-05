@@ -49,11 +49,13 @@ export function HistoryDialog({open, onClose, onReturnPlaying, onDeleteGame}: Ne
       {games?.map((game, i) => (
         <Accordion key={i}>
           <AccordionSummary expandIcon={<ExpandMoreIcon color="primary"/>}>
-            <Typography>{game.name}</Typography>
+            <div className="summary-container">
+              <Typography>{game.name}</Typography>
+              <Typography className="summary-subtitle" variant="caption">
+                {game.timestamp.toLocaleDateString()} - {game.timestamp.toLocaleTimeString()}
+              </Typography>
+            </div>
           </AccordionSummary>
-          <AccordionDetails>
-            <Typography>Date: {game.timestamp.toLocaleDateString()} - {game.timestamp.toLocaleTimeString()}</Typography>
-          </AccordionDetails>
           <AccordionDetails>
             <Table size="small">
               <TableHead>

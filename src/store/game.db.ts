@@ -43,7 +43,7 @@ export const deleteGame = (id: string) => {
   const request = indexedDB.open("games");
   request.onsuccess = () => {
     const tx = request.result.transaction("games", "readwrite");
-    const store = tx.objectStore("games").delete(id);
+    tx.objectStore("games").delete(id);
   };
 }
 

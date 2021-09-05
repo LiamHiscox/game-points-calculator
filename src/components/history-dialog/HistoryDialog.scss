@@ -1,1 +1,9 @@
+.summary-container {
+  display: flex;
+  justify-content: space-between;
+  flex: 1;
 
+  .summary-subtitle {
+    opacity: 0.7;
+  }
+}
