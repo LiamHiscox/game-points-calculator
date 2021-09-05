@@ -18,9 +18,19 @@ interface TopBarProps {
   onOpenLeaderBoard: () => void;
   onNewGame: () => void;
   onNameChange: (name: string) => void;
+  onOpenHistory: () => void;
 }
 
-export function TopBar({gameName, onAddPlayer, onClearPoints, onOpenDelete, onOpenLeaderBoard, onNewGame, onNameChange}: TopBarProps) {
+export function TopBar({
+                         gameName,
+                         onAddPlayer,
+                         onClearPoints,
+                         onOpenDelete,
+                         onOpenLeaderBoard,
+                         onNewGame,
+                         onNameChange,
+                         onOpenHistory
+}: TopBarProps) {
   const [confirmationOpen, setConfirmationOpen] = React.useState(false);
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 
@@ -47,7 +57,9 @@ export function TopBar({gameName, onAddPlayer, onClearPoints, onOpenDelete, onOp
         <div className="empty-container"/>
         <input type="text" className="game-name-input"
                value={gameName}
-               onChange={e => onNameChange(e.target.value)}/>
+               onChange={e => onNameChange(e.target.value)}
+               onClick={e => {e.currentTarget.select()}}
+        />
         <IconButton onClick={handleClick}>
           <MoreVertIcon className="top-bar-icon"/>
         </IconButton>
@@ -76,7 +88,7 @@ export function TopBar({gameName, onAddPlayer, onClearPoints, onOpenDelete, onOp
           <ListItemIcon> <AddCircleIcon color="secondary"/> </ListItemIcon>
           <ListItemText primary={<Typography color="primary"> New Game </Typography>} />
         </MenuItem>
-        <MenuItem onClick={() => {}}>
+        <MenuItem onClick={onOpenHistory}>
           <ListItemIcon> <HistoryIcon color="secondary"/> </ListItemIcon>
           <ListItemText primary={<Typography color="primary"> History </Typography>} />
         </MenuItem>

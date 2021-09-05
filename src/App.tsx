@@ -9,12 +9,16 @@ import { v4 as uuidv4 } from 'uuid';
 import {PointsTable} from "./points-table/PointsTable";
 import {TopBar} from "./top-bar/TopBar";
 import {NewGameDialog} from "./components/new-game-dialog/NewGameDialog";
+import {HistoryDialog} from "./components/history-dialog/HistoryDialog";
+import {deleteGame, saveGame} from "./store/game.db";
+import {GameModel} from "./models/game.model";
 
 function App() {
   const [game, setGame] = useGameState();
   const [deleteOpen, setDeleteOpen] = useState(false);
   const [leaderboardOpen, setLeaderboardOpen] = useState(false);
   const [newGameOpen, setNewGameOpen] = useState(false);
+  const [historyOpen, setHistoryOpen] = useState(false);
   const {enqueueSnackbar} = useSnackbar();
 
   if (game.players.length === 0) {
@@ -28,9 +32,23 @@ function App() {
     setGame({...game, name})
   }
 
-  const setNewPlayers = (newPlayers: PlayerModel[]) => {
-    setGame({...game, players: newPlayers});
+  const setNewGame = (newPlayers: PlayerModel[]) => {
+    saveGame(game);
+    const timestamp = new Date();
+    const name = `Game ${timestamp.toLocaleDateString()}`;
+    setGame({id: uuidv4(), name, timestamp, players: newPlayers});
     setNewGameOpen(false);
+  }
+
+  const setOldGame = (oldGame: GameModel) => {
+    deleteGame(oldGame.id);
+    setGame(oldGame);
+    setHistoryOpen(false);
+  }
+
+  const deleteOldGame = (id: string) => {
+    deleteGame(id);
+    setHistoryOpen(false);
   }
 
   const handlePointsChange = (points: Points[], id: string) => {
@@ -78,6 +96,7 @@ function App() {
               onOpenDelete={() => setDeleteOpen(true)}
               onOpenLeaderBoard={() => setLeaderboardOpen(true)}
               onNewGame={() => setNewGameOpen(true)}
+              onOpenHistory={() => setHistoryOpen(true)}
       />
       <PointsTable onPlayerNameChange={setPlayerName}
                    onPointsChange={handlePointsChange}
@@ -95,7 +114,12 @@ function App() {
       <NewGameDialog open={newGameOpen}
                      players={game.players}
                      onClose={() => setNewGameOpen(false)}
-                     onSubmit={setNewPlayers}
+                     onSubmit={setNewGame}
+      />
+      <HistoryDialog open={historyOpen}
+                     onClose={() => setHistoryOpen(false)}
+                     onReturnPlaying={(game) => setOldGame(game)}
+                     onDeleteGame={(id) => {deleteOldGame(id)}}
       />
     </div>
   );
