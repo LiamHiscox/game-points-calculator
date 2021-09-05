@@ -4,15 +4,20 @@ import {
   Dialog,
   Divider,
   Fade,
+  FormControl,
   IconButton,
+  InputAdornment,
+  InputLabel,
   List,
   ListItem,
+  OutlinedInput,
   TextField,
   Typography
 } from "@material-ui/core";
 import {PlayerModel} from "../../models/player.model";
 import DeleteIcon from "@material-ui/icons/Delete";
 import AddIcon from "@material-ui/icons/Add";
+import CloseIcon from '@material-ui/icons/Close';
 import {useEffect, useState} from "react";
 import {v4 as uuidv4} from "uuid";
 import {GameModel} from "../../models/game.model";
@@ -27,12 +32,14 @@ interface NewGameDialogProps {
 export function NewGameDialog({open, players, onClose, onSubmit}: NewGameDialogProps) {
   const [newGame, setNewGame] = useState<GameModel>({id: '', timestamp: new Date(), name: '', players: []});
 
-  useEffect(() => setNewGame({
-    id: uuidv4(),
-    timestamp: new Date(),
-    name: `Game ${new Date().toLocaleDateString()}`,
-    players: players.map(player => ({...player, points: [null]}))
-  }), [players, open]);
+  useEffect(() => {
+      open && setNewGame({
+        id: uuidv4(),
+        timestamp: new Date(),
+        name: `Game ${new Date().toLocaleDateString()}`,
+        players: players.map(player => ({...player, points: [null]}))
+      });
+  }, [players, open]);
 
   const handleDelete = (index: number) => {
     setNewGame({
@@ -74,12 +81,23 @@ export function NewGameDialog({open, players, onClose, onSubmit}: NewGameDialogP
             onClose={onClose}>
       <List>
         <ListItem>
-          <TextField label="Game Name" variant="outlined"
-                     value={newGame.name}
-                     style={{flex: "1"}}
-                     onChange={(e) => handleGameNameChange(e.target.value)}
-                     error={!newGame.name}
-          />
+          <FormControl variant="outlined">
+            <InputLabel> Game Name </InputLabel>
+            <OutlinedInput
+              type="text"
+              value={newGame.name}
+              onChange={(e) => handleGameNameChange(e.target.value)}
+              error={!newGame.name}
+              endAdornment={
+                <InputAdornment position="end">
+                  <IconButton onClick={() => handleGameNameChange("")}>
+                    <CloseIcon color="primary"/>
+                  </IconButton>
+                </InputAdornment>
+              }
+              labelWidth={93}
+            />
+          </FormControl>
         </ListItem>
         <ListItem>
           <Typography style={{fontWeight: "bold"}}> Players </Typography>

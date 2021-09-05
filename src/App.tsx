@@ -44,7 +44,7 @@ function App() {
     if (canSaveGame(game)) {
       addGame(game);
     }
-    setGame({id: uuidv4(), name: game.name, timestamp: new Date(), players: newGame.players});
+    setGame({id: uuidv4(), name: newGame.name, timestamp: new Date(), players: newGame.players});
     setNewGameOpen(false);
   }
 
