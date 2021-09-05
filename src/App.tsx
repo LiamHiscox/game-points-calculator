@@ -49,6 +49,14 @@ function App() {
 
   const setOldGame = (oldGame: GameModel) => {
     deleteGame(oldGame.id);
+    if (
+      game
+        .players
+        .map(player => player.points.filter(points => points !== null)).filter(points => points.length > 0)
+        .length > 0
+    ) {
+      saveGame(game);
+    }
     setGame(oldGame);
     setHistoryOpen(false);
   }
