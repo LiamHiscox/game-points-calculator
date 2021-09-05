@@ -37,6 +37,7 @@ export function HistoryDialog({open, onClose, onReturnPlaying, onDeleteGame}: Ne
   const [game, setGame] = useState<GameModel | null>(null);
   const [showGame, setShowGame] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
+  const [showConfirmReplay, setShowConfirmReplay] = useState(false);
   const {enqueueSnackbar} = useSnackbar();
 
   useEffect(() => {
@@ -54,6 +55,16 @@ export function HistoryDialog({open, onClose, onReturnPlaying, onDeleteGame}: Ne
   const handleDetailClick = (game: GameModel) => {
     setGame(game);
     setShowGame(true);
+  }
+
+  const handleReplayClick = (game: GameModel) => {
+    setGame(game);
+    setShowConfirmReplay(true);
+  }
+
+  const handleReplay = () => {
+    game && onReturnPlaying(game);
+    setShowConfirmReplay(false);
   }
 
   const handleDeleteClick = (game: GameModel) => {
@@ -109,7 +120,7 @@ export function HistoryDialog({open, onClose, onReturnPlaying, onDeleteGame}: Ne
               <IconButton onClick={() => handleDeleteClick(game)}>
                 <DeleteIcon color="primary"/>
               </IconButton>
-              <IconButton onClick={() => onReturnPlaying(game)}>
+              <IconButton onClick={() => handleReplayClick(game)}>
                 <ReplayIcon color="primary"/>
               </IconButton>
               <IconButton onClick={() => handleDetailClick(game)}>
@@ -122,10 +133,8 @@ export function HistoryDialog({open, onClose, onReturnPlaying, onDeleteGame}: Ne
       <Dialog open={showGame}
               onClose={() => setShowGame(false)}>
         <PointsTable players={game?.players || []}
-                     onPlayerNameChange={() => {
-                     }}
-                     onPointsChange={() => {
-                     }}
+                     onPlayerNameChange={() => {}}
+                     onPointsChange={() => {}}
                      readonly={true}
         />
       </Dialog>
@@ -133,6 +142,11 @@ export function HistoryDialog({open, onClose, onReturnPlaying, onDeleteGame}: Ne
                           open={showConfirm}
                           onConfirm={handleDelete}
                           onDecline={() => setShowConfirm(false)}
+      />
+      <ConfirmationDialog message={`Are you sure you want to replay ${game?.name}?`}
+                          open={showConfirmReplay}
+                          onConfirm={handleReplay}
+                          onDecline={() => setShowConfirmReplay(false)}
       />
     </Dialog>
   );
