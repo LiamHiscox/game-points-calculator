@@ -33,7 +33,14 @@ function App() {
   }
 
   const setNewGame = (newPlayers: PlayerModel[]) => {
-    saveGame(game);
+    if (
+      game
+        .players
+        .map(player => player.points.filter(points => points !== null)).filter(points => points.length > 0)
+        .length > 0
+    ) {
+      saveGame(game);
+    }
     const timestamp = new Date();
     const name = `Game ${timestamp.toLocaleDateString()}`;
     setGame({id: uuidv4(), name, timestamp, players: newPlayers});
@@ -101,6 +108,7 @@ function App() {
       <PointsTable onPlayerNameChange={setPlayerName}
                    onPointsChange={handlePointsChange}
                    players={game.players}
+                   readonly={false}
       />
       <DeletePlayersDialog players={game.players}
                            open={deleteOpen}

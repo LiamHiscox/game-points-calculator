@@ -5,9 +5,10 @@ import {PlayerModel, Points} from "../../models/player.model";
 interface PlayerProps {
   player: PlayerModel;
   onPointsChange: (points: Points[]) => void;
+  readonly: boolean;
 }
 
-function Player({player, onPointsChange}: PlayerProps) {
+function Player({player, onPointsChange, readonly}: PlayerProps) {
 
   if (player.points.length === 0 || player.points[player.points.length-1] !== null) {
     onPointsChange(player.points.concat(null));
@@ -32,6 +33,7 @@ function Player({player, onPointsChange}: PlayerProps) {
                  value={p !== null ? p : ""}
                  onChange={(e) => handleChange(e, i)}
                  onClick={(e) => {e.currentTarget.select()}}
+                 disabled={readonly}
           />
         </div>
       )) }

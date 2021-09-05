@@ -9,13 +9,20 @@ import {
   Accordion,
   AccordionSummary,
   Typography,
-  AccordionDetails, AccordionActions, Button
+  AccordionDetails,
+  AccordionActions,
+  Button,
+  IconButton
 } from "@material-ui/core";
 import {useEffect, useState} from "react";
 import {GameModel} from "../../models/game.model";
 import {getAllGames, openGamesDB} from "../../store/game.db";
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import {Points} from "../../models/player.model";
+import ZoomInIcon from '@material-ui/icons/ZoomIn';
+import {PointsTable} from "../../points-table/PointsTable";
+import {ConfirmationDialog} from "../confirmation-dialog/ConfirmationDialog";
+import {useSnackbar} from "notistack";
 
 interface NewGameDialogProps {
   open: boolean;
@@ -26,6 +33,10 @@ interface NewGameDialogProps {
 
 export function HistoryDialog({open, onClose, onReturnPlaying, onDeleteGame}: NewGameDialogProps) {
   const [games, setGames] = useState<GameModel[] | null>(null);
+  const [game, setGame] = useState<GameModel | null>(null);
+  const [showGame, setShowGame] = useState(false);
+  const [showConfirm, setShowConfirm] = useState(false);
+  const {enqueueSnackbar} = useSnackbar();
 
   useEffect(() => {
     if (open) {
@@ -38,6 +49,22 @@ export function HistoryDialog({open, onClose, onReturnPlaying, onDeleteGame}: Ne
     return () => {
     };
   }, [open]);
+
+  const handleDetailClick = (game: GameModel) => {
+    setGame(game);
+    setShowGame(true);
+  }
+
+  const handleDeleteClick = (game: GameModel) => {
+    setGame(game);
+    setShowConfirm(true);
+  }
+
+  const handleDelete = () => {
+    setShowConfirm(false);
+    game && onDeleteGame(game.id);
+    game && enqueueSnackbar(`Successfully deleted game ${game.name}`, {variant: "success"})
+  }
 
   return (
     <Dialog fullWidth
@@ -77,11 +104,31 @@ export function HistoryDialog({open, onClose, onReturnPlaying, onDeleteGame}: Ne
             </Table>
           </AccordionDetails>
           <AccordionActions>
-            <Button color="primary" onClick={() => onDeleteGame(game.id)}> Delete </Button>
-            <Button color="primary" variant="contained" onClick={() => onReturnPlaying(game)}> Return Playing </Button>
+            <div className="history-actions">
+              <div>
+                <Button color="primary" variant="contained" onClick={() => onReturnPlaying(game)}> Return Playing </Button>
+                <Button color="primary" onClick={() => handleDeleteClick(game)}> Delete </Button>
+              </div>
+              <IconButton onClick={() => handleDetailClick(game)}>
+                <ZoomInIcon color="primary"/>
+              </IconButton>
+            </div>
           </AccordionActions>
         </Accordion>
       ))}
+      <Dialog open={showGame}
+              onClose={() => setShowGame(false)}>
+        <PointsTable players={game?.players || []}
+                     onPlayerNameChange={() => {}}
+                     onPointsChange={() => {}}
+                     readonly={true}
+        />
+      </Dialog>
+      <ConfirmationDialog message={`Are you sure you want to delete ${game?.name}?`}
+                          open={showConfirm}
+                          onConfirm={handleDelete}
+                          onDecline={() => setShowConfirm(false)}
+      />
     </Dialog>
   );
 }

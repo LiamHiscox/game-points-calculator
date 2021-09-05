@@ -7,14 +7,16 @@ interface PointsTableProps {
   players: PlayerModel[];
   onPlayerNameChange: (name: string, id: string) => void;
   onPointsChange: (points: Points[], id: string) => void;
+  readonly: boolean;
 }
 
-export function PointsTable({players, onPlayerNameChange, onPointsChange}: PointsTableProps) {
+export function PointsTable({players, onPlayerNameChange, onPointsChange, readonly}: PointsTableProps) {
   return (
     <div className="player-table-container">
       <div className="player-names">
         {players.map((player, index) => (
           <input className="player-name" type="text"
+                 disabled={readonly}
                  key={index}
                  value={player.name}
                  onChange={(e) => onPlayerNameChange(e.target.value, player.id)}
@@ -26,7 +28,9 @@ export function PointsTable({players, onPlayerNameChange, onPointsChange}: Point
         {players.map((player, i) => (
           <Player key={i}
                   player={player}
-                  onPointsChange={(points) => onPointsChange(points, player.id)}/>
+                  onPointsChange={(points) => onPointsChange(points, player.id)}
+                  readonly={readonly}
+          />
         ))}
       </div>
       <div className="player-scores">
