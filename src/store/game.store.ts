@@ -1,29 +1,30 @@
-import {useEffect, useState} from "react";
+import {useState} from "react";
 import {GameModel} from "../models/game.model";
-import { v4 as uuidv4 } from 'uuid';
-import localForage from 'localforage';
+import {v4 as uuidv4} from 'uuid';
 
 const gameKey = 'game';
 
-const initialGame: GameModel = {
-  id: uuidv4(),
-  name: `Game ${new Date().toLocaleDateString()}`,
-  timestamp: new Date(),
-  players: []
-};
+const getStoredGame = (): GameModel => {
+  const storedGame = localStorage.getItem(gameKey);
+  if (storedGame) {
+    const parsed = JSON.parse(storedGame) as GameModel;
+    return {...parsed, timestamp: new Date(parsed.timestamp)}
+  } else {
+    return {
+      id: uuidv4(),
+      name: 'New Game',
+      timestamp: new Date(),
+      players: []
+    };
+  }
+}
 
 export const useGameState = (): [GameModel, (game: GameModel) => void] => {
-  const [game, setStateGame] = useState<GameModel>(initialGame);
+  const [game, setStateGame] = useState<GameModel>(getStoredGame);
 
-  useEffect(() => {
-      localForage
-        .getItem<GameModel>(gameKey)
-        .then((game) => game && setStateGame(game));
-  }, []);
-
-  const setGame = async (newGame: GameModel) => {
+  const setGame = (newGame: GameModel) => {
     setStateGame(newGame);
-    await localForage.setItem(gameKey, newGame);
+    localStorage.setItem(gameKey, JSON.stringify(newGame));
   }
 
   return [game, setGame];

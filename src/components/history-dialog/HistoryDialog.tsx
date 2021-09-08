@@ -13,7 +13,7 @@ import {
   AccordionActions,
   IconButton
 } from "@material-ui/core";
-import {useEffect, useState} from "react";
+import {useState} from "react";
 import {GameModel} from "../../models/game.model";
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import {Points} from "../../models/player.model";
@@ -34,16 +34,10 @@ interface NewGameDialogProps {
 
 export function HistoryDialog({open, onClose, onReturnPlaying, onDeleteGame, games}: NewGameDialogProps) {
   const [game, setGame] = useState<GameModel | null>(null);
-  const [sortedGames, setSortedGames] = useState<GameModel[]>([]);
   const [showGame, setShowGame] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
   const [showConfirmReplay, setShowConfirmReplay] = useState(false);
   const {enqueueSnackbar} = useSnackbar();
-
-  useEffect(() => {
-    setSortedGames(
-      [...games].sort((a, b) => b.timestamp.getTime() - a.timestamp.getTime()));
-  }, [games]);
 
   const handleDetailClick = (game: GameModel) => {
     setGame(game);
@@ -75,10 +69,10 @@ export function HistoryDialog({open, onClose, onReturnPlaying, onDeleteGame, gam
     <Dialog fullWidth
             open={open}
             onClose={onClose}>
-      {(!sortedGames || sortedGames.length <= 0) && (
+      {games.length <= 0 && (
         <Typography>No past games found!</Typography>
       )}
-      {sortedGames?.map((game, i) => (
+      {games.map((game, i) => (
         <Accordion key={i}>
           <AccordionSummary expandIcon={<ExpandMoreIcon color="primary"/>}>
             <div className="summary-container">

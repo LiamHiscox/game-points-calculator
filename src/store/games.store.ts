@@ -1,41 +1,53 @@
 import {GameModel} from "../models/game.model";
 import {useEffect, useState} from "react";
-import localForage from "localforage";
+import Dexie from "dexie";
 
-const gamesKey = 'games';
+class GamesDatabase extends Dexie {
+  public games: Dexie.Table<GameModel, string>;
+
+  public constructor() {
+    super("GamesDatabase");
+    this.version(1).stores({
+      games: "id,timestamp,name,players"
+    });
+    this.games = this.table('games');
+  }
+}
 
 export interface GameStateProps {
   games: GameModel[],
-  setGames: (games: GameModel[]) => void,
   deleteGame: (id: string) => void
   addGame: (game: GameModel) => void,
 }
 
 export const useGamesState = (): GameStateProps => {
   const [games, setStateGames] = useState<GameModel[]>([]);
+  const [db] = useState(new GamesDatabase());
+
+  const loadGames = async () => {
+    const storedGames = await db.games.orderBy("timestamp").reverse().toArray();
+    setStateGames(storedGames);
+  }
 
   useEffect(() => {
-    localForage
-      .getItem<GameModel[]>(gamesKey)
-      .then((games) => games && setStateGames(games));
-  }, []);
+    db.transaction('r', db.games, async () => {
+      await loadGames();
+    });
+  }, [db, loadGames]);
 
-  const setGames = async (newGames: GameModel[]) => {
-    await localForage.setItem(gamesKey, newGames);
-    setStateGames(newGames);
+  const addGame = (newGame: GameModel) => {
+    db.transaction('rw', db.games, async () => {
+      await db.games.add(newGame);
+      await loadGames();
+    });
   }
 
   const deleteGame = async (id: string) => {
-    const filteredGames = games.filter(game => game.id !== id);
-    await localForage.setItem(gamesKey, filteredGames);
-    setStateGames(filteredGames);
+    db.transaction('rw', db.games, async () => {
+      await db.games.where("id").equals(id).delete();
+      await loadGames();
+    });
   }
 
-  const addGame = async (game: GameModel) => {
-    const newGames = games.concat(game);
-    await localForage.setItem(gamesKey, newGames);
-    setStateGames(newGames);
-  }
-
-  return {games, setGames, deleteGame, addGame};
+  return {games, deleteGame, addGame};
 }
