@@ -22,7 +22,6 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import ReplayIcon from '@material-ui/icons/Replay';
 import {PointsTable} from "../../points-table/PointsTable";
 import {ConfirmationDialog} from "../confirmation-dialog/ConfirmationDialog";
-import {useSnackbar} from "notistack";
 
 interface NewGameDialogProps {
   open: boolean;
@@ -37,7 +36,7 @@ export function HistoryDialog({open, onClose, onReturnPlaying, onDeleteGame, gam
   const [showGame, setShowGame] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
   const [showConfirmReplay, setShowConfirmReplay] = useState(false);
-  const {enqueueSnackbar} = useSnackbar();
+  const [expanded, setExpanded] = useState<number | null>(null);
 
   const handleDetailClick = (game: GameModel) => {
     setGame(game);
@@ -62,7 +61,10 @@ export function HistoryDialog({open, onClose, onReturnPlaying, onDeleteGame, gam
   const handleDelete = () => {
     setShowConfirm(false);
     game && onDeleteGame(game.id);
-    game && enqueueSnackbar(`Successfully deleted game ${game.name}`, {variant: "success"})
+  }
+
+  const handleExpandedChange = (index: number) => {
+    setExpanded(expanded === index ? null : index);
   }
 
   return (
@@ -73,7 +75,7 @@ export function HistoryDialog({open, onClose, onReturnPlaying, onDeleteGame, gam
         <Typography>No past games found!</Typography>
       )}
       {games.map((game, i) => (
-        <Accordion key={i}>
+        <Accordion key={i} expanded={expanded === i} onChange={() => handleExpandedChange(i)}>
           <AccordionSummary expandIcon={<ExpandMoreIcon color="primary"/>}>
             <div className="summary-container">
               <Typography>{game.name}</Typography>

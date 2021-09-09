@@ -36,7 +36,7 @@ export function NewGameDialog({open, players, onClose, onSubmit}: NewGameDialogP
       open && setNewGame({
         id: uuidv4(),
         timestamp: new Date(),
-        name: `Game ${new Date().toLocaleDateString()}`,
+        name: '',
         players: players.map(player => ({...player, points: [null]}))
       });
   }, [players, open]);
@@ -81,16 +81,16 @@ export function NewGameDialog({open, players, onClose, onSubmit}: NewGameDialogP
             onClose={onClose}>
       <List>
         <ListItem>
-          <FormControl variant="outlined">
+          <FormControl variant="outlined" className="player-name-form-control">
             <InputLabel> Game Name </InputLabel>
             <OutlinedInput
               type="text"
               value={newGame.name}
-              onChange={(e) => handleGameNameChange(e.target.value)}
               error={!newGame.name}
+              onChange={e => handleGameNameChange(e.target.value)}
               endAdornment={
                 <InputAdornment position="end">
-                  <IconButton onClick={() => handleGameNameChange("")}>
+                  <IconButton onClick={() => handleGameNameChange('')}>
                     <CloseIcon color="primary"/>
                   </IconButton>
                 </InputAdornment>
@@ -117,8 +117,10 @@ export function NewGameDialog({open, players, onClose, onSubmit}: NewGameDialogP
             </ListItem>
           </Fade>
         ))}
-        <ListItem button style={{justifyContent: "center"}} onClick={addPlayer}>
-          <AddIcon color="primary"/>
+        <ListItem style={{justifyContent: "center"}}>
+          <IconButton onClick={addPlayer}>
+            <AddIcon color="primary"/>
+          </IconButton>
         </ListItem>
       </List>
       <Divider/>

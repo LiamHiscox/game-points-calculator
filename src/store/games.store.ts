@@ -1,6 +1,7 @@
 import {GameModel} from "../models/game.model";
 import {useEffect, useState} from "react";
 import Dexie from "dexie";
+import {useSnackbar} from "notistack";
 
 class GamesDatabase extends Dexie {
   public games: Dexie.Table<GameModel, string>;
@@ -23,17 +24,19 @@ export interface GameStateProps {
 export const useGamesState = (): GameStateProps => {
   const [games, setStateGames] = useState<GameModel[]>([]);
   const [db] = useState(new GamesDatabase());
+  const {enqueueSnackbar} = useSnackbar();
+
+  useEffect(() => {
+    db.transaction('r', db.games, async () => {
+      const storedGames = await db.games.orderBy("timestamp").reverse().toArray();
+      setStateGames(storedGames);
+    });
+  }, [db]);
 
   const loadGames = async () => {
     const storedGames = await db.games.orderBy("timestamp").reverse().toArray();
     setStateGames(storedGames);
   }
-
-  useEffect(() => {
-    db.transaction('r', db.games, async () => {
-      await loadGames();
-    });
-  }, [db, loadGames]);
 
   const addGame = (newGame: GameModel) => {
     db.transaction('rw', db.games, async () => {
@@ -46,6 +49,7 @@ export const useGamesState = (): GameStateProps => {
     db.transaction('rw', db.games, async () => {
       await db.games.where("id").equals(id).delete();
       await loadGames();
+      enqueueSnackbar(`Successfully deleted game`, {variant: "success"});
     });
   }
 

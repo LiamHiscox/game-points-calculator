@@ -130,8 +130,8 @@ function App() {
       />
       <HistoryDialog open={historyOpen}
                      onClose={() => setHistoryOpen(false)}
-                     onReturnPlaying={(game) => setOldGame(game)}
-                     onDeleteGame={(id) => {deleteOldGame(id)}}
+                     onReturnPlaying={setOldGame}
+                     onDeleteGame={deleteOldGame}
                      games={games}
       />
     </div>

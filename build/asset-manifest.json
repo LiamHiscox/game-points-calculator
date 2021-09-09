@@ -1,8 +1,8 @@
 {
   "files": {
-    "main.css": "/game-points-calculator/build/static/css/main.64ed9748.chunk.css",
-    "main.js": "/game-points-calculator/build/static/js/main.95a68654.chunk.js",
-    "main.js.map": "/game-points-calculator/build/static/js/main.95a68654.chunk.js.map",
+    "main.css": "/game-points-calculator/build/static/css/main.d153fde5.chunk.css",
+    "main.js": "/game-points-calculator/build/static/js/main.6cfa07d9.chunk.js",
+    "main.js.map": "/game-points-calculator/build/static/js/main.6cfa07d9.chunk.js.map",
     "runtime-main.js": "/game-points-calculator/build/static/js/runtime-main.e19735ed.js",
     "runtime-main.js.map": "/game-points-calculator/build/static/js/runtime-main.e19735ed.js.map",
     "static/js/2.fc8edbb7.chunk.js": "/game-points-calculator/build/static/js/2.fc8edbb7.chunk.js",
@@ -10,13 +10,13 @@
     "index.html": "/game-points-calculator/build/index.html",
     "service-worker.js": "/game-points-calculator/build/service-worker.js",
     "service-worker.js.map": "/game-points-calculator/build/service-worker.js.map",
-    "static/css/main.64ed9748.chunk.css.map": "/game-points-calculator/build/static/css/main.64ed9748.chunk.css.map",
+    "static/css/main.d153fde5.chunk.css.map": "/game-points-calculator/build/static/css/main.d153fde5.chunk.css.map",
     "static/js/2.fc8edbb7.chunk.js.LICENSE.txt": "/game-points-calculator/build/static/js/2.fc8edbb7.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.e19735ed.js",
     "static/js/2.fc8edbb7.chunk.js",
-    "static/css/main.64ed9748.chunk.css",
-    "static/js/main.95a68654.chunk.js"
+    "static/css/main.d153fde5.chunk.css",
+    "static/js/main.6cfa07d9.chunk.js"
   ]
 }
