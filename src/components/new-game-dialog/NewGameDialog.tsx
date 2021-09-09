@@ -14,7 +14,6 @@ import {
   TextField,
   Typography
 } from "@material-ui/core";
-import {PlayerModel} from "../../models/player.model";
 import DeleteIcon from "@material-ui/icons/Delete";
 import AddIcon from "@material-ui/icons/Add";
 import CloseIcon from '@material-ui/icons/Close';
@@ -24,22 +23,22 @@ import {GameModel} from "../../models/game.model";
 
 interface NewGameDialogProps {
   open: boolean;
-  players: PlayerModel[];
+  game: GameModel;
   onClose: () => void;
   onSubmit: (game: GameModel) => void;
 }
 
-export function NewGameDialog({open, players, onClose, onSubmit}: NewGameDialogProps) {
+export function NewGameDialog({open, game, onClose, onSubmit}: NewGameDialogProps) {
   const [newGame, setNewGame] = useState<GameModel>({id: '', timestamp: new Date(), name: '', players: []});
 
   useEffect(() => {
       open && setNewGame({
         id: uuidv4(),
         timestamp: new Date(),
-        name: '',
-        players: players.map(player => ({...player, points: [null]}))
+        name: game.name,
+        players: game.players.map(player => ({...player, points: [null]}))
       });
-  }, [players, open]);
+  }, [game, open]);
 
   const handleDelete = (index: number) => {
     setNewGame({

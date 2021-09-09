@@ -124,7 +124,7 @@ function App() {
                          onClose={() => setLeaderboardOpen(false)}
       />
       <NewGameDialog open={newGameOpen}
-                     players={game.players}
+                     game={game}
                      onClose={() => setNewGameOpen(false)}
                      onSubmit={setNewGame}
       />
