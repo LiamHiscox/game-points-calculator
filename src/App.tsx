@@ -37,14 +37,14 @@ function App() {
     return game
       .players
       .map(player => player.points.filter(points => points !== null)).filter(points => points.length > 0)
-      .length > 0;
+      .length >= game.players.length;
   }
 
   const setNewGame = (newGame: GameModel) => {
     if (canSaveGame(game)) {
       addGame(game);
     }
-    setGame({id: uuidv4(), name: newGame.name, timestamp: new Date(), players: newGame.players});
+    setGame({...newGame, id: uuidv4(), timestamp: new Date(), players: newGame.players});
     setNewGameOpen(false);
   }
 
@@ -78,7 +78,7 @@ function App() {
   }
 
   const clearPoints = () => {
-    setGame({
+    setNewGame({
       ...game,
       players: game.players.map(player => ({...player, points: [null]}))
     });
