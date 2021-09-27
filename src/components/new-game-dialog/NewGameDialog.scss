@@ -1,3 +1,10 @@
 .player-name-form-control {
   flex: 1;
 }
+.new-game-toolbar {
+  justify-content: flex-end;
+}
+.new-game-list {
+  flex: 1;
+  overflow: auto;
+}
