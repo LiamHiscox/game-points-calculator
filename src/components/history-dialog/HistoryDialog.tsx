@@ -38,6 +38,21 @@ export function HistoryDialog({open, onClose, onReturnPlaying, onDeleteGame, gam
   const [showConfirmReplay, setShowConfirmReplay] = useState(false);
   const [expanded, setExpanded] = useState<number | null>(null);
 
+  const handleClose = () => {
+    setExpanded(null);
+    onClose();
+  }
+
+  const handleReturnPlaying = (game: GameModel) => {
+    setExpanded(null);
+    onReturnPlaying(game);
+  }
+
+  const handleDeleteGame = (id: string) => {
+    setExpanded(null);
+    onDeleteGame(id);
+  }
+
   const handleDetailClick = (game: GameModel) => {
     setGame(game);
     setShowGame(true);
@@ -49,7 +64,7 @@ export function HistoryDialog({open, onClose, onReturnPlaying, onDeleteGame, gam
   }
 
   const handleReplay = () => {
-    game && onReturnPlaying(game);
+    game && handleReturnPlaying(game);
     setShowConfirmReplay(false);
   }
 
@@ -60,7 +75,7 @@ export function HistoryDialog({open, onClose, onReturnPlaying, onDeleteGame, gam
 
   const handleDelete = () => {
     setShowConfirm(false);
-    game && onDeleteGame(game.id);
+    game && handleDeleteGame(game.id);
   }
 
   const handleExpandedChange = (index: number) => {
@@ -70,7 +85,7 @@ export function HistoryDialog({open, onClose, onReturnPlaying, onDeleteGame, gam
   return (
     <Dialog fullWidth
             open={open}
-            onClose={onClose}>
+            onClose={handleClose}>
       {games.length <= 0 && (
         <Typography>No past games found!</Typography>
       )}
