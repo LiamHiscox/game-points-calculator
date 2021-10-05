@@ -15,7 +15,7 @@ import {GameModel} from "./models/game.model";
 
 function App() {
   const [game, setGame] = useGameState();
-  const {games, deleteGame, addGame} = useGamesState();
+  const {games, deleteGame, replayGame, addGame} = useGamesState();
   const [deleteOpen, setDeleteOpen] = useState(false);
   const [leaderboardOpen, setLeaderboardOpen] = useState(false);
   const [newGameOpen, setNewGameOpen] = useState(false);
@@ -52,7 +52,7 @@ function App() {
     if (canSaveGame(game)) {
       addGame(game);
     }
-    deleteGame(oldGame.id);
+    replayGame(oldGame.id);
     setGame({...oldGame, timestamp: new Date()});
     setHistoryOpen(false);
   }

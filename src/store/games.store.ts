@@ -16,9 +16,10 @@ class GamesDatabase extends Dexie {
 }
 
 export interface GameStateProps {
-  games: GameModel[],
-  deleteGame: (id: string) => void
-  addGame: (game: GameModel) => void,
+  games: GameModel[];
+  deleteGame: (id: string) => void;
+  replayGame: (id: string) => void;
+  addGame: (game: GameModel) => void;
 }
 
 export const useGamesState = (): GameStateProps => {
@@ -53,5 +54,13 @@ export const useGamesState = (): GameStateProps => {
     });
   }
 
-  return {games, deleteGame, addGame};
+  const replayGame = async (id: string) => {
+    db.transaction('rw', db.games, async () => {
+      await db.games.where("id").equals(id).delete();
+      await loadGames();
+      enqueueSnackbar(`Successfully loaded old game`, {variant: "success"});
+    });
+  }
+
+  return {games, deleteGame, replayGame, addGame};
 }

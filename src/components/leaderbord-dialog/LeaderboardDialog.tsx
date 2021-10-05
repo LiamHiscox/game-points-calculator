@@ -1,6 +1,6 @@
 import "./LeaderboardDialog.scss";
 import {PlayerModel, Points} from "../../models/player.model";
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import Dialog from "@material-ui/core/Dialog";
 import {
   Avatar,
@@ -26,8 +26,17 @@ interface PlayerScores {
   score: number;
 }
 
+type Order = 'asc' | 'desc';
+
+const initialOrder = (): Order => {
+  const order = localStorage.getItem('order');
+  return order === 'asc' || order === 'desc' ? order : 'asc';
+}
+
 export function LeaderboardDialog({players, open, onClose}: LeaderboardDialogProps) {
-  const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc');
+  const [sortOrder, setSortOrder] = useState<Order>(initialOrder());
+
+  useEffect(() => localStorage.setItem('order', sortOrder), [sortOrder]);
 
   let sortedPlayers = players
     .map<PlayerScores>(player => ({
