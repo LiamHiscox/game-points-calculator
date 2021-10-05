@@ -43,16 +43,6 @@ export function HistoryDialog({open, onClose, onReturnPlaying, onDeleteGame, gam
     onClose();
   }
 
-  const handleReturnPlaying = (game: GameModel) => {
-    setExpanded(null);
-    onReturnPlaying(game);
-  }
-
-  const handleDeleteGame = (id: string) => {
-    setExpanded(null);
-    onDeleteGame(id);
-  }
-
   const handleDetailClick = (game: GameModel) => {
     setGame(game);
     setShowGame(true);
@@ -64,8 +54,9 @@ export function HistoryDialog({open, onClose, onReturnPlaying, onDeleteGame, gam
   }
 
   const handleReplay = () => {
-    game && handleReturnPlaying(game);
     setShowConfirmReplay(false);
+    game && onReturnPlaying(game);
+    setExpanded(null);
   }
 
   const handleDeleteClick = (game: GameModel) => {
@@ -75,7 +66,8 @@ export function HistoryDialog({open, onClose, onReturnPlaying, onDeleteGame, gam
 
   const handleDelete = () => {
     setShowConfirm(false);
-    game && handleDeleteGame(game.id);
+    game && onDeleteGame(game.id);
+    setExpanded(null);
   }
 
   const handleExpandedChange = (index: number) => {
