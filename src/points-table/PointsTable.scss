@@ -77,15 +77,15 @@
 
   .points-rows-container {
     background-color: $primary;
-    transition: width .5s;
+    transition: min-width .5s;
   }
 
   .rows-open {
-    width: 40px;
+    min-width: 40px;
   }
 
   .rows-closed {
-    width: 0;
+    min-width: 0;
   }
 }
 

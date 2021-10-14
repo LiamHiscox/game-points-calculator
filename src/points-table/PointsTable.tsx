@@ -27,8 +27,7 @@ export function PointsTable({
   return (
     <div className="player-table-container">
       <div className="player-names">
-        {!readonly && <div
-          className={showRows ? "player-row-placeholder-names placeholder-open" : "player-row-placeholder-names placeholder-closed"}/>}
+        <div className={showRows ? "player-row-placeholder-names placeholder-open" : "player-row-placeholder-names placeholder-closed"}/>
         {players.map((player, index) => (
           <input className="player-name" type="text"
                  disabled={readonly}
@@ -42,15 +41,13 @@ export function PointsTable({
         ))}
       </div>
       <div className="row-players-container">
-        {!readonly && (
-          <div className={showRows ? "points-rows-container rows-open" : "points-rows-container rows-closed"}>
-            {rounds.map((_, index) => (
-              <div className="points-row-index" key={index}>
-                {index + 1}
-              </div>
-            ))}
-          </div>
-        )}
+        <div className={showRows ? "points-rows-container rows-open" : "points-rows-container rows-closed"}>
+          {showRows && rounds.map((_, index) => (
+            <div className="points-row-index" key={index}>
+              {index + 1}
+            </div>
+          ))}
+        </div>
         <div className="player-table">
           {players.map((player, i) => (
             <Player key={i}
@@ -62,8 +59,7 @@ export function PointsTable({
         </div>
       </div>
       <div className="player-scores">
-        {!readonly && <div
-          className={showRows ? "player-row-placeholder-points placeholder-open" : "player-row-placeholder-points placeholder-closed"}/>}
+        <div className={showRows ? "player-row-placeholder-points placeholder-open" : "player-row-placeholder-points placeholder-closed"}/>
         {players.map((player, i) =>
           <div className="player-score player-header-cell" key={i}>
             {player.points.reduce((a: number, b: Points) => a + (b || 0), 0)}
