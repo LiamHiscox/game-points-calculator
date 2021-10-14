@@ -8,6 +8,8 @@ import GradeIcon from "@material-ui/icons/Grade";
 import AddCircleIcon from "@material-ui/icons/AddCircle";
 import HistoryIcon from '@material-ui/icons/History';
 import {ConfirmationDialog} from "../components/confirmation-dialog/ConfirmationDialog";
+import KeyboardArrowLeftIcon from '@material-ui/icons/KeyboardArrowLeft';
+import KeyboardArrowRightIcon from '@material-ui/icons/KeyboardArrowRight';
 import React from "react";
 
 interface TopBarProps {
@@ -19,6 +21,8 @@ interface TopBarProps {
   onNewGame: () => void;
   onNameChange: (name: string) => void;
   onOpenHistory: () => void;
+  showRows: boolean;
+  onToggleRows: () => void;
 }
 
 export function TopBar({
@@ -29,8 +33,10 @@ export function TopBar({
                          onOpenLeaderBoard,
                          onNewGame,
                          onNameChange,
-                         onOpenHistory
-}: TopBarProps) {
+                         onOpenHistory,
+                         showRows,
+                         onToggleRows
+                       }: TopBarProps) {
   const [confirmationOpen, setConfirmationOpen] = React.useState(false);
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 
@@ -54,19 +60,26 @@ export function TopBar({
   return (
     <>
       <div className="top-bar">
-        <div className="empty-container"/>
+        <IconButton onClick={onToggleRows}>
+          {showRows ?
+            <KeyboardArrowLeftIcon className="top-bar-icon"/> :
+            <KeyboardArrowRightIcon className="top-bar-icon"/>
+          }
+        </IconButton>
         <input type="text" className="game-name-input"
                value={gameName}
                onChange={e => onNameChange(e.target.value)}
-               onClick={e => {e.currentTarget.select()}}
+               onClick={e => {
+                 e.currentTarget.select()
+               }}
         />
         <IconButton onClick={handleClick}>
           <MoreVertIcon className="top-bar-icon"/>
         </IconButton>
       </div>
       <Menu anchorEl={anchorEl}
-               open={!!anchorEl}
-               onClose={handleClose}
+            open={!!anchorEl}
+            onClose={handleClose}
       >
         <MenuItem onClick={handleClearPoints}>
           <ListItemIcon> <RotateLeftIcon color="secondary"/> </ListItemIcon>
@@ -86,11 +99,11 @@ export function TopBar({
         </MenuItem>
         <MenuItem onClick={onNewGame}>
           <ListItemIcon> <AddCircleIcon color="secondary"/> </ListItemIcon>
-          <ListItemText primary={<Typography color="primary"> New Game </Typography>} />
+          <ListItemText primary={<Typography color="primary"> New Game </Typography>}/>
         </MenuItem>
         <MenuItem onClick={onOpenHistory}>
           <ListItemIcon> <HistoryIcon color="secondary"/> </ListItemIcon>
-          <ListItemText primary={<Typography color="primary"> History </Typography>} />
+          <ListItemText primary={<Typography color="primary"> History </Typography>}/>
         </MenuItem>
       </Menu>
       <ConfirmationDialog message="Are you sure you want to clear all points?"

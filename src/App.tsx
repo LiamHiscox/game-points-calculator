@@ -20,6 +20,7 @@ function App() {
   const [leaderboardOpen, setLeaderboardOpen] = useState(false);
   const [newGameOpen, setNewGameOpen] = useState(false);
   const [historyOpen, setHistoryOpen] = useState(false);
+  const [showRows, setShowRows] = useState(!!localStorage.getItem('showRows'));
   const {enqueueSnackbar} = useSnackbar();
 
   if (game.players.length === 0) {
@@ -98,6 +99,11 @@ function App() {
     });
   }
 
+  const handleToggleRows = () => {
+    setShowRows(!showRows);
+    localStorage.setItem('showRows', !showRows ? 'true': '');
+  }
+
   return (
     <div className="app">
       <TopBar gameName={game.name}
@@ -108,11 +114,14 @@ function App() {
               onOpenLeaderBoard={() => setLeaderboardOpen(true)}
               onNewGame={() => setNewGameOpen(true)}
               onOpenHistory={() => setHistoryOpen(true)}
+              showRows={showRows}
+              onToggleRows={handleToggleRows}
       />
       <PointsTable onPlayerNameChange={setPlayerName}
                    onPointsChange={handlePointsChange}
                    players={game.players}
                    readonly={false}
+                   showRows={showRows}
       />
       <DeletePlayersDialog players={game.players}
                            open={deleteOpen}

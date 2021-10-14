@@ -54,7 +54,7 @@ export function LeaderboardDialog({players, open, onClose}: LeaderboardDialogPro
     }, Array<PlayerScores>());
 
   return (
-    <Dialog open={open} fullWidth onClose={onClose}>
+    <Dialog open={open} fullWidth onClose={onClose} className="leaderboard-dialog">
       {
         sortOrder === 'asc' ? (
           <Button
@@ -75,7 +75,7 @@ export function LeaderboardDialog({players, open, onClose}: LeaderboardDialogPro
         )
       }
       <Divider/>
-      <List>
+      <List className="leaderboard-list">
         {sortedPlayers.map((player, index) => (
           <ListItem key={index}>
             <ListItemAvatar className={player.position <= 3 ? ('place-' + player.position) : 'default-place'}>

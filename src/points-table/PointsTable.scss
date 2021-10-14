@@ -18,10 +18,13 @@
   padding: 0;
 }
 .player-header-cell {
+  height: 2.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   font-weight: bold;
   min-width: $min-width;
   text-align: center;
-  padding: .75rem;
   box-sizing: border-box;
 }
 .player-table-container {
@@ -30,10 +33,48 @@
   flex-direction: column;
   flex: 1;
 }
+.player-row-placeholder-names {
+  height: 2.5rem;
+  background-color: $primary;
+  transition: min-width .5s;
+}
+.placeholder-open {
+  min-width: 40px;
+}
+.placeholder-closed {
+  min-width: 0;
+}
+.player-row-placeholder-points {
+  height: 2.5rem;
+  background-color: $secondary;
+  transition: min-width .5s;
+}
 .player-table {
   display: flex;
   flex-direction: row;
   flex: 1;
+
+  .points-rows {
+    background-color: $primary;
+    transition: width .5s;
+  }
+  .rows-open {
+    width: 40px;
+  }
+  .rows-closed {
+    width: 0;
+  }
+  .points-row-index {
+    height: 2.5rem;
+    background-color: $primary;
+    color: white;
+    font-weight: bold;
+    box-sizing: border-box;
+    padding: .25rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 }
 .player-scores {
   display: flex;
@@ -42,7 +83,6 @@
   bottom: 0;
 }
 .player-score {
-  // background: linear-gradient(0deg, $primary, $secondary);
   background-color: $secondary;
   color: $secondaryText;
   flex: 1;

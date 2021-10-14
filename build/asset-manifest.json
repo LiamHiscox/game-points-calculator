@@ -1,22 +1,22 @@
 {
   "files": {
-    "main.css": "/game-points-calculator/build/static/css/main.209578c0.chunk.css",
-    "main.js": "/game-points-calculator/build/static/js/main.39314392.chunk.js",
-    "main.js.map": "/game-points-calculator/build/static/js/main.39314392.chunk.js.map",
+    "main.css": "/game-points-calculator/build/static/css/main.212d84a8.chunk.css",
+    "main.js": "/game-points-calculator/build/static/js/main.69b5dce6.chunk.js",
+    "main.js.map": "/game-points-calculator/build/static/js/main.69b5dce6.chunk.js.map",
     "runtime-main.js": "/game-points-calculator/build/static/js/runtime-main.7eeda632.js",
     "runtime-main.js.map": "/game-points-calculator/build/static/js/runtime-main.7eeda632.js.map",
-    "static/js/2.12000dc1.chunk.js": "/game-points-calculator/build/static/js/2.12000dc1.chunk.js",
-    "static/js/2.12000dc1.chunk.js.map": "/game-points-calculator/build/static/js/2.12000dc1.chunk.js.map",
+    "static/js/2.11c2f2cc.chunk.js": "/game-points-calculator/build/static/js/2.11c2f2cc.chunk.js",
+    "static/js/2.11c2f2cc.chunk.js.map": "/game-points-calculator/build/static/js/2.11c2f2cc.chunk.js.map",
     "index.html": "/game-points-calculator/build/index.html",
     "service-worker.js": "/game-points-calculator/build/service-worker.js",
     "service-worker.js.map": "/game-points-calculator/build/service-worker.js.map",
-    "static/css/main.209578c0.chunk.css.map": "/game-points-calculator/build/static/css/main.209578c0.chunk.css.map",
-    "static/js/2.12000dc1.chunk.js.LICENSE.txt": "/game-points-calculator/build/static/js/2.12000dc1.chunk.js.LICENSE.txt"
+    "static/css/main.212d84a8.chunk.css.map": "/game-points-calculator/build/static/css/main.212d84a8.chunk.css.map",
+    "static/js/2.11c2f2cc.chunk.js.LICENSE.txt": "/game-points-calculator/build/static/js/2.11c2f2cc.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.7eeda632.js",
-    "static/js/2.12000dc1.chunk.js",
-    "static/css/main.209578c0.chunk.css",
-    "static/js/main.39314392.chunk.js"
+    "static/js/2.11c2f2cc.chunk.js",
+    "static/css/main.212d84a8.chunk.css",
+    "static/js/main.69b5dce6.chunk.js"
   ]
 }

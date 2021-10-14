@@ -132,6 +132,7 @@ export function HistoryDialog({open, onClose, onReturnPlaying, onDeleteGame, gam
                      onPlayerNameChange={() => {}}
                      onPointsChange={() => {}}
                      readonly={true}
+                     showRows={false}
         />
       </Dialog>
       <ConfirmationDialog message={`Are you sure you want to delete ${game?.name}?`}

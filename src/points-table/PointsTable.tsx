@@ -1,19 +1,34 @@
 import './PointsTable.scss';
 import Player from "./player/Player";
 import {PlayerModel, Points} from "../models/player.model";
-import React from "react";
+import React, {useEffect, useState} from "react";
 
 interface PointsTableProps {
   players: PlayerModel[];
   onPlayerNameChange: (name: string, id: string) => void;
   onPointsChange: (points: Points[], id: string) => void;
   readonly: boolean;
+  showRows: boolean;
 }
 
-export function PointsTable({players, onPlayerNameChange, onPointsChange, readonly}: PointsTableProps) {
+export function PointsTable({
+                              players,
+                              onPlayerNameChange,
+                              onPointsChange,
+                              readonly,
+                              showRows
+                            }: PointsTableProps) {
+  const [rounds, setRounds] = useState<null[]>([]);
+  useEffect(() => {
+    const max = players.reduce((m, {points}) => points.length > m ? points.length : m, 0);
+    setRounds(new Array(max).fill(null));
+  }, [players]);
+
   return (
     <div className="player-table-container">
       <div className="player-names">
+        {!readonly && <div
+          className={showRows ? "player-row-placeholder-names placeholder-open" : "player-row-placeholder-names placeholder-closed"}/>}
         {players.map((player, index) => (
           <input className="player-name" type="text"
                  disabled={readonly}
@@ -25,6 +40,15 @@ export function PointsTable({players, onPlayerNameChange, onPointsChange, readon
         ))}
       </div>
       <div className="player-table">
+        {!readonly && (
+          <div className={showRows ? "points-rows rows-open" : "points-rows rows-closed"}>
+            {rounds.map((_, index) => (
+              <div className="points-row-index" key={index}>
+                {index + 1}
+              </div>
+            ))}
+          </div>
+        )}
         {players.map((player, i) => (
           <Player key={i}
                   player={player}
@@ -34,6 +58,8 @@ export function PointsTable({players, onPlayerNameChange, onPointsChange, readon
         ))}
       </div>
       <div className="player-scores">
+        {!readonly && <div
+          className={showRows ? "player-row-placeholder-points placeholder-open" : "player-row-placeholder-points placeholder-closed"}/>}
         {players.map((player, i) =>
           <div className="player-score player-header-cell" key={i}>
             {player.points.reduce((a: number, b: Points) => a + (b || 0), 0)}
