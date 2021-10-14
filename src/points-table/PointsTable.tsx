@@ -35,13 +35,15 @@ export function PointsTable({
                  key={index}
                  value={player.name}
                  onChange={(e) => onPlayerNameChange(e.target.value, player.id)}
-                 onClick={(e) => {e.currentTarget.select()}}
+                 onClick={(e) => {
+                   e.currentTarget.select()
+                 }}
           />
         ))}
       </div>
-      <div className="player-table">
+      <div className="row-players-container">
         {!readonly && (
-          <div className={showRows ? "points-rows rows-open" : "points-rows rows-closed"}>
+          <div className={showRows ? "points-rows-container rows-open" : "points-rows-container rows-closed"}>
             {rounds.map((_, index) => (
               <div className="points-row-index" key={index}>
                 {index + 1}
@@ -49,13 +51,15 @@ export function PointsTable({
             ))}
           </div>
         )}
-        {players.map((player, i) => (
-          <Player key={i}
-                  player={player}
-                  onPointsChange={(points) => onPointsChange(points, player.id)}
-                  readonly={readonly}
-          />
-        ))}
+        <div className="player-table">
+          {players.map((player, i) => (
+            <Player key={i}
+                    player={player}
+                    onPointsChange={(points) => onPointsChange(points, player.id)}
+                    readonly={readonly}
+            />
+          ))}
+        </div>
       </div>
       <div className="player-scores">
         {!readonly && <div
