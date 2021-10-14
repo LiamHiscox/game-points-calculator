@@ -8,11 +8,12 @@
 }
 
 .player-name {
+  border: 0;
+  border-right: 1px solid $primary;
   background-color: $primary;
   color: $primaryText;
   flex: 1;
   height: 2.5rem;
-  border: 0;
   font-weight: bold;
   min-width: $min-width;
   text-align: center;
@@ -27,7 +28,6 @@
   font-weight: bold;
   min-width: $min-width;
   text-align: center;
-  box-sizing: border-box;
 }
 
 .player-table-container {
@@ -103,6 +103,7 @@
 }
 
 .player-score {
+  border-right: 1px solid $secondary;
   background-color: $secondary;
   color: $secondaryText;
   flex: 1;
