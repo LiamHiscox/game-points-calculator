@@ -65,7 +65,6 @@
   .points-row-index {
     height: 2.5rem;
     background-color: $primary;
-    color: white;
     font-weight: bold;
     box-sizing: border-box;
     padding: .25rem;
@@ -77,15 +76,19 @@
 
   .points-rows-container {
     background-color: $primary;
-    transition: min-width .5s;
+    transition: min-width .5s, width .5s, color .5s;
   }
 
   .rows-open {
     min-width: 40px;
+    width: 40px;
+    color: white;
   }
 
   .rows-closed {
     min-width: 0;
+    width: 0;
+    color: $primary;
   }
 }
 

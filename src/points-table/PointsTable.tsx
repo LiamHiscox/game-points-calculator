@@ -42,7 +42,7 @@ export function PointsTable({
       </div>
       <div className="row-players-container">
         <div className={showRows ? "points-rows-container rows-open" : "points-rows-container rows-closed"}>
-          {showRows && rounds.map((_, index) => (
+          {rounds.map((_, index) => (
             <div className="points-row-index" key={index}>
               {index + 1}
             </div>
