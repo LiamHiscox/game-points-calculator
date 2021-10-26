@@ -41,8 +41,8 @@ function App() {
       .length >= game.players.length;
   }
 
-  const setNewGame = (newGame: GameModel) => {
-    if (canSaveGame(game)) {
+  const setNewGame = (newGame: GameModel, save: boolean = true) => {
+    if (canSaveGame(game) && save) {
       addGame(game);
     }
     setGame({...newGame, id: uuidv4(), timestamp: new Date(), players: newGame.players});
@@ -78,11 +78,11 @@ function App() {
     enqueueSnackbar(`${game.players.length + 1} players`);
   }
 
-  const clearPoints = () => {
+  const clearPoints = (save: boolean) => {
     setNewGame({
       ...game,
       players: game.players.map(player => ({...player, points: [null]}))
-    });
+    }, save);
   }
 
   const setPlayerName = (name: string, id: string) => {
@@ -107,6 +107,7 @@ function App() {
   return (
     <div className="app">
       <TopBar gameName={game.name}
+              canSaveGame={canSaveGame(game)}
               onNameChange={setGameName}
               onAddPlayer={addPlayer}
               onClearPoints={clearPoints}

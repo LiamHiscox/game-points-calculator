@@ -14,8 +14,9 @@ import React from "react";
 
 interface TopBarProps {
   gameName: string;
+  canSaveGame: boolean;
   onAddPlayer: () => void;
-  onClearPoints: () => void;
+  onClearPoints: (save: boolean) => void;
   onOpenDelete: () => void;
   onOpenLeaderBoard: () => void;
   onNewGame: () => void;
@@ -27,6 +28,7 @@ interface TopBarProps {
 
 export function TopBar({
                          gameName,
+                         canSaveGame,
                          onAddPlayer,
                          onClearPoints,
                          onOpenDelete,
@@ -48,9 +50,9 @@ export function TopBar({
     setConfirmationOpen(true);
   }
 
-  const handleClearConfirmation = () => {
+  const handleClearConfirmation = (save: boolean) => {
     setConfirmationOpen(false);
-    onClearPoints();
+    onClearPoints(save);
   }
 
   const handleClose = () => {
@@ -106,10 +108,11 @@ export function TopBar({
           <ListItemText primary={<Typography color="primary"> History </Typography>}/>
         </MenuItem>
       </Menu>
-      <ConfirmationDialog message="Are you sure you want to clear all points?"
+      <ConfirmationDialog message={canSaveGame ? "Do you want to save the current game to the history?" : "Are you sure you want to clear all points?"}
                           open={confirmationOpen}
-                          onConfirm={handleClearConfirmation}
-                          onDecline={() => setConfirmationOpen(false)}
+                          onConfirm={() => handleClearConfirmation(true)}
+                          onDecline={() => handleClearConfirmation(false)}
+                          onCancel={() => setConfirmationOpen(false)}
       />
     </>
   );

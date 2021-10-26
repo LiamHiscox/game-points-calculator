@@ -51,6 +51,7 @@ export function DeletePlayersDialog({players, open, onClose, onDelete}: DeletePl
                           open={confirmationOpen}
                           onConfirm={handleConfirm}
                           onDecline={() => setConfirmationOpen(false)}
+                          onCancel={() => setConfirmationOpen(false)}
       />
     </Dialog>
   );

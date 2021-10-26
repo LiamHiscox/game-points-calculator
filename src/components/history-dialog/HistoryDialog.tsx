@@ -139,11 +139,13 @@ export function HistoryDialog({open, onClose, onReturnPlaying, onDeleteGame, gam
                           open={showConfirm}
                           onConfirm={handleDelete}
                           onDecline={() => setShowConfirm(false)}
+                          onCancel={() => setShowConfirm(false)}
       />
       <ConfirmationDialog message={`Are you sure you want to replay ${game?.name}?`}
                           open={showConfirmReplay}
                           onConfirm={handleReplay}
                           onDecline={() => setShowConfirmReplay(false)}
+                          onCancel={() => setShowConfirmReplay(false)}
       />
     </Dialog>
   );
