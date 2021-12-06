@@ -13,7 +13,7 @@ interface LeaderboardDialogProps {
 
 export function ConfirmationDialog({message, open, onConfirm, onDecline, onCancel}: LeaderboardDialogProps) {
   return (
-    <Dialog open={open} fullWidth onClose={onDecline}>
+    <Dialog open={open} fullWidth onClose={onCancel}>
       <DialogContent>
         {message}
       </DialogContent>
