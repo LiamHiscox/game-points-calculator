@@ -111,7 +111,7 @@ export function TopBar({
       <ConfirmationDialog message={canSaveGame ? "Do you want to save the current game to the history?" : "Are you sure you want to clear all points?"}
                           open={confirmationOpen}
                           onConfirm={() => handleClearConfirmation(true)}
-                          onDecline={() => handleClearConfirmation(false)}
+                          onDecline={() => canSaveGame ? handleClearConfirmation(false) : setConfirmationOpen(false)}
                           onCancel={() => setConfirmationOpen(false)}
       />
     </>
