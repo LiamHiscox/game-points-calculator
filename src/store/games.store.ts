@@ -3,7 +3,7 @@ import {useEffect, useState} from "react";
 import Dexie from "dexie";
 import {useSnackbar} from "notistack";
 
-class GamesDatabase extends Dexie {
+export class GamesDatabase extends Dexie {
   public games: Dexie.Table<GameModel, string>;
 
   public constructor() {

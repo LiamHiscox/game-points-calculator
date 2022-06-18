@@ -6,9 +6,11 @@ import {ThemeProvider} from '@mui/material/styles';
 import {theme} from "./theme";
 import {SnackbarProvider} from "notistack";
 import {createRoot} from "react-dom/client";
+import {migrate} from "./store/versioning";
 
 const container = document.getElementById('root');
 const root = createRoot(container!);
+migrate();
 
 root.render(
   <React.StrictMode>
@@ -28,4 +30,3 @@ root.render(
 );
 
 serviceWorkerRegistration.register();
-

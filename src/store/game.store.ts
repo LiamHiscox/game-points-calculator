@@ -2,7 +2,7 @@ import {useState} from "react";
 import {GameModel} from "../models/game.model";
 import {v4 as uuidv4} from 'uuid';
 
-const gameKey = 'game';
+export const gameKey = 'game';
 
 const getStoredGame = (): GameModel => {
   const storedGame = localStorage.getItem(gameKey);
