@@ -12,14 +12,14 @@ import {
   AccordionDetails,
   AccordionActions,
   IconButton
-} from "@material-ui/core";
+} from "@mui/material";
 import {useState} from "react";
 import {GameModel} from "../../models/game.model";
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import {Points} from "../../models/player.model";
-import ZoomInIcon from '@material-ui/icons/ZoomIn';
-import DeleteIcon from '@material-ui/icons/Delete';
-import ReplayIcon from '@material-ui/icons/Replay';
+import ZoomInIcon from '@mui/icons-material/ZoomIn';
+import DeleteIcon from '@mui/icons-material/Delete';
+import ReplayIcon from '@mui/icons-material/Replay';
 import {PointsTable} from "../../points-table/PointsTable";
 import {ConfirmationDialog} from "../confirmation-dialog/ConfirmationDialog";
 
@@ -104,7 +104,7 @@ export function HistoryDialog({open, onClose, onReturnPlaying, onDeleteGame, gam
                 <TableRow>
                   {game.players.map((player, pi) => (
                     <TableCell key={pi} component="th" scope="row">
-                      {player.points.reduce((a: number, b: Points) => a + (b || 0), 0)}
+                      {player.points.reduce((sum: number, points: Points) => sum + (points?.points || 0), 0)}
                     </TableCell>
                   ))}
                 </TableRow>
@@ -129,10 +129,9 @@ export function HistoryDialog({open, onClose, onReturnPlaying, onDeleteGame, gam
       <Dialog open={showGame}
               onClose={() => setShowGame(false)}>
         <PointsTable players={game?.players || []}
-                     onPlayerNameChange={() => {}}
-                     onPointsChange={() => {}}
                      readonly={true}
                      showRows={false}
+                     commentFields={!!game?.commentFields}
         />
       </Dialog>
       <ConfirmationDialog message={`Are you sure you want to delete ${game?.name}?`}

@@ -5,10 +5,11 @@ import React, {useEffect, useState} from "react";
 
 interface PointsTableProps {
   players: PlayerModel[];
-  onPlayerNameChange: (name: string, id: string) => void;
-  onPointsChange: (points: Points[], id: string) => void;
+  onPlayerNameChange?: (name: string, id: string) => void;
+  onPointsChange?: (points: Points[], id: string) => void;
   readonly: boolean;
   showRows: boolean;
+  commentFields: boolean;
 }
 
 export function PointsTable({
@@ -16,7 +17,8 @@ export function PointsTable({
                               onPlayerNameChange,
                               onPointsChange,
                               readonly,
-                              showRows
+                              showRows,
+                              commentFields
                             }: PointsTableProps) {
   const [rounds, setRounds] = useState<null[]>([]);
   useEffect(() => {
@@ -33,7 +35,7 @@ export function PointsTable({
                  disabled={readonly}
                  key={index}
                  value={player.name}
-                 onChange={(e) => onPlayerNameChange(e.target.value, player.id)}
+                 onChange={(e) => onPlayerNameChange && onPlayerNameChange(e.target.value, player.id)}
                  onClick={(e) => {
                    e.currentTarget.select()
                  }}
@@ -52,8 +54,9 @@ export function PointsTable({
           {players.map((player, i) => (
             <Player key={i}
                     player={player}
-                    onPointsChange={(points) => onPointsChange(points, player.id)}
+                    onPointsChange={(points) => onPointsChange && onPointsChange(points, player.id)}
                     readonly={readonly}
+                    commentFields={commentFields}
             />
           ))}
         </div>
@@ -62,7 +65,7 @@ export function PointsTable({
         <div className={showRows ? "player-row-placeholder-points placeholder-open" : "player-row-placeholder-points placeholder-closed"}/>
         {players.map((player, i) =>
           <div className="player-score player-header-cell" key={i}>
-            {player.points.reduce((a: number, b: Points) => a + (b || 0), 0)}
+            {player.points.reduce((sum: number, model: Points) => sum + (model?.points || 0), 0)}
           </div>
         )}
       </div>

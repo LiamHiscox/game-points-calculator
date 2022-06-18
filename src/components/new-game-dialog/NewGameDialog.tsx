@@ -13,14 +13,20 @@ import {
   OutlinedInput,
   TextField,
   Toolbar,
-  Typography
-} from "@material-ui/core";
-import DeleteIcon from "@material-ui/icons/Delete";
-import AddIcon from "@material-ui/icons/Add";
-import CloseIcon from '@material-ui/icons/Close';
+  Typography,
+  Slide,
+  Checkbox,
+  FormControlLabel,
+  FormGroup
+} from "@mui/material";
+import {TransitionProps} from "@mui/material/transitions";
+import DeleteIcon from "@mui/icons-material/Delete";
+import AddIcon from "@mui/icons-material/Add";
+import CloseIcon from '@mui/icons-material/Close';
 import React, {useEffect, useRef, useState} from "react";
 import {v4 as uuidv4} from "uuid";
 import {GameModel} from "../../models/game.model";
+import {PlayerModel} from "../../models/player.model";
 
 interface NewGameDialogProps {
   open: boolean;
@@ -29,64 +35,67 @@ interface NewGameDialogProps {
   onSubmit: (game: GameModel) => void;
 }
 
+const Transition = React.forwardRef(function Transition(
+  props: TransitionProps & {
+    children: React.ReactElement;
+  },
+  ref: React.Ref<unknown>
+) {
+  return <Slide direction="up" ref={ref} {...props}/>;
+});
+
 export function NewGameDialog({open, game, onClose, onSubmit}: NewGameDialogProps) {
-  const [newGame, setNewGame] = useState<GameModel>({id: '', timestamp: new Date(), name: '', players: []});
+  const [id, setId] = useState<string>('');
+  const [timestamp, setTimestamp] = useState<Date>(new Date());
+  const [commentFields, setCommentFields] = useState<boolean>(false);
+  const [name, setName] = useState<string>('');
+  const [players, setPlayers] = useState<PlayerModel[]>([]);
   const [focus, setFocus] = useState<boolean>(false);
   const inputEl = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    open && setNewGame({
-      id: uuidv4(),
-      timestamp: new Date(),
-      name: game.name,
-      players: game.players.map(player => ({...player, points: [null]}))
-    });
+    if(open) {
+      setId(uuidv4());
+      setTimestamp(new Date());
+      setName(game.name);
+      setPlayers(game.players.map(player => ({...player, points: [null]})));
+    }
   }, [game, open]);
 
   const handleDelete = (index: number) => {
-    setNewGame({
-      ...newGame,
-      players: newGame.players.filter((_, i) => i !== index)
-    });
+    setPlayers(players.filter((_, i) => i !== index));
   }
 
   const handleClear = () => {
     inputEl?.current?.focus();
-    setNewGame({...newGame, name: ''});
+    setName('');
   }
 
   const handleGameNameChange = (newName: string) => {
-    setNewGame({
-      ...newGame,
-      name: newName
-    });
+    setName(newName);
   }
 
   const handleNameChange = (name: string, index: number) => {
-    setNewGame({
-      ...newGame,
-      players: newGame.players.map((player, i) => index === i ? {...player, name} : player)
-    });
+    setPlayers(players.map((player, i) => index === i ? {...player, name} : player));
   }
 
   const addPlayer = () => {
     setFocus(true);
-    setNewGame({
-      ...newGame,
-      players: newGame.players.concat({id: uuidv4(), name: '', points: [null]})
-    });
+    setPlayers(players.concat({id: uuidv4(), name: '', points: [null]}));
   }
 
   const canSubmit = (): boolean => {
-    const emptyPlayerName = !!newGame.players.find(player => !player.name);
-    const emptyGameName = !newGame.name;
+    const emptyPlayerName = !!players.find(player => !player.name);
+    const emptyGameName = !name;
     return emptyPlayerName || emptyGameName;
   }
 
   return (
     <Dialog fullScreen
             open={open}
-            onClose={onClose}>
+            onClose={onClose}
+            TransitionComponent={Transition}
+    >
       <AppBar position="static">
         <Toolbar className="new-game-toolbar">
           <IconButton onClick={onClose} color="inherit">
@@ -98,11 +107,11 @@ export function NewGameDialog({open, game, onClose, onSubmit}: NewGameDialogProp
         <List>
           <ListItem>
             <FormControl variant="outlined" className="player-name-form-control">
-              <InputLabel> Game Name </InputLabel>
+              <InputLabel> Game </InputLabel>
               <OutlinedInput type="text"
                              inputRef={inputEl}
-                             value={newGame.name}
-                             error={!newGame.name}
+                             value={name}
+                             error={!name}
                              onChange={e => handleGameNameChange(e.target.value)}
                              endAdornment={
                                <InputAdornment position="end">
@@ -111,17 +120,28 @@ export function NewGameDialog({open, game, onClose, onSubmit}: NewGameDialogProp
                                  </IconButton>
                                </InputAdornment>
                              }
-                             labelWidth={93}
+                             label="Game"
               />
             </FormControl>
           </ListItem>
           <ListItem>
+            <FormGroup>
+              <FormControlLabel
+                control={
+                  <Checkbox checked={commentFields} onClick={() => setCommentFields(!commentFields)} />
+                }
+                label="Additional Text Field"
+              />
+            </FormGroup>
+          </ListItem>
+          <ListItem>
             <Typography style={{fontWeight: "bold"}}> Players </Typography>
           </ListItem>
-          {newGame.players.map((player, index, players) => (
+          {players.map((player, index, players) => (
             <Fade key={index} in>
               <ListItem>
-                <TextField label="Player Name" variant="outlined"
+                <TextField label="Name"
+                           variant="outlined"
                            autoFocus={focus && index === players.length - 1}
                            value={player.name}
                            style={{flex: "1"}}
@@ -143,7 +163,7 @@ export function NewGameDialog({open, game, onClose, onSubmit}: NewGameDialogProp
       </div>
       <Button color="primary"
               variant="contained"
-              onClick={() => onSubmit(newGame)}
+              onClick={() => onSubmit({id, timestamp, commentFields, name, players})}
               disabled={canSubmit()}
       >
         New Game

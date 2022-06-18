@@ -1,15 +1,15 @@
 import './TopBar.scss';
-import {IconButton, ListItemIcon, ListItemText, Menu, MenuItem, Typography} from "@material-ui/core";
-import MoreVertIcon from "@material-ui/icons/MoreVert";
-import RotateLeftIcon from "@material-ui/icons/RotateLeft";
-import DeleteIcon from "@material-ui/icons/Delete";
-import AddIcon from "@material-ui/icons/Add";
-import GradeIcon from "@material-ui/icons/Grade";
-import AddCircleIcon from "@material-ui/icons/AddCircle";
-import HistoryIcon from '@material-ui/icons/History';
+import {IconButton, ListItemIcon, ListItemText, Menu, MenuItem, Typography} from "@mui/material";
+import MoreVertIcon from "@mui/icons-material/MoreVert";
+import RotateLeftIcon from "@mui/icons-material/RotateLeft";
+import DeleteIcon from "@mui/icons-material/Delete";
+import AddIcon from "@mui/icons-material/Add";
+import GradeIcon from "@mui/icons-material/Grade";
+import AddCircleIcon from "@mui/icons-material/AddCircle";
+import HistoryIcon from '@mui/icons-material/History';
 import {ConfirmationDialog} from "../components/confirmation-dialog/ConfirmationDialog";
-import KeyboardArrowLeftIcon from '@material-ui/icons/KeyboardArrowLeft';
-import KeyboardArrowRightIcon from '@material-ui/icons/KeyboardArrowRight';
+import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
+import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 import React from "react";
 
 interface TopBarProps {

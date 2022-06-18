@@ -1,7 +1,7 @@
 import "./LeaderboardDialog.scss";
 import {PlayerModel, Points} from "../../models/player.model";
 import React, {useEffect, useState} from "react";
-import Dialog from "@material-ui/core/Dialog";
+import Dialog from "@mui/material/Dialog";
 import {
   Avatar,
   Button,
@@ -10,9 +10,9 @@ import {
   ListItem,
   ListItemAvatar,
   ListItemText
-} from "@material-ui/core";
-import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
-import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
+} from "@mui/material";
+import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
+import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import logo from './poop.png';
 
 interface LeaderboardDialogProps {
@@ -44,7 +44,7 @@ export function LeaderboardDialog({players, open, onClose}: LeaderboardDialogPro
     .map<PlayerScores>(player => ({
       position: 0,
       name: player.name,
-      score: player.points.reduce((a: number, b: Points) => a + (b || 0), 0),
+      score: player.points.reduce((sum: number, points: Points) => sum + (points?.points || 0), 0),
       last: false
     }))
     .sort((a, b) => sortOrder === 'asc' ? (a.score - b.score) : (b.score - a.score))

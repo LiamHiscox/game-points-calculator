@@ -4,4 +4,9 @@ export interface PlayerModel {
   points: Points[];
 }
 
-export type Points = number|null;
+export type Points = PointModel | null;
+
+export interface PointModel {
+  points?: number;
+  comment?: string;
+}

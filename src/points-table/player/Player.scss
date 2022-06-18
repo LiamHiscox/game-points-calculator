@@ -15,16 +15,26 @@
   .player-input-cell {
     min-width: $min-width;
     text-align: center;
+    display: flex;
   }
   .player-points {
-    .points-input {
+    @mixin player-input {
       padding: 0;
       width: 100%;
       box-sizing: border-box;
       border: 0;
       height: 2.5rem;
       text-align: center;
+    }
+    .points-input {
+      @include player-input;
       color: $primary;
+      flex: 2;
+    }
+    .comment-input {
+      @include player-input;
+      background-color: lightgray;
+      flex: 1;
     }
     .empty-input {
       background-color: aliceblue;

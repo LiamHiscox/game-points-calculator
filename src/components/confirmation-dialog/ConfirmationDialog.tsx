@@ -1,7 +1,7 @@
 import "./ConfirmationDialog.scss";
 import React from "react";
-import Dialog from "@material-ui/core/Dialog";
-import {Button, DialogActions, DialogContent} from "@material-ui/core";
+import Dialog from "@mui/material/Dialog";
+import {Button, DialogActions, DialogContent} from "@mui/material";
 
 interface LeaderboardDialogProps {
   message: string;

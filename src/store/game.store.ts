@@ -12,6 +12,7 @@ const getStoredGame = (): GameModel => {
   } else {
     return {
       id: uuidv4(),
+      commentFields: false,
       name: 'New Game',
       timestamp: new Date(),
       players: []

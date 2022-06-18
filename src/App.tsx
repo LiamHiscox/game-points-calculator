@@ -123,6 +123,7 @@ function App() {
                    players={game.players}
                    readonly={false}
                    showRows={showRows}
+                   commentFields={game.commentFields}
       />
       <DeletePlayersDialog players={game.players}
                            open={deleteOpen}

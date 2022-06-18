@@ -1,7 +1,7 @@
-import Dialog from '@material-ui/core/Dialog';
+import Dialog from "@mui/material/Dialog";
 import {PlayerModel} from "../../models/player.model";
-import {Button, Divider, IconButton, List, ListItem, ListItemSecondaryAction, ListItemText} from "@material-ui/core";
-import DeleteIcon from '@material-ui/icons/Delete';
+import {Button, Divider, IconButton, List, ListItem, ListItemSecondaryAction, ListItemText} from "@mui/material";
+import DeleteIcon from '@mui/icons-material/Delete';
 import {useState} from "react";
 import {ConfirmationDialog} from "../confirmation-dialog/ConfirmationDialog";
 

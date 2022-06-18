@@ -1,27 +1,30 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import * as serviceWorkerRegistration from './serviceWorkerRegistration';
-import {MuiThemeProvider} from '@material-ui/core';
+import {ThemeProvider} from '@mui/material/styles';
 import {theme} from "./theme";
 import {SnackbarProvider} from "notistack";
+import {createRoot} from "react-dom/client";
 
-ReactDOM.render(
+const container = document.getElementById('root');
+const root = createRoot(container!);
+
+root.render(
   <React.StrictMode>
-    <MuiThemeProvider theme={theme}>
-      <SnackbarProvider maxSnack={1}
-                        dense={true}
-                        anchorOrigin={{
-                          vertical: 'bottom',
-                          horizontal: 'center',
-                        }}
+    <ThemeProvider theme={theme}>
+      <SnackbarProvider
+        maxSnack={1}
+        dense={true}
+        anchorOrigin={{
+          vertical: 'bottom',
+          horizontal: 'center',
+        }}
       >
         <App/>
       </SnackbarProvider>
-    </MuiThemeProvider>
-  </React.StrictMode>,
-  document.getElementById('root')
+    </ThemeProvider>
+  </React.StrictMode>
 );
 
 serviceWorkerRegistration.register();
