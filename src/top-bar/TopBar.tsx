@@ -7,6 +7,7 @@ import AddIcon from "@mui/icons-material/Add";
 import GradeIcon from "@mui/icons-material/Grade";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import HistoryIcon from '@mui/icons-material/History';
+import ShowChartIcon from '@mui/icons-material/ShowChart';
 import {ConfirmationDialog} from "../components/confirmation-dialog/ConfirmationDialog";
 import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
@@ -24,6 +25,7 @@ interface TopBarProps {
   onOpenHistory: () => void;
   showRows: boolean;
   onToggleRows: () => void;
+  onOpenStats: () => void;
 }
 
 export function TopBar({
@@ -37,7 +39,8 @@ export function TopBar({
                          onNameChange,
                          onOpenHistory,
                          showRows,
-                         onToggleRows
+                         onToggleRows,
+                         onOpenStats
                        }: TopBarProps) {
   const [confirmationOpen, setConfirmationOpen] = React.useState(false);
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -106,6 +109,10 @@ export function TopBar({
         <MenuItem onClick={onOpenHistory}>
           <ListItemIcon> <HistoryIcon color="secondary"/> </ListItemIcon>
           <ListItemText primary={<Typography color="primary"> History </Typography>}/>
+        </MenuItem>
+        <MenuItem onClick={onOpenStats}>
+          <ListItemIcon> <ShowChartIcon color="secondary"/> </ListItemIcon>
+          <ListItemText primary={<Typography color="primary"> Stats </Typography>}/>
         </MenuItem>
       </Menu>
       <ConfirmationDialog message={canSaveGame ? "Do you want to save the current game to the history?" : "Are you sure you want to clear all points?"}

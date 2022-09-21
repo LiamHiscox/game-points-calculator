@@ -10,6 +10,7 @@ import {PointsTable} from "./points-table/PointsTable";
 import {TopBar} from "./top-bar/TopBar";
 import {NewGameDialog} from "./components/new-game-dialog/NewGameDialog";
 import {HistoryDialog} from "./components/history-dialog/HistoryDialog";
+import {StatsDialog} from "./components/stats-dialog/StatsDialog";
 import {useGamesState} from "./store/games.store";
 import {GameModel} from "./models/game.model";
 
@@ -20,6 +21,7 @@ function App() {
   const [leaderboardOpen, setLeaderboardOpen] = useState(false);
   const [newGameOpen, setNewGameOpen] = useState(false);
   const [historyOpen, setHistoryOpen] = useState(false);
+  const [statsOpen, setStatsOpen] = useState(false);
   const [showRows, setShowRows] = useState(!!localStorage.getItem('showRows'));
   const {enqueueSnackbar} = useSnackbar();
 
@@ -115,6 +117,7 @@ function App() {
               onOpenLeaderBoard={() => setLeaderboardOpen(true)}
               onNewGame={() => setNewGameOpen(true)}
               onOpenHistory={() => setHistoryOpen(true)}
+              onOpenStats={() => setStatsOpen(true)}
               showRows={showRows}
               onToggleRows={handleToggleRows}
       />
@@ -144,6 +147,10 @@ function App() {
                      onReturnPlaying={setOldGame}
                      onDeleteGame={deleteOldGame}
                      games={games}
+      />
+      <StatsDialog open={statsOpen}
+                   onClose={() => setStatsOpen(false)}
+                   players={game.players}
       />
     </div>
   );

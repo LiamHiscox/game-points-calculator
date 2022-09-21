@@ -20,8 +20,10 @@ import {Points} from "../../models/player.model";
 import ZoomInIcon from '@mui/icons-material/ZoomIn';
 import DeleteIcon from '@mui/icons-material/Delete';
 import ReplayIcon from '@mui/icons-material/Replay';
+import ShowChartIcon from '@mui/icons-material/ShowChart';
 import {PointsTable} from "../../points-table/PointsTable";
 import {ConfirmationDialog} from "../confirmation-dialog/ConfirmationDialog";
+import {StatsDialog} from "../stats-dialog/StatsDialog"
 
 interface NewGameDialogProps {
   open: boolean;
@@ -36,6 +38,7 @@ export function HistoryDialog({open, onClose, onReturnPlaying, onDeleteGame, gam
   const [showGame, setShowGame] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
   const [showConfirmReplay, setShowConfirmReplay] = useState(false);
+  const [showStats, setShowStats] = useState(false);
   const [expanded, setExpanded] = useState<number | null>(null);
 
   const handleClose = () => {
@@ -46,6 +49,11 @@ export function HistoryDialog({open, onClose, onReturnPlaying, onDeleteGame, gam
   const handleDetailClick = (game: GameModel) => {
     setGame(game);
     setShowGame(true);
+  }
+
+  const handleStatsClick = (game: GameModel) => {
+    setGame(game);
+    setShowStats(true);
   }
 
   const handleReplayClick = (game: GameModel) => {
@@ -122,6 +130,9 @@ export function HistoryDialog({open, onClose, onReturnPlaying, onDeleteGame, gam
               <IconButton onClick={() => handleDetailClick(game)}>
                 <ZoomInIcon color="primary"/>
               </IconButton>
+              <IconButton onClick={() => handleStatsClick(game)}>
+                <ShowChartIcon color="primary"/>
+              </IconButton>
             </div>
           </AccordionActions>
         </Accordion>
@@ -134,6 +145,10 @@ export function HistoryDialog({open, onClose, onReturnPlaying, onDeleteGame, gam
                      commentFields={!!game?.commentFields}
         />
       </Dialog>
+      <StatsDialog open={showStats}
+                   onClose={() => setShowStats(false)}
+                   players={game?.players || []}
+      />
       <ConfirmationDialog message={`Are you sure you want to delete ${game?.name}?`}
                           open={showConfirm}
                           onConfirm={handleDelete}
