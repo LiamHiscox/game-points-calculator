@@ -4,6 +4,7 @@ import {Dialog, Table, TableBody, TableCell, TableHead, TableRow} from "@mui/mat
 import {PlayerModel} from "../../models/player.model";
 import {CartesianGrid, Legend, Line, LineChart, Tooltip, XAxis, YAxis, ResponsiveContainer} from "recharts";
 import randomcolor from "randomcolor";
+import {Payload} from 'recharts/types/component/DefaultTooltipContent';
 
 interface StatsDialogProps {
   open: boolean;
@@ -112,7 +113,10 @@ export function StatsDialog({open, players, onClose}: StatsDialogProps) {
               <CartesianGrid strokeDasharray="3 3" />
               <XAxis dataKey="round" label="Round" />
               <YAxis/>
-              <Tooltip />
+              <Tooltip isAnimationActive={false}
+                       labelFormatter={(label) => `Round ${label}`}
+                       itemSorter={(item: Payload<number, string>) => -(item.value || 0)}
+              />
               <Legend />
               {players.map(player => (
                 <Line type="monotone" dataKey={player.name} stroke={randomcolor({luminosity: 'dark'})} key={player.id}/>
