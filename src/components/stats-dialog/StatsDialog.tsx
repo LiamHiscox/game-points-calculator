@@ -1,7 +1,7 @@
 import './StatsDialog.scss';
 import React, {useEffect, useState} from 'react';
 import {Dialog, Table, TableBody, TableCell, TableHead, TableRow} from "@mui/material";
-import {PlayerModel, Points} from "../../models/player.model";
+import {PlayerModel} from "../../models/player.model";
 import {CartesianGrid, Legend, Line, LineChart, Tooltip, XAxis, YAxis, ResponsiveContainer} from "recharts";
 import randomcolor from "randomcolor";
 
@@ -33,6 +33,7 @@ export function StatsDialog({open, players, onClose}: StatsDialogProps) {
   const [minMaxData, setMinMaxData] = useState<MinMaxPointsModel[]>([]);
   const [min, setMin] = useState<number>(0);
   const [max, setMax] = useState<number>(0);
+  const [maxRounds, setMaxRounds] = useState<number>(0);
 
   useEffect(() => {
     if (open) {
@@ -91,20 +92,22 @@ export function StatsDialog({open, players, onClose}: StatsDialogProps) {
           };
         });
 
-      console.log({newData, paddedPlayers, maxRounds, newPlayers, players});
-
       setData(newData);
+      setMaxRounds(maxRounds);
     }
   }, [players, open]);
+
+  const height = window.innerHeight * 0.75 > 300 ? 300 : window.innerHeight * 0.75;
+  const width = maxRounds * 30 > window.innerWidth * 0.75 ? maxRounds * 30 : "100%";
 
   return (
     <Dialog open={open}
             onClose={onClose}
             fullWidth
     >
-      <div style={{overflow: 'hidden', padding: '2rem'}}>
-        <div style={{marginLeft: '-2rem'}}>
-          <ResponsiveContainer width="100%" height={400}>
+      <div style={{padding: '1rem'}}>
+        <div style={{marginLeft: '-2.5rem', overflow: 'hidden', overflowX: 'auto'}}>
+          <ResponsiveContainer width={width} height={height > 300 ? 300 : height}>
             <LineChart data={data}>
               <CartesianGrid strokeDasharray="3 3" />
               <XAxis dataKey="round" label="Round" />
