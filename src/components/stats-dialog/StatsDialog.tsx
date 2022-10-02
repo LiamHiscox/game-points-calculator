@@ -4,7 +4,6 @@ import { PlayerModel } from "../../models/player.model";
 import { MinMaxTable } from './min-max-table/MinMaxTable';
 import { LineGraph } from './line-graph/LineGraph';
 import { BarChart } from './bar-chart/BarChart';
-import randomcolor from "randomcolor";
 
 interface StatsDialogProps {
   open: boolean;
@@ -12,9 +11,25 @@ interface StatsDialogProps {
   onClose: () => void;
 }
 
-export function StatsDialog({ open, players, onClose }: StatsDialogProps) {
-  const colors = randomcolor({count: players.length, luminosity: 'dark'});
+const colors = [
+  '#ff0000',
+  '#009933',
+  '#0040ff',
+  '#00cc99',  
+  '#ff66ff',
+  '#00ccff',
+  '#cc9900',
+  '#664400',
+  '#ff00ff',
+  '#666666',
+  '#000066',
+  '#660066',
+  '#e6e600',
+  '#006666',
+  '#000000'
+];
 
+export function StatsDialog({ open, players, onClose }: StatsDialogProps) {
   return (
     <Dialog open={open}
       onClose={onClose}
@@ -27,7 +42,7 @@ export function StatsDialog({ open, players, onClose }: StatsDialogProps) {
         </div>
         <div style={{ margin: '1rem 0' }}>
           {players.map((player, i) => (
-            <Chip label={player.name} style={{backgroundColor: colors[i], color: 'white'}} />
+            <Chip label={player.name} key={i} style={{backgroundColor: colors[i%colors.length], color: 'white'}} />
           ))}
         </div>
         <Typography variant="h6"> Points Per Round </Typography>
@@ -36,7 +51,7 @@ export function StatsDialog({ open, players, onClose }: StatsDialogProps) {
         </div>
         <div style={{ margin: '1rem 0' }}>
           {players.map((player, i) => (
-            <Chip label={player.name} style={{backgroundColor: colors[i], color: 'white'}} />
+            <Chip label={player.name} key={i} style={{backgroundColor: colors[i%colors.length], color: 'white'}} />
           ))}
         </div>
         <Typography variant="h6"> Min/Max </Typography>
