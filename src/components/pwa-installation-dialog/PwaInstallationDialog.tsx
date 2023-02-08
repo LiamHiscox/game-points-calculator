@@ -60,7 +60,7 @@ export function PwaInstallationDialog({open, onClose}: PwaInstallationDialogProp
     return (
       <Dialog fullWidth={true} open={open} TransitionComponent={UpTransition}>
         <div className="dialog-header">
-          <Typography variant="h4" className="title"> Installation Guide </Typography>
+          <Typography variant="h5" className="title"> Installation Guide </Typography>
           <IconButton onClick={onClose}> <CloseIcon/> </IconButton>
         </div>
         <DialogContent>

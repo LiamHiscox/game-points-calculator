@@ -1,10 +1,11 @@
 import './StatsDialog.scss';
-import { Chip, Dialog, Typography } from "@mui/material";
+import {AppBar, Chip, Dialog, IconButton, Toolbar, Typography} from "@mui/material";
 import { PlayerModel } from "../../models/player.model";
 import { MinMaxTable } from './min-max-table/MinMaxTable';
 import { LineGraph } from './line-graph/LineGraph';
 import { BarChart } from './bar-chart/BarChart';
 import {UpTransition} from "../up-transition/UpTransition";
+import CloseIcon from "@mui/icons-material/Close";
 
 interface StatsDialogProps {
   open: boolean;
@@ -32,8 +33,15 @@ const colors = [
 
 export function StatsDialog({ open, players, onClose }: StatsDialogProps) {
   return (
-    <Dialog open={open} onClose={onClose} fullWidth TransitionComponent={UpTransition}>
-      <div style={{ padding: '1rem' }}>
+    <Dialog open={open} onClose={onClose} fullScreen TransitionComponent={UpTransition}>
+      <AppBar position="static">
+        <Toolbar className="tool-bar">
+          <div/>
+          <Typography variant="h6"> Statistics </Typography>
+          <IconButton onClick={onClose} color="inherit"> <CloseIcon/> </IconButton>
+        </Toolbar>
+      </AppBar>
+      <div className="content-container content-padding">
       <Typography variant="h6"> Game Progress </Typography>
         <div style={{ overflow: 'hidden', overflowX: 'auto' }}>
           <LineGraph players={players} colors={colors} />

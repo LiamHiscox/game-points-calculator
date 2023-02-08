@@ -89,6 +89,8 @@ export function NewGameDialog({open, game, onClose, onSubmit}: NewGameDialogProp
     >
       <AppBar position="static">
         <Toolbar className="new-game-toolbar">
+          <div/>
+          <Typography variant="h6"> Start New Game </Typography>
           <IconButton onClick={onClose} color="inherit">
             <CloseIcon/>
           </IconButton>

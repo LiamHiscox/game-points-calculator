@@ -1,5 +1,6 @@
 import './HistoryDialog.scss';
 import {
+  AppBar,
   Dialog,
   TableHead,
   Table,
@@ -11,7 +12,8 @@ import {
   Typography,
   AccordionDetails,
   AccordionActions,
-  IconButton
+  IconButton,
+  Toolbar
 } from "@mui/material";
 import {useState} from "react";
 import {GameModel} from "../../models/game.model";
@@ -20,6 +22,7 @@ import {Points} from "../../models/player.model";
 import ZoomInIcon from '@mui/icons-material/ZoomIn';
 import DeleteIcon from '@mui/icons-material/Delete';
 import ReplayIcon from '@mui/icons-material/Replay';
+import CloseIcon from '@mui/icons-material/Close';
 import ShowChartIcon from '@mui/icons-material/ShowChart';
 import {PointsTable} from "../../points-table/PointsTable";
 import {ConfirmationDialog} from "../confirmation-dialog/ConfirmationDialog";
@@ -84,7 +87,15 @@ export function HistoryDialog({open, onClose, onReturnPlaying, onDeleteGame, gam
   }
 
   return (
-    <Dialog fullWidth open={open} onClose={handleClose} TransitionComponent={UpTransition}>
+    <Dialog fullScreen open={open} onClose={handleClose} TransitionComponent={UpTransition}>
+      <AppBar position="static">
+        <Toolbar className="tool-bar">
+          <div></div>
+          <Typography variant="h6"> History </Typography>
+          <IconButton onClick={handleClose} color="inherit"> <CloseIcon/> </IconButton>
+        </Toolbar>
+      </AppBar>
+      <div className="content-container">
       {games.length <= 0 && (
         <Typography>No past games found!</Typography>
       )}
@@ -159,6 +170,7 @@ export function HistoryDialog({open, onClose, onReturnPlaying, onDeleteGame, gam
                           onDecline={() => setShowConfirmReplay(false)}
                           onCancel={() => setShowConfirmReplay(false)}
       />
+      </div>
     </Dialog>
   );
 }

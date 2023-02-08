@@ -125,7 +125,7 @@ export function TopBar({
         </MenuItem>
         <MenuItem onClick={onOpenStats}>
           <ListItemIcon> <ShowChartIcon color="primary"/> </ListItemIcon>
-          <ListItemText primary={<Typography> Stats </Typography>}/>
+          <ListItemText primary={<Typography> Statistics </Typography>}/>
         </MenuItem>
         <MenuItem onClick={onToggleCommentField}>
           {commentField ?
