@@ -56,7 +56,7 @@ function Player({
           {commentFields && !(readonly && typeof p?.points !== "number") && (
             <input className="comment-input"
                    type="text"
-                   value={p && p.comment ? p.comment : ""}
+                   value={p?.comment || ""}
                    onChange={(e) => handleCommentChange(e, i)}
                    onClick={(e) => {
                      e.currentTarget.select()

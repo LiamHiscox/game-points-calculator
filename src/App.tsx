@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import './App.scss';
-import {Points} from "./models/player.model";
+import {PlayerModel, Points} from "./models/player.model";
 import {useGameState} from "./store/game.store";
 import {DeletePlayersDialog} from "./components/delete-players-dialog/DeletePlayersDialog";
 import {useSnackbar} from "notistack";
@@ -14,6 +14,7 @@ import {StatsDialog} from "./components/stats-dialog/StatsDialog";
 import {useGamesState} from "./store/games.store";
 import {GameModel} from "./models/game.model";
 import {PwaInstallationDialog} from "./components/pwa-installation-dialog/PwaInstallationDialog";
+import {SortPlayersDialog} from "./components/sort-players-dialog/SortPlayersDialog";
 
 function App() {
   const [game, setGame] = useGameState();
@@ -23,6 +24,7 @@ function App() {
   const [newGameOpen, setNewGameOpen] = useState(false);
   const [historyOpen, setHistoryOpen] = useState(false);
   const [statsOpen, setStatsOpen] = useState(false);
+  const [sortPlayersOpen, setSortPlayersOpen] = useState(false);
   const [installationOpen, setInstallationOpen] = useState(true);
   const [showRows, setShowRows] = useState(!!localStorage.getItem('showRows'));
   const {enqueueSnackbar} = useSnackbar();
@@ -108,9 +110,22 @@ function App() {
     localStorage.setItem('showRows', !showRows ? 'true': '');
   }
 
+  const toggleCommentField = () => {
+    setGame({
+      ...game,
+      commentFields: !game.commentFields
+    });
+  }
+
+  const changePlayerSort = (players: PlayerModel[]) => {
+    setSortPlayersOpen(false);
+    setGame({...game, players});
+  }
+
   return (
     <div className="app">
-      <TopBar gameName={game.name}
+      <TopBar commentField={game.commentFields}
+              gameName={game.name}
               canSaveGame={canSaveGame(game)}
               onNameChange={setGameName}
               onAddPlayer={addPlayer}
@@ -122,6 +137,8 @@ function App() {
               onOpenStats={() => setStatsOpen(true)}
               showRows={showRows}
               onToggleRows={handleToggleRows}
+              onToggleCommentField={toggleCommentField}
+              onSortPlayers={() => setSortPlayersOpen(true)}
       />
       <PointsTable onPlayerNameChange={setPlayerName}
                    onPointsChange={handlePointsChange}
@@ -156,6 +173,11 @@ function App() {
       />
       <PwaInstallationDialog open={installationOpen}
                              onClose={() => setInstallationOpen(false)}
+      />
+      <SortPlayersDialog open={sortPlayersOpen}
+                         onClose={() => setSortPlayersOpen(false)}
+                         onSubmit={changePlayerSort}
+                         players={game.players}
       />
     </div>
   );

@@ -13,20 +13,18 @@ const root = createRoot(container!);
 migrate();
 
 root.render(
-  <React.StrictMode>
-    <ThemeProvider theme={theme}>
-      <SnackbarProvider
-        maxSnack={1}
-        dense={true}
-        anchorOrigin={{
-          vertical: 'bottom',
-          horizontal: 'center',
-        }}
-      >
-        <App/>
-      </SnackbarProvider>
-    </ThemeProvider>
-  </React.StrictMode>
+  <ThemeProvider theme={theme}>
+    <SnackbarProvider
+      maxSnack={1}
+      dense={true}
+      anchorOrigin={{
+        vertical: 'bottom',
+        horizontal: 'center',
+      }}
+    >
+      <App/>
+    </SnackbarProvider>
+  </ThemeProvider>
 );
 
 serviceWorkerRegistration.register();

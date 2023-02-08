@@ -8,14 +8,18 @@ import GradeIcon from "@mui/icons-material/Grade";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import HistoryIcon from '@mui/icons-material/History';
 import ShowChartIcon from '@mui/icons-material/ShowChart';
+import CheckBoxIcon from '@mui/icons-material/CheckBox';
+import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
 import {ConfirmationDialog} from "../components/confirmation-dialog/ConfirmationDialog";
 import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
+import SortIcon from '@mui/icons-material/Sort';
 import React from "react";
 
 interface TopBarProps {
   gameName: string;
   canSaveGame: boolean;
+  commentField: boolean;
   onAddPlayer: () => void;
   onClearPoints: (save: boolean) => void;
   onOpenDelete: () => void;
@@ -26,9 +30,12 @@ interface TopBarProps {
   showRows: boolean;
   onToggleRows: () => void;
   onOpenStats: () => void;
+  onToggleCommentField: () => void;
+  onSortPlayers: () => void;
 }
 
 export function TopBar({
+                         commentField,
                          gameName,
                          canSaveGame,
                          onAddPlayer,
@@ -40,7 +47,9 @@ export function TopBar({
                          onOpenHistory,
                          showRows,
                          onToggleRows,
-                         onOpenStats
+                         onOpenStats,
+                         onToggleCommentField,
+                         onSortPlayers
                        }: TopBarProps) {
   const [confirmationOpen, setConfirmationOpen] = React.useState(false);
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -98,6 +107,10 @@ export function TopBar({
           <ListItemIcon> <AddIcon color="secondary"/> </ListItemIcon>
           <ListItemText primary={<Typography color="primary"> Add Player </Typography>}/>
         </MenuItem>
+        <MenuItem onClick={onSortPlayers}>
+          <ListItemIcon> <SortIcon color="secondary"/> </ListItemIcon>
+          <ListItemText primary={<Typography color="primary"> Sort Players </Typography>}/>
+        </MenuItem>
         <MenuItem onClick={onOpenLeaderBoard}>
           <ListItemIcon> <GradeIcon color="secondary"/> </ListItemIcon>
           <ListItemText primary={<Typography color="primary"> Leaderboard </Typography>}/>
@@ -114,12 +127,20 @@ export function TopBar({
           <ListItemIcon> <ShowChartIcon color="secondary"/> </ListItemIcon>
           <ListItemText primary={<Typography color="primary"> Stats </Typography>}/>
         </MenuItem>
+        <MenuItem onClick={onToggleCommentField}>
+          {commentField ?
+            (<ListItemIcon> <CheckBoxIcon color="secondary"/> </ListItemIcon>) :
+            (<ListItemIcon> <CheckBoxOutlineBlankIcon color="secondary"/> </ListItemIcon>)
+          }
+          <ListItemText primary={<Typography color="primary"> Additional Text Field </Typography>}/>
+        </MenuItem>
       </Menu>
-      <ConfirmationDialog message={canSaveGame ? "Do you want to save the current game to the history?" : "Are you sure you want to clear all points?"}
-                          open={confirmationOpen}
-                          onConfirm={() => handleClearConfirmation(true)}
-                          onDecline={() => canSaveGame ? handleClearConfirmation(false) : setConfirmationOpen(false)}
-                          onCancel={() => setConfirmationOpen(false)}
+      <ConfirmationDialog
+        message={canSaveGame ? "Do you want to save the current game to the history?" : "Are you sure you want to clear all points?"}
+        open={confirmationOpen}
+        onConfirm={() => handleClearConfirmation(true)}
+        onDecline={() => canSaveGame ? handleClearConfirmation(false) : setConfirmationOpen(false)}
+        onCancel={() => setConfirmationOpen(false)}
       />
     </>
   );
