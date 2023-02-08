@@ -3,7 +3,6 @@ import {
   AppBar,
   Button,
   Dialog,
-  Fade,
   FormControl,
   IconButton,
   InputAdornment,
@@ -26,6 +25,8 @@ import {v4 as uuidv4} from "uuid";
 import {GameModel} from "../../models/game.model";
 import {PlayerModel} from "../../models/player.model";
 import {UpTransition} from "../up-transition/UpTransition";
+import {DraggableList} from "../draggable-list/DraggableList";
+import DragIndicatorIcon from "@mui/icons-material/DragIndicator";
 
 interface NewGameDialogProps {
   open: boolean;
@@ -44,7 +45,7 @@ export function NewGameDialog({open, game, onClose, onSubmit}: NewGameDialogProp
   const inputEl = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    if(open) {
+    if (open) {
       setId(uuidv4());
       setTimestamp(new Date());
       setName(game.name);
@@ -118,7 +119,7 @@ export function NewGameDialog({open, game, onClose, onSubmit}: NewGameDialogProp
             <FormGroup>
               <FormControlLabel
                 control={
-                  <Checkbox checked={commentFields} onClick={() => setCommentFields(!commentFields)} />
+                  <Checkbox checked={commentFields} onClick={() => setCommentFields(!commentFields)}/>
                 }
                 label="Show Additional Text Field"
               />
@@ -127,23 +128,26 @@ export function NewGameDialog({open, game, onClose, onSubmit}: NewGameDialogProp
           <ListItem>
             <Typography style={{fontWeight: "bold"}}> Players </Typography>
           </ListItem>
-          {players.map((player, index, players) => (
-            <Fade key={index} in>
-              <ListItem>
-                <TextField label="Name"
-                           variant="outlined"
-                           autoFocus={focus && index === players.length - 1}
-                           value={player.name}
-                           style={{flex: "1"}}
-                           onChange={(e) => handleNameChange(e.target.value, index)}
-                           error={!player.name}
-                />
-                <IconButton onClick={() => handleDelete(index)}>
-                  <DeleteIcon color="primary"/>
-                </IconButton>
-              </ListItem>
-            </Fade>
-          ))}
+          <DraggableList items={players}
+                         onSortChange={(sorted) => setPlayers(sorted)}
+                         listItemId={(player) => player.id}
+                         renderListItem={(player, index) => (
+                           <>
+                             <DragIndicatorIcon color="primary"/>
+                             <TextField label="Name"
+                                        variant="outlined"
+                                        autoFocus={focus && index === players.length - 1}
+                                        value={player.name}
+                                        style={{flex: "1"}}
+                                        onChange={(e) => handleNameChange(e.target.value, index)}
+                                        error={!player.name}
+                             />
+                             <IconButton onClick={() => handleDelete(index)}>
+                               <DeleteIcon color="primary"/>
+                             </IconButton>
+                           </>
+                         )}
+          />
           <ListItem style={{justifyContent: "center"}}>
             <IconButton onClick={addPlayer}>
               <AddIcon color="primary"/>
