@@ -9,9 +9,9 @@
 
 .player-name {
   border: 0;
-  border-right: 1px solid $primary;
-  background-color: $primary;
-  color: $primaryText;
+  border-right: 1px solid $secondary;
+  background-color: $secondary;
+  color: $secondaryText;
   flex: 1;
   height: 2.5rem;
   font-weight: bold;
@@ -53,7 +53,7 @@
 
 .player-row-placeholder-points {
   height: 2.5rem;
-  background-color: $secondary;
+  background-color: $primary;
   transition: min-width .5s;
 }
 

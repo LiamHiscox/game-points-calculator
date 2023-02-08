@@ -96,43 +96,43 @@ export function TopBar({
             onClose={handleClose}
       >
         <MenuItem onClick={handleClearPoints}>
-          <ListItemIcon> <RotateLeftIcon color="secondary"/> </ListItemIcon>
-          <ListItemText primary={<Typography color="primary"> Clear Points </Typography>}/>
+          <ListItemIcon> <RotateLeftIcon color="primary"/> </ListItemIcon>
+          <ListItemText primary={<Typography> Clear Points </Typography>}/>
         </MenuItem>
         <MenuItem onClick={onOpenDelete}>
-          <ListItemIcon> <DeleteIcon color="secondary"/> </ListItemIcon>
-          <ListItemText primary={<Typography color="primary"> Remove Players </Typography>}/>
+          <ListItemIcon> <DeleteIcon color="primary"/> </ListItemIcon>
+          <ListItemText primary={<Typography> Remove Players </Typography>}/>
         </MenuItem>
         <MenuItem onClick={onAddPlayer}>
-          <ListItemIcon> <AddIcon color="secondary"/> </ListItemIcon>
-          <ListItemText primary={<Typography color="primary"> Add Player </Typography>}/>
+          <ListItemIcon> <AddIcon color="primary"/> </ListItemIcon>
+          <ListItemText primary={<Typography> Add Player </Typography>}/>
         </MenuItem>
         <MenuItem onClick={onSortPlayers}>
-          <ListItemIcon> <SortIcon color="secondary"/> </ListItemIcon>
-          <ListItemText primary={<Typography color="primary"> Sort Players </Typography>}/>
+          <ListItemIcon> <SortIcon color="primary"/> </ListItemIcon>
+          <ListItemText primary={<Typography> Sort Players </Typography>}/>
         </MenuItem>
         <MenuItem onClick={onOpenLeaderBoard}>
-          <ListItemIcon> <GradeIcon color="secondary"/> </ListItemIcon>
-          <ListItemText primary={<Typography color="primary"> Leaderboard </Typography>}/>
+          <ListItemIcon> <GradeIcon color="primary"/> </ListItemIcon>
+          <ListItemText primary={<Typography> Leaderboard </Typography>}/>
         </MenuItem>
         <MenuItem onClick={onNewGame}>
-          <ListItemIcon> <AddCircleIcon color="secondary"/> </ListItemIcon>
-          <ListItemText primary={<Typography color="primary"> New Game </Typography>}/>
+          <ListItemIcon> <AddCircleIcon color="primary"/> </ListItemIcon>
+          <ListItemText primary={<Typography> New Game </Typography>}/>
         </MenuItem>
         <MenuItem onClick={onOpenHistory}>
-          <ListItemIcon> <HistoryIcon color="secondary"/> </ListItemIcon>
-          <ListItemText primary={<Typography color="primary"> History </Typography>}/>
+          <ListItemIcon> <HistoryIcon color="primary"/> </ListItemIcon>
+          <ListItemText primary={<Typography> History </Typography>}/>
         </MenuItem>
         <MenuItem onClick={onOpenStats}>
-          <ListItemIcon> <ShowChartIcon color="secondary"/> </ListItemIcon>
-          <ListItemText primary={<Typography color="primary"> Stats </Typography>}/>
+          <ListItemIcon> <ShowChartIcon color="primary"/> </ListItemIcon>
+          <ListItemText primary={<Typography> Stats </Typography>}/>
         </MenuItem>
         <MenuItem onClick={onToggleCommentField}>
           {commentField ?
-            (<ListItemIcon> <CheckBoxIcon color="secondary"/> </ListItemIcon>) :
-            (<ListItemIcon> <CheckBoxOutlineBlankIcon color="secondary"/> </ListItemIcon>)
+            (<ListItemIcon> <CheckBoxIcon color="primary"/> </ListItemIcon>) :
+            (<ListItemIcon> <CheckBoxOutlineBlankIcon color="primary"/> </ListItemIcon>)
           }
-          <ListItemText primary={<Typography color="primary"> Additional Text Field </Typography>}/>
+          <ListItemText primary={<Typography> Additional Text Field </Typography>}/>
         </MenuItem>
       </Menu>
       <ConfirmationDialog

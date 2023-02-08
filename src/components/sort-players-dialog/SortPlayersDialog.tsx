@@ -54,7 +54,7 @@ export function SortPlayersDialog({open, players, onClose, onSubmit}: SortPlayer
                               {...provided.draggableProps}
                     >
                       <ListItemText primary={player.name}/>
-                      <DragIndicatorIcon/>
+                      <DragIndicatorIcon color="primary"/>
                     </ListItem>
                   )}
                 </Draggable>

@@ -28,12 +28,11 @@
     }
     .points-input {
       @include player-input;
-      color: $primary;
       flex: 2;
     }
     .comment-input {
       @include player-input;
-      background-color: lightgray;
+      background-color: #ebebeb;
       flex: 1;
     }
     .empty-input {

@@ -2,7 +2,7 @@
 
 .top-bar {
   width: 100vw;
-  background-color: $secondary;
+  background-color: $primary;
   display: flex;
 
   .empty-container {
@@ -11,7 +11,7 @@
   }
   .game-name-input {
     color: white;
-    background-color: $secondary;
+    background-color: $primary;
     border: 0;
     flex: 1;
     height: 3rem;
