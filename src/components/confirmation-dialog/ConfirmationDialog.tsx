@@ -2,6 +2,7 @@ import "./ConfirmationDialog.scss";
 import React from "react";
 import Dialog from "@mui/material/Dialog";
 import {Button, DialogActions, DialogContent} from "@mui/material";
+import {UpTransition} from "../up-transition/UpTransition";
 
 interface LeaderboardDialogProps {
   message: string;
@@ -13,7 +14,7 @@ interface LeaderboardDialogProps {
 
 export function ConfirmationDialog({message, open, onConfirm, onDecline, onCancel}: LeaderboardDialogProps) {
   return (
-    <Dialog open={open} fullWidth onClose={onCancel}>
+    <Dialog open={open} fullWidth onClose={onCancel} TransitionComponent={UpTransition}>
       <DialogContent>
         {message}
       </DialogContent>

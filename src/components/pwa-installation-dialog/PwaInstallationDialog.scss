@@ -1,0 +1,31 @@
+.dialog-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  .title {
+    padding-top: 20px;
+    padding-left: 24px;
+  }
+}
+.ordered-list {
+  margin: 0;
+  padding-left: 1rem;
+
+  li + li {
+    margin-top: 1rem;
+  }
+  svg {
+    margin-bottom: -6px;
+  }
+}
+.dialog-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding-bottom: 1.5rem;
+}
+.success-header {
+  display: flex;
+  justify-content: flex-end;
+}

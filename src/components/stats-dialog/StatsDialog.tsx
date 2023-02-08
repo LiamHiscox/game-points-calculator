@@ -4,6 +4,7 @@ import { PlayerModel } from "../../models/player.model";
 import { MinMaxTable } from './min-max-table/MinMaxTable';
 import { LineGraph } from './line-graph/LineGraph';
 import { BarChart } from './bar-chart/BarChart';
+import {UpTransition} from "../up-transition/UpTransition";
 
 interface StatsDialogProps {
   open: boolean;
@@ -31,10 +32,7 @@ const colors = [
 
 export function StatsDialog({ open, players, onClose }: StatsDialogProps) {
   return (
-    <Dialog open={open}
-      onClose={onClose}
-      fullWidth
-    >
+    <Dialog open={open} onClose={onClose} fullWidth TransitionComponent={UpTransition}>
       <div style={{ padding: '1rem' }}>
       <Typography variant="h6"> Game Progress </Typography>
         <div style={{ overflow: 'hidden', overflowX: 'auto' }}>

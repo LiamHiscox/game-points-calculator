@@ -13,6 +13,7 @@ import {HistoryDialog} from "./components/history-dialog/HistoryDialog";
 import {StatsDialog} from "./components/stats-dialog/StatsDialog";
 import {useGamesState} from "./store/games.store";
 import {GameModel} from "./models/game.model";
+import {PwaInstallationDialog} from "./components/pwa-installation-dialog/PwaInstallationDialog";
 
 function App() {
   const [game, setGame] = useGameState();
@@ -22,6 +23,7 @@ function App() {
   const [newGameOpen, setNewGameOpen] = useState(false);
   const [historyOpen, setHistoryOpen] = useState(false);
   const [statsOpen, setStatsOpen] = useState(false);
+  const [installationOpen, setInstallationOpen] = useState(true);
   const [showRows, setShowRows] = useState(!!localStorage.getItem('showRows'));
   const {enqueueSnackbar} = useSnackbar();
 
@@ -151,6 +153,9 @@ function App() {
       <StatsDialog open={statsOpen}
                    onClose={() => setStatsOpen(false)}
                    players={game.players}
+      />
+      <PwaInstallationDialog open={installationOpen}
+                             onClose={() => setInstallationOpen(false)}
       />
     </div>
   );

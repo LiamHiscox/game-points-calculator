@@ -14,12 +14,10 @@ import {
   TextField,
   Toolbar,
   Typography,
-  Slide,
   Checkbox,
   FormControlLabel,
   FormGroup
 } from "@mui/material";
-import {TransitionProps} from "@mui/material/transitions";
 import DeleteIcon from "@mui/icons-material/Delete";
 import AddIcon from "@mui/icons-material/Add";
 import CloseIcon from '@mui/icons-material/Close';
@@ -27,6 +25,7 @@ import React, {useEffect, useRef, useState} from "react";
 import {v4 as uuidv4} from "uuid";
 import {GameModel} from "../../models/game.model";
 import {PlayerModel} from "../../models/player.model";
+import {UpTransition} from "../up-transition/UpTransition";
 
 interface NewGameDialogProps {
   open: boolean;
@@ -34,15 +33,6 @@ interface NewGameDialogProps {
   onClose: () => void;
   onSubmit: (game: GameModel) => void;
 }
-
-const Transition = React.forwardRef(function Transition(
-  props: TransitionProps & {
-    children: React.ReactElement;
-  },
-  ref: React.Ref<unknown>
-) {
-  return <Slide direction="up" ref={ref} {...props}/>;
-});
 
 export function NewGameDialog({open, game, onClose, onSubmit}: NewGameDialogProps) {
   const [id, setId] = useState<string>('');
@@ -94,7 +84,7 @@ export function NewGameDialog({open, game, onClose, onSubmit}: NewGameDialogProp
     <Dialog fullScreen
             open={open}
             onClose={onClose}
-            TransitionComponent={Transition}
+            TransitionComponent={UpTransition}
     >
       <AppBar position="static">
         <Toolbar className="new-game-toolbar">

@@ -4,6 +4,7 @@ import {Button, Divider, IconButton, List, ListItem, ListItemSecondaryAction, Li
 import DeleteIcon from '@mui/icons-material/Delete';
 import {useState} from "react";
 import {ConfirmationDialog} from "../confirmation-dialog/ConfirmationDialog";
+import {UpTransition} from "../up-transition/UpTransition";
 
 
 interface DeletePlayersDialogProps {
@@ -30,9 +31,7 @@ export function DeletePlayersDialog({players, open, onClose, onDelete}: DeletePl
   }
 
   return (
-    <Dialog open={open}
-            fullWidth
-            onClose={onClose}>
+    <Dialog open={open} fullWidth onClose={onClose} TransitionComponent={UpTransition}>
       <List>
         {players.map((player, i) => (
           <ListItem key={i}>

@@ -24,6 +24,7 @@ import ShowChartIcon from '@mui/icons-material/ShowChart';
 import {PointsTable} from "../../points-table/PointsTable";
 import {ConfirmationDialog} from "../confirmation-dialog/ConfirmationDialog";
 import {StatsDialog} from "../stats-dialog/StatsDialog"
+import {UpTransition} from "../up-transition/UpTransition";
 
 interface NewGameDialogProps {
   open: boolean;
@@ -83,9 +84,7 @@ export function HistoryDialog({open, onClose, onReturnPlaying, onDeleteGame, gam
   }
 
   return (
-    <Dialog fullWidth
-            open={open}
-            onClose={handleClose}>
+    <Dialog fullWidth open={open} onClose={handleClose} TransitionComponent={UpTransition}>
       {games.length <= 0 && (
         <Typography>No past games found!</Typography>
       )}
@@ -137,8 +136,7 @@ export function HistoryDialog({open, onClose, onReturnPlaying, onDeleteGame, gam
           </AccordionActions>
         </Accordion>
       ))}
-      <Dialog open={showGame}
-              onClose={() => setShowGame(false)}>
+      <Dialog open={showGame} onClose={() => setShowGame(false)} TransitionComponent={UpTransition}>
         <PointsTable players={game?.players || []}
                      readonly={true}
                      showRows={false}
