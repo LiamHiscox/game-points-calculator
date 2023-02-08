@@ -133,7 +133,6 @@ export function NewGameDialog({open, game, onClose, onSubmit}: NewGameDialogProp
                          listItemId={(player) => player.id}
                          renderListItem={(player, index) => (
                            <>
-                             <DragIndicatorIcon color="primary"/>
                              <TextField label="Name"
                                         variant="outlined"
                                         autoFocus={focus && index === players.length - 1}
@@ -145,6 +144,7 @@ export function NewGameDialog({open, game, onClose, onSubmit}: NewGameDialogProp
                              <IconButton onClick={() => handleDelete(index)}>
                                <DeleteIcon color="primary"/>
                              </IconButton>
+                             <DragIndicatorIcon color="primary"/>
                            </>
                          )}
           />
