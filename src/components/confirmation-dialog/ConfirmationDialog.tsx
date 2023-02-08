@@ -3,6 +3,7 @@ import React from "react";
 import Dialog from "@mui/material/Dialog";
 import {Button, DialogActions, DialogContent} from "@mui/material";
 import {UpTransition} from "../up-transition/UpTransition";
+import {useTranslation} from "react-i18next";
 
 interface LeaderboardDialogProps {
   message: string;
@@ -13,16 +14,18 @@ interface LeaderboardDialogProps {
 }
 
 export function ConfirmationDialog({message, open, onConfirm, onDecline, onCancel}: LeaderboardDialogProps) {
+  const {t} = useTranslation();
+
   return (
     <Dialog open={open} fullWidth onClose={onCancel} TransitionComponent={UpTransition}>
       <DialogContent>
         {message}
       </DialogContent>
       <DialogActions>
-        <Button color="primary" onClick={onCancel}> Cancel </Button>
+        <Button color="primary" onClick={onCancel}> {t("common.cancel")} </Button>
         <div>
-          <Button color="primary" onClick={onDecline}> No </Button>
-          <Button color="primary" onClick={onConfirm}> Yes </Button>
+          <Button color="primary" onClick={onDecline}> {t("common.no")} </Button>
+          <Button color="primary" onClick={onConfirm}> {t("common.yes")} </Button>
         </div>
       </DialogActions>
     </Dialog>

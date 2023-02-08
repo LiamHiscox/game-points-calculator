@@ -1,0 +1,65 @@
+{
+  "common": {
+    "cancel": "Cancel",
+    "save": "Save",
+    "close": "Close",
+    "yes": "Yes",
+    "no": "No"
+  },
+  "headers": {
+    "clearPoints": "Clear Points",
+    "removePlayers": "Remove Players",
+    "addPlayer": "Add Player",
+    "sortPlayers": "Sort Players",
+    "leaderboard": "Leaderboard",
+    "newGame": "New Game",
+    "history": "History",
+    "statistics": "Statistics",
+    "additionalTextField": "Additional Text Field"
+  },
+  "confirmationDialog": {
+    "saveCurrentGame": "Do you want to save the current game to the history?",
+    "clearAllPoints": "Are you sure you want to clear all points?",
+    "deleteGame": "Are you sure you want to delete",
+    "deletePlayer": "Are you sure you want to delete",
+    "replayGame": "Are you sure you want to replay"
+  },
+  "stats": {
+    "gameProgress": "Game Progress",
+    "pointsPerRound": "Points Per Round",
+    "minMax": "Min/Max",
+    "max": "Max",
+    "min": "Min",
+    "round": "Round"
+  },
+  "pwaInstallation": {
+    "installationGuide": "Installation Guide",
+    "addAppToHomeScreen": "Add App To Home Screen",
+    "iosStep1Left": "While viewing the website, tap the",
+    "iosStep1Right": "button in the menu bar",
+    "iosStep2": "Scroll down the list of options",
+    "iosStep3": "Tap 'Add to Home Screen",
+    "androidStep1Left": "While viewing the website, tap the",
+    "androidStep1Right": "button next to the URL bar",
+    "androidStep2": "Scroll down the list of options",
+    "androidStep3Left": "Tap",
+    "androidStep3Right": "Install app",
+    "notSupportedBrowser": "This app only has confirmed support for Safari on IOS and Chrome on Android devices!",
+    "appInstalled": "App Installed!"
+  },
+  "newGame": {
+    "startNewGame": "Start New Game",
+    "game": "Game",
+    "showAdditionalTextField": "Show Additional Text Field",
+    "players": "Players",
+    "name": "Name",
+    "start": "Start"
+  },
+  "leaderboard": {
+    "highestFirst": "Highest First",
+    "lowestFirst": "Lowest First"
+  },
+  "history": {
+    "noPastGamesFound": "No past games found!"
+  }
+}

@@ -4,6 +4,7 @@ import { PlayerModel } from "../../../models/player.model";
 import { PointsDataModel } from "../../../models/points-data.model";
 import { FilteredPlayerModel } from "../../../models/filtered-player.model";
 import { useEffect, useState } from "react";
+import {useTranslation} from "react-i18next";
 
 interface LineGraphProps {
     players: PlayerModel[];
@@ -13,6 +14,7 @@ interface LineGraphProps {
 export function BarChart({ players, colors }: LineGraphProps) {
     const [data, setData] = useState<PointsDataModel[]>([]);
     const [maxRounds, setMaxRounds] = useState<number>(0);
+    const {t} = useTranslation();
 
     useEffect(() => {
         const newPlayers = players.map<FilteredPlayerModel>(player => {
@@ -65,7 +67,7 @@ export function BarChart({ players, colors }: LineGraphProps) {
                 <YAxis />
                 <Tooltip
                     isAnimationActive={false}
-                    labelFormatter={(label) => `Round ${label}`}
+                    labelFormatter={(label) => `${t("stats.round")} ${label}`}
                     itemSorter={(item: Payload<number, string>) => -(item.value || 0)}
                 />
                 {players.map((player, i) => (

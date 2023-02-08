@@ -7,11 +7,10 @@ import AddBoxOutlinedIcon from '@mui/icons-material/AddBoxOutlined';
 import SwipeUpOutlinedIcon from '@mui/icons-material/SwipeUpOutlined';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import AddToHomeScreenIcon from '@mui/icons-material/AddToHomeScreen';
-import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
-import SwipeLeftIcon from '@mui/icons-material/SwipeLeft';
 import CloseIcon from '@mui/icons-material/Close';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import {UpTransition} from '../up-transition/UpTransition';
+import {useTranslation} from "react-i18next";
 
 interface PwaInstallationDialogProps {
   open: boolean;
@@ -22,6 +21,7 @@ export function PwaInstallationDialog({open, onClose}: PwaInstallationDialogProp
   const [prompt, setPrompt] = useState<null | BeforeInstallPromptEvent>(null);
   const [userInstalled, setUserInstalled] = useState<boolean>(false);
   const [userAgent] = useState<string>(navigator.userAgent.toLowerCase());
+  const {t} = useTranslation();
 
   const isStandalone = window.matchMedia('(display-mode: standalone)').matches;
   const showInstallButton = userInstalled && !!prompt;
@@ -31,11 +31,6 @@ export function PwaInstallationDialog({open, onClose}: PwaInstallationDialogProp
   const showIOSHelp = isSafari && isIOS && !isStandalone;
 
   const isChrome = /chrome/.test(userAgent);
-  const isFirefox = /firefox/.test(userAgent);
-
-  const showAndroidHelp = isChrome || isFirefox;
-
-  const isEdgeAndroid = /edga/.test(userAgent);
 
   useEffect(() => {
     window.addEventListener('beforeinstallprompt', (event) => {
@@ -60,40 +55,33 @@ export function PwaInstallationDialog({open, onClose}: PwaInstallationDialogProp
     return (
       <Dialog fullWidth={true} open={open} TransitionComponent={UpTransition}>
         <div className="dialog-header">
-          <Typography variant="h5" className="title"> Installation Guide </Typography>
+          <Typography variant="h5" className="title"> {t("pwaInstallation.installationGuide")} </Typography>
           <IconButton onClick={onClose}> <CloseIcon/> </IconButton>
         </div>
         <DialogContent>
           {showInstallButton && (
             <div>
               <Button onClick={addToHomeScreen} color="primary" variant="contained">
-                Add App To Home Screen
+                {t("pwaInstallation.addAppToHomeScreen")}
               </Button>
             </div>
           )}
           {showIOSHelp && (
             <ol className="ordered-list">
-              <li> While viewing the website, tap the &nbsp;<IosShareIcon/>&nbsp; button in the menu bar </li>
-              <li> Scroll down the list of options &nbsp;<SwipeUpOutlinedIcon/></li>
-              <li> Tap 'Add to Home Screen &nbsp;<AddBoxOutlinedIcon/>'</li>
+              <li> {t("pwaInstallation.iosStep1Left")} &nbsp;<IosShareIcon/>&nbsp; {t("pwaInstallation.iosStep1Right")} </li>
+              <li> {t("pwaInstallation.iosStep2")} &nbsp;<SwipeUpOutlinedIcon/></li>
+              <li> {t("pwaInstallation.iosStep3")} &nbsp;<AddBoxOutlinedIcon/>'</li>
             </ol>
           )}
-          {showAndroidHelp && (
+          {isChrome && (
             <ol className="ordered-list">
-              <li> While viewing the website, tap the <MoreVertIcon/> button next to the URL bar</li>
-              <li> Scroll down the list of options &nbsp;<SwipeUpOutlinedIcon/></li>
-              <li> Tap '<AddToHomeScreenIcon/>&nbsp; Install app' or 'Install'</li>
+              <li> {t("pwaInstallation.androidStep1Left")} <MoreVertIcon/> {t("pwaInstallation.androidStep1Right")} </li>
+              <li> {t("pwaInstallation.androidStep2")} &nbsp;<SwipeUpOutlinedIcon/></li>
+              <li> {t("pwaInstallation.androidStep3Left")} '<AddToHomeScreenIcon/>&nbsp; {t("pwaInstallation.androidStep3Right")}' </li>
             </ol>
           )}
-          {isEdgeAndroid && (
-            <ol className="ordered-list">
-              <li> While viewing the website, tap the &nbsp;<MoreHorizIcon/>&nbsp; in the menu bar</li>
-              <li> Swipe left the list of options &nbsp;<SwipeLeftIcon/></li>
-              <li> Tap 'Add to home screen'</li>
-            </ol>
-          )}
-          {!showInstallButton && !showIOSHelp && !showAndroidHelp && !isEdgeAndroid && (
-            <div> This app only supports Safari on IOS and Chrome, Firefox and Edge on Android devices! </div>
+          {!showInstallButton && !showIOSHelp && !isChrome && (
+            <div> {t("pwaInstallation.notSupportedBrowser")} </div>
           )}
         </DialogContent>
       </Dialog>
@@ -110,7 +98,7 @@ export function PwaInstallationDialog({open, onClose}: PwaInstallationDialogProp
             <CheckCircleIcon style={{color: 'green', fontSize: '150px'}}/>
           </Zoom>
           <Fade in={true} style={{transitionDelay: '300ms'}}>
-            <Typography variant="h6"> App installed </Typography>
+            <Typography variant="h6"> {t("pwaInstallation.appInstalled")} </Typography>
           </Fade>
         </div>
       </Dialog>

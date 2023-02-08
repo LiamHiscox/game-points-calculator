@@ -5,6 +5,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import {useState} from "react";
 import {ConfirmationDialog} from "../confirmation-dialog/ConfirmationDialog";
 import {UpTransition} from "../up-transition/UpTransition";
+import {useTranslation} from "react-i18next";
 
 
 interface DeletePlayersDialogProps {
@@ -18,6 +19,7 @@ export function DeletePlayersDialog({players, open, onClose, onDelete}: DeletePl
   const [confirmationOpen, setConfirmationOpen] = useState(false);
   const [deleteId, setDeleteId] = useState('');
   const [deleteName, setDeleteName] = useState('');
+  const {t} = useTranslation();
 
   const handleDelete = (id: string, name: string) => {
     setDeleteId(id);
@@ -46,7 +48,7 @@ export function DeletePlayersDialog({players, open, onClose, onDelete}: DeletePl
       </List>
       <Divider/>
       <Button color="primary" onClick={onClose}> Close </Button>
-      <ConfirmationDialog message={`Are you sure you want to delete ${deleteName}?`}
+      <ConfirmationDialog message={`${t("confirmationDialog.deletePlayer")} ${deleteName}?`}
                           open={confirmationOpen}
                           onConfirm={handleConfirm}
                           onDecline={() => setConfirmationOpen(false)}

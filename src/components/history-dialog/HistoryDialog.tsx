@@ -28,6 +28,7 @@ import {PointsTable} from "../../points-table/PointsTable";
 import {ConfirmationDialog} from "../confirmation-dialog/ConfirmationDialog";
 import {StatsDialog} from "../stats-dialog/StatsDialog"
 import {UpTransition} from "../up-transition/UpTransition";
+import {useTranslation} from "react-i18next";
 
 interface NewGameDialogProps {
   open: boolean;
@@ -44,6 +45,7 @@ export function HistoryDialog({open, onClose, onReturnPlaying, onDeleteGame, gam
   const [showConfirmReplay, setShowConfirmReplay] = useState(false);
   const [showStats, setShowStats] = useState(false);
   const [expanded, setExpanded] = useState<number | null>(null);
+  const {t} = useTranslation();
 
   const handleClose = () => {
     setExpanded(null);
@@ -91,13 +93,13 @@ export function HistoryDialog({open, onClose, onReturnPlaying, onDeleteGame, gam
       <AppBar position="static">
         <Toolbar className="tool-bar">
           <div></div>
-          <Typography variant="h6"> History </Typography>
+          <Typography variant="h6"> {t("headers.history")} </Typography>
           <IconButton onClick={handleClose} color="inherit"> <CloseIcon/> </IconButton>
         </Toolbar>
       </AppBar>
       <div className="content-container">
       {games.length <= 0 && (
-        <Typography>No past games found!</Typography>
+        <Typography>{t("history.noPastGamesFound")}</Typography>
       )}
       {games.map((game, i) => (
         <Accordion key={i} expanded={expanded === i} onChange={() => handleExpandedChange(i)}>
@@ -158,13 +160,13 @@ export function HistoryDialog({open, onClose, onReturnPlaying, onDeleteGame, gam
                    onClose={() => setShowStats(false)}
                    players={game?.players || []}
       />
-      <ConfirmationDialog message={`Are you sure you want to delete ${game?.name}?`}
+      <ConfirmationDialog message={`${t("confirmationDialog.deleteGame")} ${game?.name}?`}
                           open={showConfirm}
                           onConfirm={handleDelete}
                           onDecline={() => setShowConfirm(false)}
                           onCancel={() => setShowConfirm(false)}
       />
-      <ConfirmationDialog message={`Are you sure you want to replay ${game?.name}?`}
+      <ConfirmationDialog message={`${t("confirmationDialog.replayGame")} ${game?.name}?`}
                           open={showConfirmReplay}
                           onConfirm={handleReplay}
                           onDecline={() => setShowConfirmReplay(false)}

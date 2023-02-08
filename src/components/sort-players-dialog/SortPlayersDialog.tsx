@@ -10,6 +10,7 @@ import {UpTransition} from "../up-transition/UpTransition";
 import {useEffect, useState} from "react";
 import DragIndicatorIcon from '@mui/icons-material/DragIndicator';
 import {DraggableList} from "../draggable-list/DraggableList";
+import {useTranslation} from "react-i18next";
 
 interface SortPlayersDialogProps {
   open: boolean;
@@ -20,6 +21,7 @@ interface SortPlayersDialogProps {
 
 export function SortPlayersDialog({open, players, onClose, onSubmit}: SortPlayersDialogProps) {
   const [sortedPlayers, setSortedPlayers] = useState<PlayerModel[]>([]);
+  const {t} = useTranslation();
 
   useEffect(() => setSortedPlayers(players), [players]);
 
@@ -34,8 +36,8 @@ export function SortPlayersDialog({open, players, onClose, onSubmit}: SortPlayer
                      </>)}
       />
       <DialogActions>
-        <Button onClick={onClose} color="primary"> Cancel </Button>
-        <Button onClick={() => onSubmit(sortedPlayers)} color="primary" variant="contained"> Save </Button>
+        <Button onClick={onClose} color="primary"> {t("common.cancel")} </Button>
+        <Button onClick={() => onSubmit(sortedPlayers)} color="primary" variant="contained"> {t("common.save")} </Button>
       </DialogActions>
     </Dialog>
   );

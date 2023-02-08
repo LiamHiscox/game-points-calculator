@@ -14,6 +14,7 @@ import {
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import logo from './poop.png';
+import {useTranslation} from "react-i18next";
 
 interface LeaderboardDialogProps {
   players: PlayerModel[];
@@ -37,6 +38,7 @@ const initialOrder = (): Order => {
 
 export function LeaderboardDialog({players, open, onClose}: LeaderboardDialogProps) {
   const [sortOrder, setSortOrder] = useState<Order>(initialOrder());
+  const {t} = useTranslation();
 
   useEffect(() => localStorage.setItem('order', sortOrder), [sortOrder]);
 
@@ -75,7 +77,7 @@ export function LeaderboardDialog({players, open, onClose}: LeaderboardDialogPro
             endIcon={<ArrowUpwardIcon/>}
             onClick={() => setSortOrder('desc')}
           >
-            Highest First
+            {t("leaderboard.highestFirst")}
           </Button>
         ) : (
           <Button
@@ -83,7 +85,7 @@ export function LeaderboardDialog({players, open, onClose}: LeaderboardDialogPro
             endIcon={<ArrowDownwardIcon/>}
             onClick={() => setSortOrder('asc')}
           >
-            Lowest First
+            {t("leaderboard.lowestFirst")}
           </Button>
         )
       }
@@ -100,7 +102,7 @@ export function LeaderboardDialog({players, open, onClose}: LeaderboardDialogPro
         ))}
       </List>
       <Divider/>
-      <Button color="primary" onClick={onClose}> Close </Button>
+      <Button color="primary" onClick={onClose}> {t("common.close")} </Button>
     </Dialog>
   );
 }

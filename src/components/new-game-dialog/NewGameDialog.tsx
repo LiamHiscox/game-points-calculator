@@ -27,6 +27,7 @@ import {PlayerModel} from "../../models/player.model";
 import {UpTransition} from "../up-transition/UpTransition";
 import {DraggableList} from "../draggable-list/DraggableList";
 import DragIndicatorIcon from "@mui/icons-material/DragIndicator";
+import {useTranslation} from "react-i18next";
 
 interface NewGameDialogProps {
   open: boolean;
@@ -43,6 +44,7 @@ export function NewGameDialog({open, game, onClose, onSubmit}: NewGameDialogProp
   const [players, setPlayers] = useState<PlayerModel[]>([]);
   const [focus, setFocus] = useState<boolean>(false);
   const inputEl = useRef<HTMLInputElement>(null);
+  const {t} = useTranslation();
 
   useEffect(() => {
     if (open) {
@@ -90,7 +92,7 @@ export function NewGameDialog({open, game, onClose, onSubmit}: NewGameDialogProp
       <AppBar position="static">
         <Toolbar className="new-game-toolbar">
           <div/>
-          <Typography variant="h6"> Start New Game </Typography>
+          <Typography variant="h6"> {t("newGame.startNewGame")} </Typography>
           <IconButton onClick={onClose} color="inherit">
             <CloseIcon/>
           </IconButton>
@@ -100,7 +102,7 @@ export function NewGameDialog({open, game, onClose, onSubmit}: NewGameDialogProp
         <List>
           <ListItem>
             <FormControl variant="outlined" className="player-name-form-control">
-              <InputLabel> Game </InputLabel>
+              <InputLabel> {t("newGame.game")} </InputLabel>
               <OutlinedInput type="text"
                              inputRef={inputEl}
                              value={name}
@@ -113,7 +115,7 @@ export function NewGameDialog({open, game, onClose, onSubmit}: NewGameDialogProp
                                  </IconButton>
                                </InputAdornment>
                              }
-                             label="Game"
+                             label={t("newGame.game")}
               />
             </FormControl>
           </ListItem>
@@ -123,19 +125,19 @@ export function NewGameDialog({open, game, onClose, onSubmit}: NewGameDialogProp
                 control={
                   <Checkbox checked={commentFields} onClick={() => setCommentFields(!commentFields)}/>
                 }
-                label="Show Additional Text Field"
+                label={t("newGame.showAdditionalTextField")}
               />
             </FormGroup>
           </ListItem>
           <ListItem>
-            <Typography style={{fontWeight: "bold"}}> Players </Typography>
+            <Typography style={{fontWeight: "bold"}}> {t("newGame.players")} </Typography>
           </ListItem>
           <DraggableList items={players}
                          onSortChange={(sorted) => setPlayers(sorted)}
                          listItemId={(player) => player.id}
                          renderListItem={(player, index) => (
                            <>
-                             <TextField label="Name"
+                             <TextField label={t("newGame.name")}
                                         variant="outlined"
                                         autoFocus={focus && index === players.length - 1}
                                         value={player.name}
@@ -162,7 +164,7 @@ export function NewGameDialog({open, game, onClose, onSubmit}: NewGameDialogProp
               onClick={() => onSubmit({id, timestamp, commentFields, name, players})}
               disabled={canSubmit()}
       >
-        New Game
+        {t("newGame.start")}
       </Button>
     </Dialog>
   );

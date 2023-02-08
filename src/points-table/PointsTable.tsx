@@ -21,6 +21,7 @@ export function PointsTable({
                               commentFields
                             }: PointsTableProps) {
   const [rounds, setRounds] = useState<null[]>([]);
+
   useEffect(() => {
     const max = players.reduce((m, {points}) => points.length > m ? points.length : m, 0);
     setRounds(new Array(max).fill(null));
@@ -31,7 +32,8 @@ export function PointsTable({
       <div className="player-names">
         <div className={showRows ? "player-row-placeholder-names placeholder-open" : "player-row-placeholder-names placeholder-closed"}/>
         {players.map((player, index) => (
-          <input className="player-name" type="text"
+          <input className="player-name"
+                 type="text"
                  disabled={readonly}
                  key={index}
                  value={player.name}
