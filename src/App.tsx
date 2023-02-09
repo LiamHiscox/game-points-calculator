@@ -32,7 +32,7 @@ function App() {
   if (game.players.length === 0) {
     setGame({
       ...game,
-      players: [{id: uuidv4(), name: "Liam", points: [null]}]
+      players: [{id: uuidv4(), name: "Player 1", points: [null]}]
     });
   }
 
