@@ -5,23 +5,16 @@ interface PackageJson {
   version: string;
 }
 
-caches.keys().then((names) => {
-  console.log(names);
-  // for (let name of names) {
-  //   caches.delete(name);
-  // }
-});
-
-const checkVersion = async () => {
+export const checkVersion = async () => {
   const localVersion = packageJson.version;
   try {
     const remotePackageJson = await axios.get<PackageJson>(packageJson.homepage.replace("/build/", "") + "/package.json");
     const remoteVersion = remotePackageJson.data.version;
     console.log({localVersion, remoteVersion});
     if (remoteVersion && localVersion !== remoteVersion) {
-
+      const keys = await caches.keys();
+      keys.forEach((key) => caches.delete(key));
+      console.log(`clearing cache to update game from ${localVersion} to ${remoteVersion}`)
     }
   } catch (e) {}
 }
-
-checkVersion();

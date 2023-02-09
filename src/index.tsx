@@ -12,11 +12,12 @@ import {initReactI18next} from "react-i18next";
 import LanguageDetector from 'i18next-browser-languagedetector';
 import en from "./lang/en.json";
 import de from "./lang/de.json";
-import './store/version-checker';
+import {checkVersion} from './store/version-checker';
 
 const container = document.getElementById('root');
 const root = createRoot(container!);
 migrate();
+checkVersion();
 
 i18n
   .use(LanguageDetector)
