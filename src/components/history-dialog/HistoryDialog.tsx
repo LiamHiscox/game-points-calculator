@@ -15,7 +15,7 @@ import {
   IconButton,
   Toolbar
 } from "@mui/material";
-import {useState} from "react";
+import React, {useState} from "react";
 import {GameModel} from "../../models/game.model";
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import {Points} from "../../models/player.model";
@@ -149,7 +149,16 @@ export function HistoryDialog({open, onClose, onReturnPlaying, onDeleteGame, gam
           </AccordionActions>
         </Accordion>
       ))}
-      <Dialog open={showGame} onClose={() => setShowGame(false)} TransitionComponent={UpTransition}>
+      <Dialog open={showGame} onClose={() => setShowGame(false)} fullScreen TransitionComponent={UpTransition}>
+        <AppBar position="static">
+          <Toolbar className="history-points-bar">
+            <div/>
+            <Typography variant="h6"> {game?.name} </Typography>
+            <IconButton onClick={() => setShowGame(false)} color="inherit">
+              <CloseIcon/>
+            </IconButton>
+          </Toolbar>
+        </AppBar>
         <PointsTable players={game?.players || []}
                      readonly={true}
                      showRows={false}

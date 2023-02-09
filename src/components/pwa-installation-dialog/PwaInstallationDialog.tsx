@@ -9,8 +9,7 @@ import MoreVertIcon from '@mui/icons-material/MoreVert';
 import AddToHomeScreenIcon from '@mui/icons-material/AddToHomeScreen';
 import CloseIcon from '@mui/icons-material/Close';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
-import {UpTransition} from '../up-transition/UpTransition';
-import {useTranslation} from "react-i18next";
+import {useTranslation} from 'react-i18next';
 
 interface PwaInstallationDialogProps {
   open: boolean;
@@ -53,7 +52,7 @@ export function PwaInstallationDialog({open, onClose}: PwaInstallationDialogProp
 
   if (!isStandalone && !userInstalled) {
     return (
-      <Dialog fullWidth={true} open={open} TransitionComponent={UpTransition}>
+      <Dialog fullWidth={true} open={open}>
         <div className="dialog-header">
           <Typography variant="h5" className="title"> {t("pwaInstallation.installationGuide")} </Typography>
           <IconButton onClick={onClose}> <CloseIcon/> </IconButton>
@@ -89,7 +88,7 @@ export function PwaInstallationDialog({open, onClose}: PwaInstallationDialogProp
   }
   if (!isStandalone && userInstalled) {
     return (
-      <Dialog fullWidth={true} open={open} TransitionComponent={UpTransition}>
+      <Dialog fullWidth={true} open={open}>
         <div className="success-header">
           <IconButton onClick={onClose}> <CloseIcon/> </IconButton>
         </div>
