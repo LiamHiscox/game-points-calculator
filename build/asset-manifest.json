@@ -1,14 +1,14 @@
 {
   "files": {
-    "main.css": "/game-points-calculator/build/static/css/main.ad8b7fe6.css",
-    "main.js": "/game-points-calculator/build/static/js/main.4cba64a1.js",
+    "main.css": "/game-points-calculator/build/static/css/main.b683688c.css",
+    "main.js": "/game-points-calculator/build/static/js/main.edaf9e7a.js",
     "service-worker.js": "/game-points-calculator/build/service-worker.js",
     "index.html": "/game-points-calculator/build/index.html",
-    "main.ad8b7fe6.css.map": "/game-points-calculator/build/static/css/main.ad8b7fe6.css.map",
-    "main.4cba64a1.js.map": "/game-points-calculator/build/static/js/main.4cba64a1.js.map"
+    "main.b683688c.css.map": "/game-points-calculator/build/static/css/main.b683688c.css.map",
+    "main.edaf9e7a.js.map": "/game-points-calculator/build/static/js/main.edaf9e7a.js.map"
   },
   "entrypoints": [
-    "static/css/main.ad8b7fe6.css",
-    "static/js/main.4cba64a1.js"
+    "static/css/main.b683688c.css",
+    "static/js/main.edaf9e7a.js"
   ]
 }
