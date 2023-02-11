@@ -15,6 +15,10 @@ input {
   outline: none;
   font-size: 1rem;
 }
-* {
+*:not(input) {
   user-select: none;
+}
+
+input {
+  user-select: text;
 }
