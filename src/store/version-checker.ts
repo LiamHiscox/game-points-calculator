@@ -5,17 +5,18 @@ interface PackageJson {
   version: string;
 }
 
-const versionKey = "package-version";
+const versionKey = 'package-version';
 
 export const checkVersion = async () => {
   const localVersion = localStorage.getItem(versionKey);
   try {
-    const remotePackageJson = await axios.get<PackageJson>(packageJson.homepage.replace("/build/", "") + "/package.json");
+    const remotePackageJson = await axios.get<PackageJson>(packageJson.homepage.replace('/build/', '') + '/package.json');
     const remoteVersion = remotePackageJson.data.version;
     if (remoteVersion && localVersion !== remoteVersion) {
       const keys = await caches.keys();
-      keys.forEach((key) => caches.delete(key));
+      await Promise.all(keys.map((key) => caches.delete(key)));
       localStorage.setItem(versionKey, remoteVersion);
+      window.location.reload();
     }
   } catch (e) {}
 }
