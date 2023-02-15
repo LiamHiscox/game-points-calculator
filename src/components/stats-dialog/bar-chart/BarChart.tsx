@@ -60,7 +60,7 @@ export function BarChart({ players, colors }: LineGraphProps) {
     const width = maxRounds * widthPerPlayer > window.innerWidth * 0.75 ? maxRounds * widthPerPlayer : "100%";
 
     return (
-        <ResponsiveContainer width={width} height={height > 300 ? 300 : height}>
+        <ResponsiveContainer width={width} height={height > 300 ? 300 : height} className="select-none">
             <ReBarChart margin={{left: -30}} data={data}>
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis dataKey="round" label="Round" />

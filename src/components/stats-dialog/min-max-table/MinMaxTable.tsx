@@ -35,7 +35,7 @@ export function MinMaxTable({ players }: MinMaxTableProps) {
     }, [players]);
 
     return (
-        <Table size="small">
+        <Table size="small" className="select-none">
             <TableHead>
                 <TableRow>
                     <TableCell />

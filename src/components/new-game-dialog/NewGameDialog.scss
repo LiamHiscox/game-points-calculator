@@ -12,3 +12,8 @@
   display: flex;
   padding-right: 16px;
 }
+.checkbox-form {
+  span {
+    user-select: none;
+  }
+}

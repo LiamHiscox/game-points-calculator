@@ -37,7 +37,7 @@ export function DeletePlayersDialog({players, open, onClose, onDelete}: DeletePl
       <List>
         {players.map((player, i) => (
           <ListItem key={i}>
-            <ListItemText primary={player.name}/>
+            <ListItemText primary={player.name} className="select-none"/>
             <ListItemSecondaryAction>
               <IconButton onClick={() => handleDelete(player.id, player.name)}>
                 <DeleteIcon color="primary"/>

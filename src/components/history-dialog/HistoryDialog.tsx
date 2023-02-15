@@ -99,7 +99,7 @@ export function HistoryDialog({open, onClose, onReturnPlaying, onDeleteGame, gam
       </AppBar>
       <div className="content-container">
       {games.length <= 0 && (
-        <Typography>{t("history.noPastGamesFound")}</Typography>
+        <Typography className="select-none">{t("history.noPastGamesFound")}</Typography>
       )}
       {games.map((game, i) => (
         <Accordion key={i} expanded={expanded === i} onChange={() => handleExpandedChange(i)}>
@@ -112,7 +112,7 @@ export function HistoryDialog({open, onClose, onReturnPlaying, onDeleteGame, gam
             </div>
           </AccordionSummary>
           <AccordionDetails style={{overflow: "auto"}}>
-            <Table size="small">
+            <Table size="small" className="select-none">
               <TableHead>
                 <TableRow>
                   {game.players.map((player, pi) => (
@@ -149,7 +149,10 @@ export function HistoryDialog({open, onClose, onReturnPlaying, onDeleteGame, gam
           </AccordionActions>
         </Accordion>
       ))}
-      <Dialog open={showGame} onClose={() => setShowGame(false)} fullScreen TransitionComponent={UpTransition}>
+      <Dialog open={showGame}
+              onClose={() => setShowGame(false)}
+              fullScreen
+              TransitionComponent={UpTransition}>
         <AppBar position="static">
           <Toolbar className="history-points-bar">
             <div/>

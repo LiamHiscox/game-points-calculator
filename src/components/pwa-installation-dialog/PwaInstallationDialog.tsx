@@ -52,7 +52,7 @@ export function PwaInstallationDialog({open, onClose}: PwaInstallationDialogProp
 
   if (!isStandalone && !userInstalled) {
     return (
-      <Dialog fullWidth={true} open={open}>
+      <Dialog fullWidth={true} open={open} className="select-none">
         <div className="dialog-header">
           <Typography variant="h5" className="title"> {t("pwaInstallation.installationGuide")} </Typography>
           <IconButton onClick={onClose}> <CloseIcon/> </IconButton>

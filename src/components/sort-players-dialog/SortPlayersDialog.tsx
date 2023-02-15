@@ -1,4 +1,3 @@
-import './SortPlayersDialog.scss';
 import {
   Button,
   Dialog,

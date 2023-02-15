@@ -1,4 +1,3 @@
-import "./ConfirmationDialog.scss";
 import React from "react";
 import Dialog from "@mui/material/Dialog";
 import {Button, DialogActions, DialogContent} from "@mui/material";
@@ -18,7 +17,7 @@ export function ConfirmationDialog({message, open, onConfirm, onDecline, onCance
 
   return (
     <Dialog open={open} fullWidth onClose={onCancel} TransitionComponent={UpTransition}>
-      <DialogContent>
+      <DialogContent className="select-none">
         {message}
       </DialogContent>
       <DialogActions>

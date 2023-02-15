@@ -51,7 +51,7 @@ export function StatsDialog({ open, players, onClose }: StatsDialogProps) {
         </div>
         <div style={{ margin: '1rem 0' }}>
           {players.map((player, i) => (
-            <Chip label={player.name} key={i} style={{backgroundColor: colors[i%colors.length], color: 'white'}} />
+            <Chip label={player.name} key={i} style={{backgroundColor: colors[i%colors.length], color: 'white'}} className="select-none" />
           ))}
         </div>
         <Typography variant="h6"> {t("stats.pointsPerRound")} </Typography>

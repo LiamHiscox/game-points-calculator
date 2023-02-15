@@ -98,7 +98,7 @@ export function LeaderboardDialog({players, open, onClose}: LeaderboardDialogPro
               <ListItemAvatar className={player.position <= 3 ? ('place-' + player.position) : 'default-place'}>
                 <Avatar> {player.score} </Avatar>
               </ListItemAvatar>
-              <ListItemText primary={player.name}/>
+              <ListItemText primary={player.name} className="select-none"/>
               {player.last && <img src={logo} alt="poop emoji"/>}
             </ListItem>
           ))}

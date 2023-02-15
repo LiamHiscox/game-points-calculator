@@ -122,6 +122,7 @@ export function NewGameDialog({open, game, onClose, onSubmit}: NewGameDialogProp
           <ListItem>
             <FormGroup>
               <FormControlLabel
+                className="checkbox-form"
                 control={
                   <Checkbox checked={commentFields} onClick={() => setCommentFields(!commentFields)}/>
                 }

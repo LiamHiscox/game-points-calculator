@@ -64,7 +64,7 @@ export function LineGraph({ players, colors }: LineGraphProps) {
     const width = maxRounds * stepSize > window.innerWidth * 0.75 ? maxRounds * stepSize : "100%";
 
     return (
-        <ResponsiveContainer width={width} height={height > 300 ? 300 : height}>
+        <ResponsiveContainer width={width} height={height > 300 ? 300 : height} className="select-none">
             <LineChart margin={{left: -30}} data={data}>
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis dataKey="round" label="Round" />

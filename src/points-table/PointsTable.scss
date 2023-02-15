@@ -61,6 +61,7 @@
   display: flex;
   flex: 1;
   flex-direction: row;
+  user-select: none;
 
   .points-row-index {
     height: 2.5rem;
@@ -111,4 +112,5 @@
   background-color: $secondary;
   color: $secondaryText;
   flex: 1;
+  user-select: none;
 }
