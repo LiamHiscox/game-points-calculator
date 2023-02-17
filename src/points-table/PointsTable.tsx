@@ -30,7 +30,7 @@ export function PointsTable({
   return (
     <div className="player-table-container">
       <div className="player-names">
-        <div className={showRows ? "player-row-placeholder-names placeholder-open" : "player-row-placeholder-names placeholder-closed"}/>
+        <div className={`player-row-placeholder-names ${showRows ? "placeholder-open" : "placeholder-closed"}`}/>
         {players.map((player, index) => (
           <input className="player-name"
                  type="text"
@@ -38,14 +38,12 @@ export function PointsTable({
                  key={index}
                  value={player.name}
                  onChange={(e) => onPlayerNameChange && onPlayerNameChange(e.target.value, player.id)}
-                 onClick={(e) => {
-                   e.currentTarget.select()
-                 }}
+                 onClick={(e) => {e.currentTarget.select()}}
           />
         ))}
       </div>
       <div className="row-players-container">
-        <div className={showRows ? "points-rows-container rows-open" : "points-rows-container rows-closed"}>
+        <div className={`points-rows-container ${showRows ? "rows-open" : "rows-closed"}`}>
           {rounds.map((_, index) => (
             <div className="points-row-index" key={index}>
               {index + 1}
@@ -64,7 +62,7 @@ export function PointsTable({
         </div>
       </div>
       <div className="player-scores">
-        <div className={showRows ? "player-row-placeholder-points placeholder-open" : "player-row-placeholder-points placeholder-closed"}/>
+        <div className={`player-row-placeholder-points ${showRows ? "placeholder-open" : " placeholder-closed"}`}/>
         {players.map((player, i) =>
           <div className="player-score player-header-cell" key={i}>
             {player.points.reduce((sum: number, model: Points) => sum + (model?.points || 0), 0)}

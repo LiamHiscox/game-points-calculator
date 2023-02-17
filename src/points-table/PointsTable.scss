@@ -39,22 +39,24 @@
 
 .player-row-placeholder-names {
   height: 2.5rem;
-  background-color: $primary;
-  transition: min-width .5s;
+  background-color: $secondary;
+  transition: min-width .5s, width .5s, color .5s;
 }
 
 .placeholder-open {
   min-width: 40px;
+  width: 40px;
 }
 
 .placeholder-closed {
   min-width: 0;
+  width: 0;
 }
 
 .player-row-placeholder-points {
   height: 2.5rem;
-  background-color: $primary;
-  transition: min-width .5s;
+  background-color: $secondary;
+  transition: min-width .5s, width .5s, color .5s;
 }
 
 .row-players-container {
@@ -77,7 +79,7 @@
 
   .points-rows-container {
     background-color: $primary;
-    transition: min-width .5s, width .5s, color .5s, opacity .5s;
+    transition: min-width .5s, width .5s, color .5s;
   }
 
   .rows-open {
@@ -89,7 +91,6 @@
   .rows-closed {
     min-width: 0;
     width: 0;
-    opacity: 0;
     color: $primary;
   }
 }

@@ -23,21 +23,22 @@ function Player({
   const handlePointsChange = (e: React.ChangeEvent<HTMLInputElement>, index: number) => {
     const points = e.target.value ? +e.target.value : undefined;
     const newPoints = player.points.map((p, i) => i === index ? {comment: p?.comment, points} : p);
-    if (index === player.points.length - 1) {
-      onPointsChange(newPoints.concat(null));
-    } else {
-      onPointsChange(newPoints);
-    }
+    onPointsChange(trimPoints(newPoints));
   }
 
   const handleCommentChange = (e: React.ChangeEvent<HTMLInputElement>, index: number) => {
     const comment = e.target.value;
     const newPoints = player.points.map((p, i) => i === index ? {points: p?.points, comment} : p);
-    if (index === player.points.length - 1) {
-      onPointsChange(newPoints.concat(null));
-    } else {
-      onPointsChange(newPoints);
+    onPointsChange(trimPoints(newPoints));
+  }
+
+  const trimPoints = (points: Points[]): Points[] => {
+    const reverseIndex = points.concat().reverse().findIndex(p =>
+      !!p?.points?.toString() || (commentFields && !!p?.comment?.trim()));
+    if (reverseIndex < 0) {
+      return [null];
     }
+    return points.slice(0, points.length - reverseIndex).concat(null);
   }
 
   return (
