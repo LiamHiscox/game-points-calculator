@@ -37,9 +37,10 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "npx eslint . && react-scripts build",
+    "build": "npx eslint . --fix && react-scripts build",
     "eject": "react-scripts eject",
-    "lint": "npx eslint ."
+    "lint": "npx eslint .",
+    "fix": "npx eslint . --fix"
   },
   "eslintConfig": {
     "extends": [

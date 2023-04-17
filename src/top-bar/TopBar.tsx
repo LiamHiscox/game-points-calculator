@@ -1,23 +1,23 @@
 import './TopBar.scss';
-import {IconButton, ListItemIcon, ListItemText, Menu, MenuItem, Typography} from "@mui/material";
-import MoreVertIcon from "@mui/icons-material/MoreVert";
-import RotateLeftIcon from "@mui/icons-material/RotateLeft";
-import DeleteIcon from "@mui/icons-material/Delete";
-import AddIcon from "@mui/icons-material/Add";
-import GradeIcon from "@mui/icons-material/Grade";
-import AddCircleIcon from "@mui/icons-material/AddCircle";
+import {IconButton, ListItemIcon, ListItemText, Menu, MenuItem, Typography} from '@mui/material';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
+import RotateLeftIcon from '@mui/icons-material/RotateLeft';
+import DeleteIcon from '@mui/icons-material/Delete';
+import AddIcon from '@mui/icons-material/Add';
+import GradeIcon from '@mui/icons-material/Grade';
+import AddCircleIcon from '@mui/icons-material/AddCircle';
 import HistoryIcon from '@mui/icons-material/History';
 import ShowChartIcon from '@mui/icons-material/ShowChart';
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
 import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
-import {ConfirmationDialog} from "../components/confirmation-dialog/ConfirmationDialog";
+import {ConfirmationDialog} from '../components/confirmation-dialog/ConfirmationDialog';
 import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 import LanguageIcon from '@mui/icons-material/Language';
 import SortIcon from '@mui/icons-material/Sort';
-import React from "react";
-import {useTranslation} from "react-i18next";
-import i18n from "i18next";
+import React from 'react';
+import {useTranslation} from 'react-i18next';
+import i18n from 'i18next';
 
 interface TopBarProps {
   gameName: string;
@@ -109,42 +109,42 @@ export function TopBar({
       >
         <MenuItem onClick={handleClearPoints}>
           <ListItemIcon> <RotateLeftIcon color="primary"/> </ListItemIcon>
-          <ListItemText primary={<Typography> {t("headers.clearPoints")} </Typography>}/>
+          <ListItemText primary={<Typography> {t('headers.clearPoints')} </Typography>}/>
         </MenuItem>
         <MenuItem onClick={onOpenDelete}>
           <ListItemIcon> <DeleteIcon color="primary"/> </ListItemIcon>
-          <ListItemText primary={<Typography> {t("headers.removePlayers")} </Typography>}/>
+          <ListItemText primary={<Typography> {t('headers.removePlayers')} </Typography>}/>
         </MenuItem>
         <MenuItem onClick={onAddPlayer}>
           <ListItemIcon> <AddIcon color="primary"/> </ListItemIcon>
-          <ListItemText primary={<Typography> {t("headers.addPlayer")} </Typography>}/>
+          <ListItemText primary={<Typography> {t('headers.addPlayer')} </Typography>}/>
         </MenuItem>
         <MenuItem onClick={onSortPlayers}>
           <ListItemIcon> <SortIcon color="primary"/> </ListItemIcon>
-          <ListItemText primary={<Typography> {t("headers.sortPlayers")} </Typography>}/>
+          <ListItemText primary={<Typography> {t('headers.sortPlayers')} </Typography>}/>
         </MenuItem>
         <MenuItem onClick={onOpenLeaderBoard}>
           <ListItemIcon> <GradeIcon color="primary"/> </ListItemIcon>
-          <ListItemText primary={<Typography> {t("headers.leaderboard")} </Typography>}/>
+          <ListItemText primary={<Typography> {t('headers.leaderboard')} </Typography>}/>
         </MenuItem>
         <MenuItem onClick={onNewGame}>
           <ListItemIcon> <AddCircleIcon color="primary"/> </ListItemIcon>
-          <ListItemText primary={<Typography> {t("headers.newGame")} </Typography>}/>
+          <ListItemText primary={<Typography> {t('headers.newGame')} </Typography>}/>
         </MenuItem>
         <MenuItem onClick={onOpenHistory}>
           <ListItemIcon> <HistoryIcon color="primary"/> </ListItemIcon>
-          <ListItemText primary={<Typography> {t("headers.history")} </Typography>}/>
+          <ListItemText primary={<Typography> {t('headers.history')} </Typography>}/>
         </MenuItem>
         <MenuItem onClick={onOpenStats}>
           <ListItemIcon> <ShowChartIcon color="primary"/> </ListItemIcon>
-          <ListItemText primary={<Typography> {t("headers.statistics")} </Typography>}/>
+          <ListItemText primary={<Typography> {t('headers.statistics')} </Typography>}/>
         </MenuItem>
         <MenuItem onClick={onToggleCommentField}>
           {commentField ?
             (<ListItemIcon> <CheckBoxIcon color="primary"/> </ListItemIcon>) :
             (<ListItemIcon> <CheckBoxOutlineBlankIcon color="primary"/> </ListItemIcon>)
           }
-          <ListItemText primary={<Typography> {t("headers.additionalTextField")} </Typography>}/>
+          <ListItemText primary={<Typography> {t('headers.additionalTextField')} </Typography>}/>
         </MenuItem>
         <MenuItem onClick={nextLanguage}>
           <ListItemIcon> <LanguageIcon color="primary"/> </ListItemIcon>
@@ -155,7 +155,7 @@ export function TopBar({
         </MenuItem>
       </Menu>
       <ConfirmationDialog
-        message={canSaveGame ? t("confirmationDialog.saveCurrentGame") : t("confirmationDialog.clearAllPoints")}
+        message={canSaveGame ? t('confirmationDialog.saveCurrentGame') : t('confirmationDialog.clearAllPoints')}
         open={confirmationOpen}
         onConfirm={(): void => handleClearConfirmation(true)}
         onDecline={(): void => canSaveGame ? handleClearConfirmation(false) : setConfirmationOpen(false)}

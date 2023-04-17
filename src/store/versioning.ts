@@ -1,7 +1,7 @@
-import {gameKey} from "./game.store";
-import {GameModel} from "../models/game.model";
-import {PlayerModel, Points} from "../models/player.model";
-import {GamesDatabase} from "./games.store";
+import {gameKey} from './game.store';
+import {GameModel} from '../models/game.model';
+import {PlayerModel, Points} from '../models/player.model';
+import {GamesDatabase} from './games.store';
 
 const currentVersion = 1;
 
@@ -14,10 +14,10 @@ export async function migrate(): Promise<void> {
       const updated = updateGame(parsed);
       localStorage.setItem(gameKey, JSON.stringify(updated));
       const db = new GamesDatabase();
-      const storedGames = await db.games.orderBy("timestamp").reverse().toArray();
+      const storedGames = await db.games.orderBy('timestamp').reverse().toArray();
       storedGames.forEach(game => {
         const updatedGame = updateGame(game);
-        db.games.where("id").equals(game.id).modify(updatedGame);
+        db.games.where('id').equals(game.id).modify(updatedGame);
       });
     }
   }
@@ -29,7 +29,7 @@ const updateGame = (game: GameModel): GameModel => {
   const players = game.players.map<PlayerModel>(player => {
     const newPoints = player.points.map(_p => {
       const points = _p as Points | number;
-      if (typeof points === "number") {
+      if (typeof points === 'number') {
         return {points};
       }
       return _p;

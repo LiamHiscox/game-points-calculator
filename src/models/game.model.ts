@@ -1,4 +1,4 @@
-import {PlayerModel} from "./player.model";
+import {PlayerModel} from './player.model';
 
 export interface GameModel {
   id: string;

@@ -1,7 +1,7 @@
-import "./LeaderboardDialog.scss";
-import {PlayerModel, Points} from "../../models/player.model";
-import React, {useEffect, useState} from "react";
-import Dialog from "@mui/material/Dialog";
+import './LeaderboardDialog.scss';
+import {PlayerModel, Points} from '../../models/player.model';
+import React, {useEffect, useState} from 'react';
+import Dialog from '@mui/material/Dialog';
 import {
   Avatar,
   Button,
@@ -10,12 +10,12 @@ import {
   ListItem,
   ListItemAvatar,
   ListItemText
-} from "@mui/material";
+} from '@mui/material';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import logo from './poop.png';
-import {useTranslation} from "react-i18next";
-import {UpTransition} from "../up-transition/UpTransition";
+import {useTranslation} from 'react-i18next';
+import {UpTransition} from '../up-transition/UpTransition';
 
 interface LeaderboardDialogProps {
   players: PlayerModel[];
@@ -79,7 +79,7 @@ export function LeaderboardDialog({players, open, onClose}: LeaderboardDialogPro
               endIcon={<ArrowUpwardIcon/>}
               onClick={(): void => setSortOrder('desc')}
             >
-              {t("leaderboard.highestFirst")}
+              {t('leaderboard.highestFirst')}
             </Button>
           ) : (
             <Button
@@ -87,7 +87,7 @@ export function LeaderboardDialog({players, open, onClose}: LeaderboardDialogPro
               endIcon={<ArrowDownwardIcon/>}
               onClick={(): void => setSortOrder('asc')}
             >
-              {t("leaderboard.lowestFirst")}
+              {t('leaderboard.lowestFirst')}
             </Button>
           )
         }
@@ -104,7 +104,7 @@ export function LeaderboardDialog({players, open, onClose}: LeaderboardDialogPro
           ))}
         </List>
         <Divider/>
-        <Button color="primary" onClick={onClose}> {t("common.close")} </Button>
+        <Button color="primary" onClick={onClose}> {t('common.close')} </Button>
       </div>
     </Dialog>
   );

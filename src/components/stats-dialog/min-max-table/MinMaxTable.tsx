@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { Table, TableBody, TableCell, TableHead, TableRow } from "@mui/material";
+import { Table, TableBody, TableCell, TableHead, TableRow } from '@mui/material';
 import { PlayerModel } from '../../../models/player.model';
-import {useTranslation} from "react-i18next";
+import {useTranslation} from 'react-i18next';
 
 interface MinMaxPointsModel {
     name: string;
@@ -46,7 +46,7 @@ export function MinMaxTable({ players }: MinMaxTableProps): JSX.Element {
             </TableHead>
             <TableBody>
                 <TableRow>
-                    <TableCell>{t("stats.max")}</TableCell>
+                    <TableCell>{t('stats.max')}</TableCell>
                     {minMaxData.map((minMax, pi) => (
                         <TableCell key={pi} component="th" scope="row">
                             {minMax.max === max ? <strong>{minMax.max}</strong> : minMax.max}
@@ -54,7 +54,7 @@ export function MinMaxTable({ players }: MinMaxTableProps): JSX.Element {
                     ))}
                 </TableRow>
                 <TableRow>
-                    <TableCell>{t("stats.min")}</TableCell>
+                    <TableCell>{t('stats.min')}</TableCell>
                     {minMaxData.map((minMax, pi) => (
                         <TableCell key={pi} component="th" scope="row">
                             {minMax.min === min ? <strong>{minMax.min}</strong> : minMax.min}

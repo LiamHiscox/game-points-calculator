@@ -1,11 +1,11 @@
-import Dialog from "@mui/material/Dialog";
-import {PlayerModel} from "../../models/player.model";
-import {Button, Divider, IconButton, List, ListItem, ListItemSecondaryAction, ListItemText} from "@mui/material";
+import Dialog from '@mui/material/Dialog';
+import {PlayerModel} from '../../models/player.model';
+import {Button, Divider, IconButton, List, ListItem, ListItemSecondaryAction, ListItemText} from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
-import {useState} from "react";
-import {ConfirmationDialog} from "../confirmation-dialog/ConfirmationDialog";
-import {UpTransition} from "../up-transition/UpTransition";
-import {useTranslation} from "react-i18next";
+import {useState} from 'react';
+import {ConfirmationDialog} from '../confirmation-dialog/ConfirmationDialog';
+import {UpTransition} from '../up-transition/UpTransition';
+import {useTranslation} from 'react-i18next';
 
 
 interface DeletePlayersDialogProps {
@@ -48,7 +48,7 @@ export function DeletePlayersDialog({players, open, onClose, onDelete}: DeletePl
       </List>
       <Divider/>
       <Button color="primary" onClick={onClose}> Close </Button>
-      <ConfirmationDialog message={`${t("confirmationDialog.deletePlayer")} ${deleteName}?`}
+      <ConfirmationDialog message={`${t('confirmationDialog.deletePlayer')} ${deleteName}?`}
                           open={confirmationOpen}
                           onConfirm={handleConfirm}
                           onDecline={(): void => setConfirmationOpen(false)}

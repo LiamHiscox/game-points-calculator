@@ -1,10 +1,10 @@
-import { CartesianGrid, Bar, Tooltip, XAxis, YAxis, ResponsiveContainer, BarChart as ReBarChart } from "recharts";
+import { CartesianGrid, Bar, Tooltip, XAxis, YAxis, ResponsiveContainer, BarChart as ReBarChart } from 'recharts';
 import { Payload } from 'recharts/types/component/DefaultTooltipContent';
-import { PlayerModel } from "../../../models/player.model";
-import { PointsDataModel } from "../../../models/points-data.model";
-import { FilteredPlayerModel } from "../../../models/filtered-player.model";
-import { useEffect, useState } from "react";
-import {useTranslation} from "react-i18next";
+import { PlayerModel } from '../../../models/player.model';
+import { PointsDataModel } from '../../../models/points-data.model';
+import { FilteredPlayerModel } from '../../../models/filtered-player.model';
+import { useEffect, useState } from 'react';
+import {useTranslation} from 'react-i18next';
 
 interface LineGraphProps {
     players: PlayerModel[];
@@ -57,7 +57,7 @@ export function BarChart({ players, colors }: LineGraphProps): JSX.Element {
 
     const widthPerPlayer = players.length * 15;
     const height = window.innerHeight * 0.75 > 300 ? 300 : window.innerHeight * 0.75;
-    const width = maxRounds * widthPerPlayer > window.innerWidth * 0.75 ? maxRounds * widthPerPlayer : "100%";
+    const width = maxRounds * widthPerPlayer > window.innerWidth * 0.75 ? maxRounds * widthPerPlayer : '100%';
 
     return (
         <ResponsiveContainer width={width} height={height > 300 ? 300 : height} className="select-none">
@@ -67,7 +67,7 @@ export function BarChart({ players, colors }: LineGraphProps): JSX.Element {
                 <YAxis />
                 <Tooltip
                     isAnimationActive={false}
-                    labelFormatter={(label): string => `${t("stats.round")} ${label}`}
+                    labelFormatter={(label): string => `${t('stats.round')} ${label}`}
                     itemSorter={(item: Payload<number, string>): number => -(item.value || 0)}
                 />
                 {players.map((player, i) => (

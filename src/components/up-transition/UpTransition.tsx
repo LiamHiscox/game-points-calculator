@@ -1,6 +1,6 @@
-import React from "react";
-import {TransitionProps} from "@mui/material/transitions";
-import {Slide} from "@mui/material";
+import React from 'react';
+import {TransitionProps} from '@mui/material/transitions';
+import {Slide} from '@mui/material';
 
 export const UpTransition = React.forwardRef(function Transition(
   props: TransitionProps & {

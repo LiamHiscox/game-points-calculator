@@ -1,12 +1,12 @@
 import './StatsDialog.scss';
-import {AppBar, Chip, Dialog, IconButton, Toolbar, Typography} from "@mui/material";
-import { PlayerModel } from "../../models/player.model";
+import {AppBar, Chip, Dialog, IconButton, Toolbar, Typography} from '@mui/material';
+import { PlayerModel } from '../../models/player.model';
 import { MinMaxTable } from './min-max-table/MinMaxTable';
 import { LineGraph } from './line-graph/LineGraph';
 import { BarChart } from './bar-chart/BarChart';
-import {UpTransition} from "../up-transition/UpTransition";
-import CloseIcon from "@mui/icons-material/Close";
-import {useTranslation} from "react-i18next";
+import {UpTransition} from '../up-transition/UpTransition';
+import CloseIcon from '@mui/icons-material/Close';
+import {useTranslation} from 'react-i18next';
 
 interface StatsDialogProps {
   open: boolean;
@@ -40,12 +40,12 @@ export function StatsDialog({ open, players, onClose }: StatsDialogProps): JSX.E
       <AppBar position="static">
         <Toolbar className="tool-bar">
           <div/>
-          <Typography variant="h6"> {t("headers.statistics")} </Typography>
+          <Typography variant="h6"> {t('headers.statistics')} </Typography>
           <IconButton onClick={onClose} color="inherit"> <CloseIcon/> </IconButton>
         </Toolbar>
       </AppBar>
       <div className="content-container content-padding">
-      <Typography variant="h6"> {t("stats.gameProgress")} </Typography>
+      <Typography variant="h6"> {t('stats.gameProgress')} </Typography>
         <div style={{ overflow: 'hidden', overflowX: 'auto' }}>
           <LineGraph players={players} colors={colors} />
         </div>
@@ -54,7 +54,7 @@ export function StatsDialog({ open, players, onClose }: StatsDialogProps): JSX.E
             <Chip label={player.name} key={i} style={{backgroundColor: colors[i%colors.length], color: 'white'}} className="select-none" />
           ))}
         </div>
-        <Typography variant="h6"> {t("stats.pointsPerRound")} </Typography>
+        <Typography variant="h6"> {t('stats.pointsPerRound')} </Typography>
         <div style={{ overflow: 'hidden', overflowX: 'auto' }}>
           <BarChart players={players} colors={colors} />
         </div>
@@ -63,7 +63,7 @@ export function StatsDialog({ open, players, onClose }: StatsDialogProps): JSX.E
             <Chip label={player.name} key={i} style={{backgroundColor: colors[i%colors.length], color: 'white'}} />
           ))}
         </div>
-        <Typography variant="h6"> {t("stats.minMax")} </Typography>
+        <Typography variant="h6"> {t('stats.minMax')} </Typography>
         <div style={{ overflow: 'auto' }}>
           <MinMaxTable players={players} />
         </div>

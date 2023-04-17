@@ -1,6 +1,6 @@
 import './DraggableList.scss';
-import {List, ListItem} from "@mui/material";
-import {DragDropContext, Draggable, Droppable, DropResult} from "react-beautiful-dnd";
+import {List, ListItem} from '@mui/material';
+import {DragDropContext, Draggable, Droppable, DropResult} from 'react-beautiful-dnd';
 
 interface DraggableListProps<T> {
   items: T[];

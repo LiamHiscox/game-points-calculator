@@ -14,21 +14,21 @@ import {
   AccordionActions,
   IconButton,
   Toolbar
-} from "@mui/material";
-import React, {useState} from "react";
-import {GameModel} from "../../models/game.model";
+} from '@mui/material';
+import React, {useState} from 'react';
+import {GameModel} from '../../models/game.model';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import {Points} from "../../models/player.model";
+import {Points} from '../../models/player.model';
 import ZoomInIcon from '@mui/icons-material/ZoomIn';
 import DeleteIcon from '@mui/icons-material/Delete';
 import ReplayIcon from '@mui/icons-material/Replay';
 import CloseIcon from '@mui/icons-material/Close';
 import ShowChartIcon from '@mui/icons-material/ShowChart';
-import {PointsTable} from "../../points-table/PointsTable";
-import {ConfirmationDialog} from "../confirmation-dialog/ConfirmationDialog";
-import {StatsDialog} from "../stats-dialog/StatsDialog"
-import {UpTransition} from "../up-transition/UpTransition";
-import {useTranslation} from "react-i18next";
+import {PointsTable} from '../../points-table/PointsTable';
+import {ConfirmationDialog} from '../confirmation-dialog/ConfirmationDialog';
+import {StatsDialog} from '../stats-dialog/StatsDialog'
+import {UpTransition} from '../up-transition/UpTransition';
+import {useTranslation} from 'react-i18next';
 
 interface NewGameDialogProps {
   open: boolean;
@@ -93,13 +93,13 @@ export function HistoryDialog({open, onClose, onReturnPlaying, onDeleteGame, gam
       <AppBar position="static">
         <Toolbar className="tool-bar">
           <div></div>
-          <Typography variant="h6"> {t("headers.history")} </Typography>
+          <Typography variant="h6"> {t('headers.history')} </Typography>
           <IconButton onClick={handleClose} color="inherit"> <CloseIcon/> </IconButton>
         </Toolbar>
       </AppBar>
       <div className="content-container">
       {games.length <= 0 && (
-        <Typography className="select-none">{t("history.noPastGamesFound")}</Typography>
+        <Typography className="select-none">{t('history.noPastGamesFound')}</Typography>
       )}
       {games.map((game, i) => (
         <Accordion key={i} expanded={expanded === i} onChange={(): void => handleExpandedChange(i)}>
@@ -111,7 +111,7 @@ export function HistoryDialog({open, onClose, onReturnPlaying, onDeleteGame, gam
               </Typography>
             </div>
           </AccordionSummary>
-          <AccordionDetails style={{overflow: "auto"}}>
+          <AccordionDetails style={{overflow: 'auto'}}>
             <Table size="small" className="select-none">
               <TableHead>
                 <TableRow>
@@ -172,13 +172,13 @@ export function HistoryDialog({open, onClose, onReturnPlaying, onDeleteGame, gam
                    onClose={(): void => setShowStats(false)}
                    players={game?.players || []}
       />
-      <ConfirmationDialog message={`${t("confirmationDialog.deleteGame")} ${game?.name}?`}
+      <ConfirmationDialog message={`${t('confirmationDialog.deleteGame')} ${game?.name}?`}
                           open={showConfirm}
                           onConfirm={handleDelete}
                           onDecline={(): void => setShowConfirm(false)}
                           onCancel={(): void => setShowConfirm(false)}
       />
-      <ConfirmationDialog message={`${t("confirmationDialog.replayGame")} ${game?.name}?`}
+      <ConfirmationDialog message={`${t('confirmationDialog.replayGame')} ${game?.name}?`}
                           open={showConfirmReplay}
                           onConfirm={handleReplay}
                           onDecline={(): void => setShowConfirmReplay(false)}

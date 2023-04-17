@@ -1,20 +1,20 @@
 import React, {useState} from 'react';
 import './App.scss';
-import {PlayerModel, Points} from "./models/player.model";
-import {useGameState} from "./store/game.store";
-import {DeletePlayersDialog} from "./components/delete-players-dialog/DeletePlayersDialog";
-import {useSnackbar} from "notistack";
-import {LeaderboardDialog} from "./components/leaderbord-dialog/LeaderboardDialog";
+import {PlayerModel, Points} from './models/player.model';
+import {useGameState} from './store/game.store';
+import {DeletePlayersDialog} from './components/delete-players-dialog/DeletePlayersDialog';
+import {useSnackbar} from 'notistack';
+import {LeaderboardDialog} from './components/leaderbord-dialog/LeaderboardDialog';
 import { v4 as uuidv4 } from 'uuid';
-import {PointsTable} from "./points-table/PointsTable";
-import {TopBar} from "./top-bar/TopBar";
-import {NewGameDialog} from "./components/new-game-dialog/NewGameDialog";
-import {HistoryDialog} from "./components/history-dialog/HistoryDialog";
-import {StatsDialog} from "./components/stats-dialog/StatsDialog";
-import {useGamesState} from "./store/games.store";
-import {GameModel} from "./models/game.model";
-import {PwaInstallationDialog} from "./components/pwa-installation-dialog/PwaInstallationDialog";
-import {SortPlayersDialog} from "./components/sort-players-dialog/SortPlayersDialog";
+import {PointsTable} from './points-table/PointsTable';
+import {TopBar} from './top-bar/TopBar';
+import {NewGameDialog} from './components/new-game-dialog/NewGameDialog';
+import {HistoryDialog} from './components/history-dialog/HistoryDialog';
+import {StatsDialog} from './components/stats-dialog/StatsDialog';
+import {useGamesState} from './store/games.store';
+import {GameModel} from './models/game.model';
+import {PwaInstallationDialog} from './components/pwa-installation-dialog/PwaInstallationDialog';
+import {SortPlayersDialog} from './components/sort-players-dialog/SortPlayersDialog';
 
 function App(): JSX.Element {
   const [game, setGame] = useGameState();
@@ -32,7 +32,7 @@ function App(): JSX.Element {
   if (game.players.length === 0) {
     setGame({
       ...game,
-      players: [{id: uuidv4(), name: "Player 1", points: [null]}]
+      players: [{id: uuidv4(), name: 'Player 1', points: [null]}]
     });
   }
 

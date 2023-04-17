@@ -1,7 +1,7 @@
 import './PointsTable.scss';
-import Player from "./player/Player";
-import {PlayerModel, Points} from "../models/player.model";
-import React, {useEffect, useState} from "react";
+import Player from './player/Player';
+import {PlayerModel, Points} from '../models/player.model';
+import React, {useEffect, useState} from 'react';
 
 interface PointsTableProps {
   players: PlayerModel[];
@@ -30,7 +30,7 @@ export function PointsTable({
   return (
     <div className="player-table-container">
       <div className="player-names">
-        <div className={`player-row-placeholder-names ${showRows ? "placeholder-open" : "placeholder-closed"}`}/>
+        <div className={`player-row-placeholder-names ${showRows ? 'placeholder-open' : 'placeholder-closed'}`}/>
         {players.map((player, index) => (
           <input className="player-name"
                  type="text"
@@ -43,7 +43,7 @@ export function PointsTable({
         ))}
       </div>
       <div className="row-players-container">
-        <div className={`points-rows-container ${showRows ? "rows-open" : "rows-closed"}`}>
+        <div className={`points-rows-container ${showRows ? 'rows-open' : 'rows-closed'}`}>
           {rounds.map((_, index) => (
             <div className="points-row-index" key={index}>
               {index + 1}
@@ -62,7 +62,7 @@ export function PointsTable({
         </div>
       </div>
       <div className="player-scores">
-        <div className={`player-row-placeholder-points ${showRows ? "placeholder-open" : " placeholder-closed"}`}/>
+        <div className={`player-row-placeholder-points ${showRows ? 'placeholder-open' : ' placeholder-closed'}`}/>
         {players.map((player, i) =>
           <div className="player-score player-header-cell" key={i}>
             {player.points.reduce((sum: number, model: Points) => sum + (model?.points || 0), 0)}

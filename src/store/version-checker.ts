@@ -1,5 +1,5 @@
 import packageJson from '../../package.json';
-import axios from "axios";
+import axios from 'axios';
 
 interface PackageJson {
   version: string;

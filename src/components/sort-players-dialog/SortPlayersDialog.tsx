@@ -3,13 +3,13 @@ import {
   Dialog,
   DialogActions,
   ListItemText
-} from "@mui/material";
-import {PlayerModel} from "../../models/player.model";
-import {UpTransition} from "../up-transition/UpTransition";
-import {useEffect, useState} from "react";
+} from '@mui/material';
+import {PlayerModel} from '../../models/player.model';
+import {UpTransition} from '../up-transition/UpTransition';
+import {useEffect, useState} from 'react';
 import DragIndicatorIcon from '@mui/icons-material/DragIndicator';
-import {DraggableList} from "../draggable-list/DraggableList";
-import {useTranslation} from "react-i18next";
+import {DraggableList} from '../draggable-list/DraggableList';
+import {useTranslation} from 'react-i18next';
 
 interface SortPlayersDialogProps {
   open: boolean;
@@ -35,8 +35,8 @@ export function SortPlayersDialog({open, players, onClose, onSubmit}: SortPlayer
                      </>)}
       />
       <DialogActions>
-        <Button onClick={onClose} color="primary"> {t("common.cancel")} </Button>
-        <Button onClick={(): void => onSubmit(sortedPlayers)} color="primary" variant="contained"> {t("common.save")} </Button>
+        <Button onClick={onClose} color="primary"> {t('common.cancel')} </Button>
+        <Button onClick={(): void => onSubmit(sortedPlayers)} color="primary" variant="contained"> {t('common.save')} </Button>
       </DialogActions>
     </Dialog>
   );

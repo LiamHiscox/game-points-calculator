@@ -1,6 +1,6 @@
-import React from "react";
+import React from 'react';
 import './Player.scss';
-import {PlayerModel, Points} from "../../models/player.model";
+import {PlayerModel, Points} from '../../models/player.model';
 
 interface PlayerProps {
   player: PlayerModel;
@@ -45,19 +45,19 @@ function Player({
     <div className="player-container">
       {player.points.map((p, i) => (
         <div className="player-points player-input-cell" key={i}>
-          <input className={p !== null ? "points-input" : "points-input empty-input"}
+          <input className={p !== null ? 'points-input' : 'points-input empty-input'}
                  type="number"
-                 value={p && typeof p.points === "number" ? p.points : ""}
+                 value={p && typeof p.points === 'number' ? p.points : ''}
                  onChange={(e): void => handlePointsChange(e, i)}
                  onClick={(e): void => {
                    e.currentTarget.select()
                  }}
                  disabled={readonly}
           />
-          {commentFields && !(readonly && typeof p?.points !== "number") && (
+          {commentFields && !(readonly && typeof p?.points !== 'number') && (
             <input className="comment-input"
                    type="text"
-                   value={p?.comment || ""}
+                   value={p?.comment || ''}
                    onChange={(e): void => handleCommentChange(e, i)}
                    onClick={(e): void => {
                      e.currentTarget.select()

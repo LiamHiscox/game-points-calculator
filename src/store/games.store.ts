@@ -1,15 +1,15 @@
-import {GameModel} from "../models/game.model";
-import {useEffect, useState} from "react";
-import Dexie from "dexie";
-import {useSnackbar} from "notistack";
+import {GameModel} from '../models/game.model';
+import {useEffect, useState} from 'react';
+import Dexie from 'dexie';
+import {useSnackbar} from 'notistack';
 
 export class GamesDatabase extends Dexie {
   public games: Dexie.Table<GameModel, string>;
 
   public constructor() {
-    super("GamesDatabase");
+    super('GamesDatabase');
     this.version(1).stores({
-      games: "id,timestamp,name,players"
+      games: 'id,timestamp,name,players'
     });
     this.games = this.table('games');
   }
@@ -29,13 +29,13 @@ export const useGamesState = (): GameStateProps => {
 
   useEffect(() => {
     db.transaction('r', db.games, async () => {
-      const storedGames = await db.games.orderBy("timestamp").reverse().toArray();
+      const storedGames = await db.games.orderBy('timestamp').reverse().toArray();
       setStateGames(storedGames);
     });
   }, [db]);
 
   const loadGames = async (): Promise<void> => {
-    const storedGames = await db.games.orderBy("timestamp").reverse().toArray();
+    const storedGames = await db.games.orderBy('timestamp').reverse().toArray();
     setStateGames(storedGames);
   }
 
@@ -48,17 +48,17 @@ export const useGamesState = (): GameStateProps => {
 
   const deleteGame = async (id: string): Promise<void> => {
     db.transaction('rw', db.games, async () => {
-      await db.games.where("id").equals(id).delete();
+      await db.games.where('id').equals(id).delete();
       await loadGames();
-      enqueueSnackbar(`Successfully deleted game`, {variant: "success"});
+      enqueueSnackbar('Successfully deleted game', {variant: 'success'});
     });
   }
 
   const replayGame = async (id: string): Promise<void> => {
     db.transaction('rw', db.games, async () => {
-      await db.games.where("id").equals(id).delete();
+      await db.games.where('id').equals(id).delete();
       await loadGames();
-      enqueueSnackbar(`Successfully loaded old game`, {variant: "success"});
+      enqueueSnackbar('Successfully loaded old game', {variant: 'success'});
     });
   }
 

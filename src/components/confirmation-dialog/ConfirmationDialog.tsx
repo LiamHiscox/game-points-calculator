@@ -1,8 +1,8 @@
-import React from "react";
-import Dialog from "@mui/material/Dialog";
-import {Button, DialogActions, DialogContent} from "@mui/material";
-import {UpTransition} from "../up-transition/UpTransition";
-import {useTranslation} from "react-i18next";
+import React from 'react';
+import Dialog from '@mui/material/Dialog';
+import {Button, DialogActions, DialogContent} from '@mui/material';
+import {UpTransition} from '../up-transition/UpTransition';
+import {useTranslation} from 'react-i18next';
 
 interface LeaderboardDialogProps {
   message: string;
@@ -21,10 +21,10 @@ export function ConfirmationDialog({message, open, onConfirm, onDecline, onCance
         {message}
       </DialogContent>
       <DialogActions>
-        <Button color="primary" onClick={onCancel}> {t("common.cancel")} </Button>
+        <Button color="primary" onClick={onCancel}> {t('common.cancel')} </Button>
         <div>
-          <Button color="primary" onClick={onDecline}> {t("common.no")} </Button>
-          <Button color="primary" onClick={onConfirm}> {t("common.yes")} </Button>
+          <Button color="primary" onClick={onDecline}> {t('common.no')} </Button>
+          <Button color="primary" onClick={onConfirm}> {t('common.yes')} </Button>
         </div>
       </DialogActions>
     </Dialog>

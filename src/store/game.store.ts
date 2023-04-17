@@ -1,5 +1,5 @@
-import {useState} from "react";
-import {GameModel} from "../models/game.model";
+import {useState} from 'react';
+import {GameModel} from '../models/game.model';
 import {v4 as uuidv4} from 'uuid';
 
 export const gameKey = 'game';
