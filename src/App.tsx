@@ -16,7 +16,7 @@ import {GameModel} from "./models/game.model";
 import {PwaInstallationDialog} from "./components/pwa-installation-dialog/PwaInstallationDialog";
 import {SortPlayersDialog} from "./components/sort-players-dialog/SortPlayersDialog";
 
-function App() {
+function App(): JSX.Element {
   const [game, setGame] = useGameState();
   const {games, deleteGame, replayGame, addGame} = useGamesState();
   const [deleteOpen, setDeleteOpen] = useState(false);
@@ -36,7 +36,7 @@ function App() {
     });
   }
 
-  const setGameName = (name: string) => {
+  const setGameName = (name: string): void => {
     setGame({...game, name})
   }
 
@@ -47,7 +47,7 @@ function App() {
       .length >= game.players.length;
   }
 
-  const setNewGame = (newGame: GameModel, save: boolean = true) => {
+  const setNewGame = (newGame: GameModel, save = true): void => {
     if (canSaveGame(game) && save) {
       addGame(game);
     }
@@ -55,7 +55,7 @@ function App() {
     setNewGameOpen(false);
   }
 
-  const setOldGame = (oldGame: GameModel) => {
+  const setOldGame = (oldGame: GameModel): void => {
     if (canSaveGame(game)) {
       addGame(game);
     }
@@ -64,19 +64,19 @@ function App() {
     setHistoryOpen(false);
   }
 
-  const deleteOldGame = (id: string) => {
+  const deleteOldGame = (id: string): void => {
     deleteGame(id);
     setHistoryOpen(false);
   }
 
-  const handlePointsChange = (points: Points[], id: string) => {
+  const handlePointsChange = (points: Points[], id: string): void => {
     setGame({
       ...game,
       players: game.players.map(player => player.id === id ? {...player, points} : player)
     });
   }
 
-  const addPlayer = () => {
+  const addPlayer = (): void => {
     setGame({
       ...game,
       players: game.players.concat({id: uuidv4(), name: `Player ${game.players.length + 1}`, points: [null]})
@@ -84,40 +84,40 @@ function App() {
     enqueueSnackbar(`${game.players.length + 1} players`);
   }
 
-  const clearPoints = (save: boolean) => {
+  const clearPoints = (save: boolean): void => {
     setNewGame({
       ...game,
       players: game.players.map(player => ({...player, points: [null]}))
     }, save);
   }
 
-  const setPlayerName = (name: string, id: string) => {
+  const setPlayerName = (name: string, id: string): void => {
     setGame({
       ...game,
       players: game.players.map(player => player.id === id ? {...player, name} : player)
     });
   }
 
-  const deletePlayer = (id: string) => {
+  const deletePlayer = (id: string): void => {
     setGame({
       ...game,
       players: game.players.filter(player => player.id !== id)
     });
   }
 
-  const handleToggleRows = () => {
+  const handleToggleRows = (): void => {
     setShowRows(!showRows);
     localStorage.setItem('showRows', !showRows ? 'true': '');
   }
 
-  const toggleCommentField = () => {
+  const toggleCommentField = (): void => {
     setGame({
       ...game,
       commentFields: !game.commentFields
     });
   }
 
-  const changePlayerSort = (players: PlayerModel[]) => {
+  const changePlayerSort = (players: PlayerModel[]): void => {
     setSortPlayersOpen(false);
     setGame({...game, players});
   }
@@ -130,15 +130,15 @@ function App() {
               onNameChange={setGameName}
               onAddPlayer={addPlayer}
               onClearPoints={clearPoints}
-              onOpenDelete={() => setDeleteOpen(true)}
-              onOpenLeaderBoard={() => setLeaderboardOpen(true)}
-              onNewGame={() => setNewGameOpen(true)}
-              onOpenHistory={() => setHistoryOpen(true)}
-              onOpenStats={() => setStatsOpen(true)}
+              onOpenDelete={(): void => setDeleteOpen(true)}
+              onOpenLeaderBoard={(): void => setLeaderboardOpen(true)}
+              onNewGame={(): void => setNewGameOpen(true)}
+              onOpenHistory={(): void => setHistoryOpen(true)}
+              onOpenStats={(): void => setStatsOpen(true)}
               showRows={showRows}
               onToggleRows={handleToggleRows}
               onToggleCommentField={toggleCommentField}
-              onSortPlayers={() => setSortPlayersOpen(true)}
+              onSortPlayers={(): void => setSortPlayersOpen(true)}
       />
       <PointsTable onPlayerNameChange={setPlayerName}
                    onPointsChange={handlePointsChange}
@@ -150,32 +150,32 @@ function App() {
       <DeletePlayersDialog players={game.players}
                            open={deleteOpen}
                            onDelete={deletePlayer}
-                           onClose={() => setDeleteOpen(false)}
+                           onClose={(): void => setDeleteOpen(false)}
       />
       <LeaderboardDialog players={game.players}
                          open={leaderboardOpen}
-                         onClose={() => setLeaderboardOpen(false)}
+                         onClose={(): void => setLeaderboardOpen(false)}
       />
       <NewGameDialog open={newGameOpen}
                      game={game}
-                     onClose={() => setNewGameOpen(false)}
+                     onClose={(): void => setNewGameOpen(false)}
                      onSubmit={setNewGame}
       />
       <HistoryDialog open={historyOpen}
-                     onClose={() => setHistoryOpen(false)}
+                     onClose={(): void => setHistoryOpen(false)}
                      onReturnPlaying={setOldGame}
                      onDeleteGame={deleteOldGame}
                      games={games}
       />
       <StatsDialog open={statsOpen}
-                   onClose={() => setStatsOpen(false)}
+                   onClose={(): void => setStatsOpen(false)}
                    players={game.players}
       />
       <PwaInstallationDialog open={installationOpen}
-                             onClose={() => setInstallationOpen(false)}
+                             onClose={(): void => setInstallationOpen(false)}
       />
       <SortPlayersDialog open={sortPlayersOpen}
-                         onClose={() => setSortPlayersOpen(false)}
+                         onClose={(): void => setSortPlayersOpen(false)}
                          onSubmit={changePlayerSort}
                          players={game.players}
       />

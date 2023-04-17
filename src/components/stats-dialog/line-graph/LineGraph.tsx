@@ -11,7 +11,7 @@ interface LineGraphProps {
     colors: string[];
 }
 
-export function LineGraph({ players, colors }: LineGraphProps) {
+export function LineGraph({ players, colors }: LineGraphProps): JSX.Element {
     const [data, setData] = useState<PointsDataModel[]>([]);
     const [maxRounds, setMaxRounds] = useState<number>(0);
     const {t} = useTranslation();
@@ -71,8 +71,8 @@ export function LineGraph({ players, colors }: LineGraphProps) {
                 <YAxis />
                 <Tooltip
                     isAnimationActive={false}
-                    labelFormatter={(label) => `${t("stats.round")} ${label}`}
-                    itemSorter={(item: Payload<number, string>) => -(item.value || 0)}
+                    labelFormatter={(label): string => `${t("stats.round")} ${label}`}
+                    itemSorter={(item: Payload<number, string>): number => -(item.value || 0)}
                 />
                 {players.map((player, i) => (
                     <Line type="monotone" dataKey={player.name} stroke={colors[i]} key={player.id} />

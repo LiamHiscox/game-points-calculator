@@ -12,7 +12,7 @@ interface LeaderboardDialogProps {
   onCancel: () => void;
 }
 
-export function ConfirmationDialog({message, open, onConfirm, onDecline, onCancel}: LeaderboardDialogProps) {
+export function ConfirmationDialog({message, open, onConfirm, onDecline, onCancel}: LeaderboardDialogProps): JSX.Element {
   const {t} = useTranslation();
 
   return (

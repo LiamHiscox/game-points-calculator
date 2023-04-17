@@ -11,7 +11,7 @@ interface LineGraphProps {
     colors: string[];
 }
 
-export function BarChart({ players, colors }: LineGraphProps) {
+export function BarChart({ players, colors }: LineGraphProps): JSX.Element {
     const [data, setData] = useState<PointsDataModel[]>([]);
     const [maxRounds, setMaxRounds] = useState<number>(0);
     const {t} = useTranslation();
@@ -67,8 +67,8 @@ export function BarChart({ players, colors }: LineGraphProps) {
                 <YAxis />
                 <Tooltip
                     isAnimationActive={false}
-                    labelFormatter={(label) => `${t("stats.round")} ${label}`}
-                    itemSorter={(item: Payload<number, string>) => -(item.value || 0)}
+                    labelFormatter={(label): string => `${t("stats.round")} ${label}`}
+                    itemSorter={(item: Payload<number, string>): number => -(item.value || 0)}
                 />
                 {players.map((player, i) => (
                     <Bar dataKey={player.name} fill={colors[i]} key={player.id} />

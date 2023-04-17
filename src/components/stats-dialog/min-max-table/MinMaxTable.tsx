@@ -13,7 +13,7 @@ interface MinMaxTableProps {
     players: PlayerModel[];
 }
 
-export function MinMaxTable({ players }: MinMaxTableProps) {
+export function MinMaxTable({ players }: MinMaxTableProps): JSX.Element {
     const [minMaxData, setMinMaxData] = useState<MinMaxPointsModel[]>([]);
     const [min, setMin] = useState<number>(0);
     const [max, setMax] = useState<number>(0);

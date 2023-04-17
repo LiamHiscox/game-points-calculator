@@ -19,7 +19,7 @@ export function PointsTable({
                               readonly,
                               showRows,
                               commentFields
-                            }: PointsTableProps) {
+                            }: PointsTableProps): JSX.Element {
   const [rounds, setRounds] = useState<null[]>([]);
 
   useEffect(() => {
@@ -37,8 +37,8 @@ export function PointsTable({
                  disabled={readonly}
                  key={index}
                  value={player.name}
-                 onChange={(e) => onPlayerNameChange && onPlayerNameChange(e.target.value, player.id)}
-                 onClick={(e) => {e.currentTarget.select()}}
+                 onChange={(e): void => onPlayerNameChange && onPlayerNameChange(e.target.value, player.id)}
+                 onClick={(e): void => {e.currentTarget.select()}}
           />
         ))}
       </div>
@@ -54,7 +54,7 @@ export function PointsTable({
           {players.map((player, i) => (
             <Player key={i}
                     player={player}
-                    onPointsChange={(points) => onPointsChange && onPointsChange(points, player.id)}
+                    onPointsChange={(points): void => onPointsChange && onPointsChange(points, player.id)}
                     readonly={readonly}
                     commentFields={commentFields}
             />

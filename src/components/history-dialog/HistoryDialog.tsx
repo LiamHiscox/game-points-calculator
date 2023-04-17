@@ -38,7 +38,7 @@ interface NewGameDialogProps {
   games: GameModel[];
 }
 
-export function HistoryDialog({open, onClose, onReturnPlaying, onDeleteGame, games}: NewGameDialogProps) {
+export function HistoryDialog({open, onClose, onReturnPlaying, onDeleteGame, games}: NewGameDialogProps): JSX.Element {
   const [game, setGame] = useState<GameModel | null>(null);
   const [showGame, setShowGame] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
@@ -47,44 +47,44 @@ export function HistoryDialog({open, onClose, onReturnPlaying, onDeleteGame, gam
   const [expanded, setExpanded] = useState<number | null>(null);
   const {t} = useTranslation();
 
-  const handleClose = () => {
+  const handleClose = (): void => {
     setExpanded(null);
     onClose();
   }
 
-  const handleDetailClick = (game: GameModel) => {
+  const handleDetailClick = (game: GameModel): void => {
     setGame(game);
     setShowGame(true);
   }
 
-  const handleStatsClick = (game: GameModel) => {
+  const handleStatsClick = (game: GameModel): void => {
     setGame(game);
     setShowStats(true);
   }
 
-  const handleReplayClick = (game: GameModel) => {
+  const handleReplayClick = (game: GameModel): void => {
     setGame(game);
     setShowConfirmReplay(true);
   }
 
-  const handleReplay = () => {
+  const handleReplay = (): void => {
     setShowConfirmReplay(false);
     game && onReturnPlaying(game);
     setExpanded(null);
   }
 
-  const handleDeleteClick = (game: GameModel) => {
+  const handleDeleteClick = (game: GameModel): void => {
     setGame(game);
     setShowConfirm(true);
   }
 
-  const handleDelete = () => {
+  const handleDelete = (): void => {
     setShowConfirm(false);
     game && onDeleteGame(game.id);
     setExpanded(null);
   }
 
-  const handleExpandedChange = (index: number) => {
+  const handleExpandedChange = (index: number): void => {
     setExpanded(expanded === index ? null : index);
   }
 
@@ -102,7 +102,7 @@ export function HistoryDialog({open, onClose, onReturnPlaying, onDeleteGame, gam
         <Typography className="select-none">{t("history.noPastGamesFound")}</Typography>
       )}
       {games.map((game, i) => (
-        <Accordion key={i} expanded={expanded === i} onChange={() => handleExpandedChange(i)}>
+        <Accordion key={i} expanded={expanded === i} onChange={(): void => handleExpandedChange(i)}>
           <AccordionSummary expandIcon={<ExpandMoreIcon color="primary"/>}>
             <div className="summary-container">
               <Typography>{game.name}</Typography>
@@ -133,16 +133,16 @@ export function HistoryDialog({open, onClose, onReturnPlaying, onDeleteGame, gam
           </AccordionDetails>
           <AccordionActions>
             <div className="history-actions">
-              <IconButton onClick={() => handleDeleteClick(game)}>
+              <IconButton onClick={(): void => handleDeleteClick(game)}>
                 <DeleteIcon color="primary"/>
               </IconButton>
-              <IconButton onClick={() => handleReplayClick(game)}>
+              <IconButton onClick={(): void => handleReplayClick(game)}>
                 <ReplayIcon color="primary"/>
               </IconButton>
-              <IconButton onClick={() => handleDetailClick(game)}>
+              <IconButton onClick={(): void => handleDetailClick(game)}>
                 <ZoomInIcon color="primary"/>
               </IconButton>
-              <IconButton onClick={() => handleStatsClick(game)}>
+              <IconButton onClick={(): void => handleStatsClick(game)}>
                 <ShowChartIcon color="primary"/>
               </IconButton>
             </div>
@@ -150,14 +150,14 @@ export function HistoryDialog({open, onClose, onReturnPlaying, onDeleteGame, gam
         </Accordion>
       ))}
       <Dialog open={showGame}
-              onClose={() => setShowGame(false)}
+              onClose={(): void => setShowGame(false)}
               fullScreen
               TransitionComponent={UpTransition}>
         <AppBar position="static">
           <Toolbar className="history-points-bar">
             <div/>
             <Typography variant="h6"> {game?.name} </Typography>
-            <IconButton onClick={() => setShowGame(false)} color="inherit">
+            <IconButton onClick={(): void => setShowGame(false)} color="inherit">
               <CloseIcon/>
             </IconButton>
           </Toolbar>
@@ -169,20 +169,20 @@ export function HistoryDialog({open, onClose, onReturnPlaying, onDeleteGame, gam
         />
       </Dialog>
       <StatsDialog open={showStats}
-                   onClose={() => setShowStats(false)}
+                   onClose={(): void => setShowStats(false)}
                    players={game?.players || []}
       />
       <ConfirmationDialog message={`${t("confirmationDialog.deleteGame")} ${game?.name}?`}
                           open={showConfirm}
                           onConfirm={handleDelete}
-                          onDecline={() => setShowConfirm(false)}
-                          onCancel={() => setShowConfirm(false)}
+                          onDecline={(): void => setShowConfirm(false)}
+                          onCancel={(): void => setShowConfirm(false)}
       />
       <ConfirmationDialog message={`${t("confirmationDialog.replayGame")} ${game?.name}?`}
                           open={showConfirmReplay}
                           onConfirm={handleReplay}
-                          onDecline={() => setShowConfirmReplay(false)}
-                          onCancel={() => setShowConfirmReplay(false)}
+                          onDecline={(): void => setShowConfirmReplay(false)}
+                          onCancel={(): void => setShowConfirmReplay(false)}
       />
       </div>
     </Dialog>

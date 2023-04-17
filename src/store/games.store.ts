@@ -34,19 +34,19 @@ export const useGamesState = (): GameStateProps => {
     });
   }, [db]);
 
-  const loadGames = async () => {
+  const loadGames = async (): Promise<void> => {
     const storedGames = await db.games.orderBy("timestamp").reverse().toArray();
     setStateGames(storedGames);
   }
 
-  const addGame = (newGame: GameModel) => {
+  const addGame = (newGame: GameModel): void => {
     db.transaction('rw', db.games, async () => {
       await db.games.add(newGame);
       await loadGames();
     });
   }
 
-  const deleteGame = async (id: string) => {
+  const deleteGame = async (id: string): Promise<void> => {
     db.transaction('rw', db.games, async () => {
       await db.games.where("id").equals(id).delete();
       await loadGames();
@@ -54,7 +54,7 @@ export const useGamesState = (): GameStateProps => {
     });
   }
 
-  const replayGame = async (id: string) => {
+  const replayGame = async (id: string): Promise<void> => {
     db.transaction('rw', db.games, async () => {
       await db.games.where("id").equals(id).delete();
       await loadGames();

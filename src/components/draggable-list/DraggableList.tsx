@@ -9,8 +9,8 @@ interface DraggableListProps<T> {
   listItemId: (item: T) => string;
 }
 
-export function DraggableList<T>({items, onSortChange, renderListItem, listItemId}: DraggableListProps<T>) {
-  const handleDrop = (droppedItem: DropResult) => {
+export function DraggableList<T>({items, onSortChange, renderListItem, listItemId}: DraggableListProps<T>): JSX.Element {
+  const handleDrop = (droppedItem: DropResult): void => {
     if (!droppedItem.destination) {
       return;
     }
@@ -24,14 +24,14 @@ export function DraggableList<T>({items, onSortChange, renderListItem, listItemI
   return (
       <DragDropContext onDragEnd={handleDrop}>
         <Droppable droppableId="list-container">
-          {(provided) => (
+          {(provided): JSX.Element => (
             <List className="list-container"
                   {...provided.droppableProps}
                   ref={provided.innerRef}
             >
               {items.map((item, index) => (
                 <Draggable key={listItemId(item)} draggableId={listItemId(item)} index={index}>
-                  {(provided, snapshot) => (
+                  {(provided, snapshot): JSX.Element => (
                     <ListItem className={snapshot.isDragging ? 'selected' : ''}
                               ref={provided.innerRef}
                               {...provided.dragHandleProps}

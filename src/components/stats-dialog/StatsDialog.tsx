@@ -32,7 +32,7 @@ const colors = [
   '#000000'
 ];
 
-export function StatsDialog({ open, players, onClose }: StatsDialogProps) {
+export function StatsDialog({ open, players, onClose }: StatsDialogProps): JSX.Element {
   const {t} = useTranslation();
 
   return (

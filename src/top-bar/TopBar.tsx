@@ -53,29 +53,29 @@ export function TopBar({
                          onOpenStats,
                          onToggleCommentField,
                          onSortPlayers
-                       }: TopBarProps) {
+                       }: TopBarProps): JSX.Element {
   const [confirmationOpen, setConfirmationOpen] = React.useState(false);
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const {t} = useTranslation();
 
-  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>): void => {
     setAnchorEl(event.currentTarget);
   };
 
-  const handleClearPoints = () => {
+  const handleClearPoints = (): void => {
     setConfirmationOpen(true);
   }
 
-  const handleClearConfirmation = (save: boolean) => {
+  const handleClearConfirmation = (save: boolean): void => {
     setConfirmationOpen(false);
     onClearPoints(save);
   }
 
-  const handleClose = () => {
+  const handleClose = (): void => {
     setAnchorEl(null);
   };
 
-  const nextLanguage = () => {
+  const nextLanguage = (): void => {
     const languages = Object.keys(i18n.services.resourceStore.data);
     const index = languages.indexOf(i18n.language);
     const newLanguage = languages[(index + 1) % languages.length];
@@ -94,8 +94,8 @@ export function TopBar({
         <input type="text"
                className="game-name-input"
                value={gameName}
-               onChange={e => onNameChange(e.target.value)}
-               onClick={e => {
+               onChange={(e): void => onNameChange(e.target.value)}
+               onClick={(e): void => {
                  e.currentTarget.select()
                }}
         />
@@ -157,9 +157,9 @@ export function TopBar({
       <ConfirmationDialog
         message={canSaveGame ? t("confirmationDialog.saveCurrentGame") : t("confirmationDialog.clearAllPoints")}
         open={confirmationOpen}
-        onConfirm={() => handleClearConfirmation(true)}
-        onDecline={() => canSaveGame ? handleClearConfirmation(false) : setConfirmationOpen(false)}
-        onCancel={() => setConfirmationOpen(false)}
+        onConfirm={(): void => handleClearConfirmation(true)}
+        onDecline={(): void => canSaveGame ? handleClearConfirmation(false) : setConfirmationOpen(false)}
+        onCancel={(): void => setConfirmationOpen(false)}
       />
     </>
   );

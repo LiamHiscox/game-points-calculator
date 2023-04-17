@@ -18,7 +18,7 @@ interface SortPlayersDialogProps {
   onSubmit: (players: PlayerModel[]) => void;
 }
 
-export function SortPlayersDialog({open, players, onClose, onSubmit}: SortPlayersDialogProps) {
+export function SortPlayersDialog({open, players, onClose, onSubmit}: SortPlayersDialogProps): JSX.Element {
   const [sortedPlayers, setSortedPlayers] = useState<PlayerModel[]>([]);
   const {t} = useTranslation();
 
@@ -27,16 +27,16 @@ export function SortPlayersDialog({open, players, onClose, onSubmit}: SortPlayer
   return (
     <Dialog open={open} onClose={onClose} fullWidth TransitionComponent={UpTransition}>
       <DraggableList items={sortedPlayers}
-                     onSortChange={(sorted) => setSortedPlayers(sorted)}
-                     listItemId={(player) => player.id}
-                     renderListItem={(player) => (<>
+                     onSortChange={(sorted): void => setSortedPlayers(sorted)}
+                     listItemId={(player): string => player.id}
+                     renderListItem={(player): JSX.Element => (<>
                        <ListItemText primary={player.name}/>
                        <DragIndicatorIcon color="primary"/>
                      </>)}
       />
       <DialogActions>
         <Button onClick={onClose} color="primary"> {t("common.cancel")} </Button>
-        <Button onClick={() => onSubmit(sortedPlayers)} color="primary" variant="contained"> {t("common.save")} </Button>
+        <Button onClick={(): void => onSubmit(sortedPlayers)} color="primary" variant="contained"> {t("common.save")} </Button>
       </DialogActions>
     </Dialog>
   );

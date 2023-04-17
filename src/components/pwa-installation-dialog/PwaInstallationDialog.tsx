@@ -16,7 +16,7 @@ interface PwaInstallationDialogProps {
   onClose: () => void;
 }
 
-export function PwaInstallationDialog({open, onClose}: PwaInstallationDialogProps) {
+export function PwaInstallationDialog({open, onClose}: PwaInstallationDialogProps): JSX.Element {
   const [prompt, setPrompt] = useState<null | BeforeInstallPromptEvent>(null);
   const [userInstalled, setUserInstalled] = useState<boolean>(false);
   const [userAgent] = useState<string>(navigator.userAgent.toLowerCase());
@@ -39,7 +39,7 @@ export function PwaInstallationDialog({open, onClose}: PwaInstallationDialogProp
     window.addEventListener('appinstalled', () => setUserInstalled(true));
   }, []);
 
-  const addToHomeScreen = async () => {
+  const addToHomeScreen = async (): Promise<void> => {
     if (!prompt) {
       return;
     }

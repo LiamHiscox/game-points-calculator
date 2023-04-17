@@ -15,19 +15,19 @@ interface DeletePlayersDialogProps {
   onDelete: (id: string) => void;
 }
 
-export function DeletePlayersDialog({players, open, onClose, onDelete}: DeletePlayersDialogProps) {
+export function DeletePlayersDialog({players, open, onClose, onDelete}: DeletePlayersDialogProps): JSX.Element {
   const [confirmationOpen, setConfirmationOpen] = useState(false);
   const [deleteId, setDeleteId] = useState('');
   const [deleteName, setDeleteName] = useState('');
   const {t} = useTranslation();
 
-  const handleDelete = (id: string, name: string) => {
+  const handleDelete = (id: string, name: string): void => {
     setDeleteId(id);
     setDeleteName(name);
     setConfirmationOpen(true);
   }
 
-  const handleConfirm = () => {
+  const handleConfirm = (): void => {
     setConfirmationOpen(false);
     onDelete(deleteId);
   }
@@ -39,7 +39,7 @@ export function DeletePlayersDialog({players, open, onClose, onDelete}: DeletePl
           <ListItem key={i}>
             <ListItemText primary={player.name} className="select-none"/>
             <ListItemSecondaryAction>
-              <IconButton onClick={() => handleDelete(player.id, player.name)}>
+              <IconButton onClick={(): void => handleDelete(player.id, player.name)}>
                 <DeleteIcon color="primary"/>
               </IconButton>
             </ListItemSecondaryAction>
@@ -51,8 +51,8 @@ export function DeletePlayersDialog({players, open, onClose, onDelete}: DeletePl
       <ConfirmationDialog message={`${t("confirmationDialog.deletePlayer")} ${deleteName}?`}
                           open={confirmationOpen}
                           onConfirm={handleConfirm}
-                          onDecline={() => setConfirmationOpen(false)}
-                          onCancel={() => setConfirmationOpen(false)}
+                          onDecline={(): void => setConfirmationOpen(false)}
+                          onCancel={(): void => setConfirmationOpen(false)}
       />
     </Dialog>
   );

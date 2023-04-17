@@ -23,7 +23,7 @@ const getStoredGame = (): GameModel => {
 export const useGameState = (): [GameModel, (game: GameModel) => void] => {
   const [game, setStateGame] = useState<GameModel>(getStoredGame);
 
-  const setGame = (newGame: GameModel) => {
+  const setGame = (newGame: GameModel): void => {
     setStateGame(newGame);
     localStorage.setItem(gameKey, JSON.stringify(newGame));
   }

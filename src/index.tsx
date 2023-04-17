@@ -15,6 +15,7 @@ import de from "./lang/de.json";
 import {checkVersion} from './store/version-checker';
 
 const container = document.getElementById('root');
+// eslint-disable-next-line
 const root = createRoot(container!);
 migrate();
 checkVersion();

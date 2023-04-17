@@ -37,13 +37,13 @@ const initialOrder = (): Order => {
   return order === 'asc' || order === 'desc' ? order : 'asc';
 }
 
-export function LeaderboardDialog({players, open, onClose}: LeaderboardDialogProps) {
+export function LeaderboardDialog({players, open, onClose}: LeaderboardDialogProps): JSX.Element {
   const [sortOrder, setSortOrder] = useState<Order>(initialOrder());
   const {t} = useTranslation();
 
   useEffect(() => localStorage.setItem('order', sortOrder), [sortOrder]);
 
-  let sortedPlayers = players
+  const sortedPlayers = players
     .map<PlayerScores>(player => ({
       position: 0,
       name: player.name,
@@ -77,7 +77,7 @@ export function LeaderboardDialog({players, open, onClose}: LeaderboardDialogPro
             <Button
               color="primary"
               endIcon={<ArrowUpwardIcon/>}
-              onClick={() => setSortOrder('desc')}
+              onClick={(): void => setSortOrder('desc')}
             >
               {t("leaderboard.highestFirst")}
             </Button>
@@ -85,7 +85,7 @@ export function LeaderboardDialog({players, open, onClose}: LeaderboardDialogPro
             <Button
               color="primary"
               endIcon={<ArrowDownwardIcon/>}
-              onClick={() => setSortOrder('asc')}
+              onClick={(): void => setSortOrder('asc')}
             >
               {t("leaderboard.lowestFirst")}
             </Button>

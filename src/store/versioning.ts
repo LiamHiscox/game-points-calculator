@@ -5,7 +5,7 @@ import {GamesDatabase} from "./games.store";
 
 const currentVersion = 1;
 
-export async function migrate() {
+export async function migrate(): Promise<void> {
   const version = +(localStorage.getItem('version') || '');
   if (version < 1) {
     const storedGame = localStorage.getItem(gameKey);

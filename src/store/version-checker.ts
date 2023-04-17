@@ -7,7 +7,7 @@ interface PackageJson {
 
 const versionKey = 'package-version';
 
-export const checkVersion = async () => {
+export const checkVersion = async (): Promise<void> => {
   const localVersion = localStorage.getItem(versionKey);
   try {
     const remotePackageJson = await axios.get<PackageJson>(packageJson.homepage.replace('/build/', '') + '/package.json');
@@ -18,5 +18,7 @@ export const checkVersion = async () => {
       localStorage.setItem(versionKey, remoteVersion);
       window.location.reload();
     }
-  } catch (e) {}
+  } catch (e) {
+    console.error(e);
+  }
 }

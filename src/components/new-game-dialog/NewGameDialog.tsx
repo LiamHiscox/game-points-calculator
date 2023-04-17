@@ -36,7 +36,7 @@ interface NewGameDialogProps {
   onSubmit: (game: GameModel) => void;
 }
 
-export function NewGameDialog({open, game, onClose, onSubmit}: NewGameDialogProps) {
+export function NewGameDialog({open, game, onClose, onSubmit}: NewGameDialogProps): JSX.Element {
   const [id, setId] = useState<string>('');
   const [timestamp, setTimestamp] = useState<Date>(new Date());
   const [commentFields, setCommentFields] = useState<boolean>(false);
@@ -55,24 +55,24 @@ export function NewGameDialog({open, game, onClose, onSubmit}: NewGameDialogProp
     }
   }, [game, open]);
 
-  const handleDelete = (index: number) => {
+  const handleDelete = (index: number): void => {
     setPlayers(players.filter((_, i) => i !== index));
   }
 
-  const handleClear = () => {
+  const handleClear = (): void => {
     inputEl?.current?.focus();
     setName('');
   }
 
-  const handleGameNameChange = (newName: string) => {
+  const handleGameNameChange = (newName: string): void => {
     setName(newName);
   }
 
-  const handleNameChange = (name: string, index: number) => {
+  const handleNameChange = (name: string, index: number): void => {
     setPlayers(players.map((player, i) => index === i ? {...player, name} : player));
   }
 
-  const addPlayer = () => {
+  const addPlayer = (): void => {
     setFocus(true);
     setPlayers(players.concat({id: uuidv4(), name: '', points: [null]}));
   }
@@ -107,7 +107,7 @@ export function NewGameDialog({open, game, onClose, onSubmit}: NewGameDialogProp
                              inputRef={inputEl}
                              value={name}
                              error={!name}
-                             onChange={e => handleGameNameChange(e.target.value)}
+                             onChange={(e): void => handleGameNameChange(e.target.value)}
                              endAdornment={
                                <InputAdornment position="end">
                                  <IconButton onClick={handleClear}>
@@ -124,7 +124,7 @@ export function NewGameDialog({open, game, onClose, onSubmit}: NewGameDialogProp
               <FormControlLabel
                 className="checkbox-form"
                 control={
-                  <Checkbox checked={commentFields} onClick={() => setCommentFields(!commentFields)}/>
+                  <Checkbox checked={commentFields} onClick={(): void => setCommentFields(!commentFields)}/>
                 }
                 label={t("newGame.showAdditionalTextField")}
               />
@@ -134,9 +134,9 @@ export function NewGameDialog({open, game, onClose, onSubmit}: NewGameDialogProp
             <Typography style={{fontWeight: "bold"}}> {t("newGame.players")} </Typography>
           </ListItem>
           <DraggableList items={players}
-                         onSortChange={(sorted) => setPlayers(sorted)}
-                         listItemId={(player) => player.id}
-                         renderListItem={(player, index) => (
+                         onSortChange={(sorted): void => setPlayers(sorted)}
+                         listItemId={(player): string => player.id}
+                         renderListItem={(player, index): JSX.Element => (
                            <>
                              <div className="drag-icon-container">
                                <DragIndicatorIcon color="primary"/>
@@ -146,10 +146,10 @@ export function NewGameDialog({open, game, onClose, onSubmit}: NewGameDialogProp
                                         autoFocus={focus && index === players.length - 1}
                                         value={player.name}
                                         style={{flex: "1"}}
-                                        onChange={(e) => handleNameChange(e.target.value, index)}
+                                        onChange={(e): void => handleNameChange(e.target.value, index)}
                                         error={!player.name}
                              />
-                             <IconButton onClick={() => handleDelete(index)}>
+                             <IconButton onClick={(): void => handleDelete(index)}>
                                <DeleteIcon color="primary"/>
                              </IconButton>
                            </>
@@ -164,7 +164,7 @@ export function NewGameDialog({open, game, onClose, onSubmit}: NewGameDialogProp
       </div>
       <Button color="primary"
               variant="contained"
-              onClick={() => onSubmit({id, timestamp, commentFields, name, players})}
+              onClick={(): void => onSubmit({id, timestamp, commentFields, name, players})}
               disabled={canSubmit()}
       >
         {t("newGame.start")}
