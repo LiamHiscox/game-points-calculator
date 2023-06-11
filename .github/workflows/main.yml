@@ -12,3 +12,8 @@ jobs:
           node-version: 18
       - run: npm ci
       - run: npm run build
+      - run: git config user.name github-actions
+      - run: git config user.email github-actions@github.com
+      - run: git add .
+      - run: git commit -m "automated build"
+      - run: git push
