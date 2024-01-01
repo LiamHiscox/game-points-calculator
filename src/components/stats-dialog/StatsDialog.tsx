@@ -1,12 +1,12 @@
 import './StatsDialog.scss';
-import {AppBar, Chip, Dialog, IconButton, Toolbar, Typography} from '@mui/material';
-import { PlayerModel } from '../../models/player.model';
+import { AppBar, Chip, Dialog, IconButton, Toolbar, Typography } from '@mui/material';
+import { PlayerModel, ColorPlayerModel } from '../../models/player.model';
 import { MinMaxTable } from './min-max-table/MinMaxTable';
 import { LineGraph } from './line-graph/LineGraph';
-import { BarChart } from './bar-chart/BarChart';
-import {UpTransition} from '../up-transition/UpTransition';
+import { UpTransition } from '../up-transition/UpTransition';
 import CloseIcon from '@mui/icons-material/Close';
-import {useTranslation} from 'react-i18next';
+import { useTranslation } from 'react-i18next';
+import { useState } from 'react';
 
 interface StatsDialogProps {
   open: boolean;
@@ -34,6 +34,22 @@ const colors = [
 
 export function StatsDialog({ open, players, onClose }: StatsDialogProps): JSX.Element {
   const {t} = useTranslation();
+  const [selected, setSelected] = useState<string[]>([]);
+  const coloredPlayers = players.map<ColorPlayerModel>((p, i) => ({color: colors[i%colors.length], ...p}));
+  const selectedPlayers = selected.length ? coloredPlayers.filter(p => selected.includes(p.id)) : coloredPlayers;
+
+  const playerClicked = (player: PlayerModel): void => {
+    if (selected.includes(player.id)) {
+      setSelected(selected.filter(id => id !== player.id));
+    } else {
+      const newSelected = selected.concat(player.id);
+      setSelected(newSelected.length !== players.length ? newSelected : []);
+    }
+  }
+
+  const isHighlighted = (player: PlayerModel): boolean => {
+    return !selected.length || selected.includes(player.id);
+  }
 
   return (
     <Dialog open={open} onClose={onClose} fullScreen TransitionComponent={UpTransition}>
@@ -45,23 +61,31 @@ export function StatsDialog({ open, players, onClose }: StatsDialogProps): JSX.E
         </Toolbar>
       </AppBar>
       <div className="content-container content-padding">
-      <Typography variant="h6"> {t('stats.gameProgress')} </Typography>
-        <div style={{ overflow: 'hidden', overflowX: 'auto' }}>
-          <LineGraph players={players} colors={colors} />
-        </div>
-        <div style={{ margin: '1rem 0' }}>
-          {players.map((player, i) => (
-            <Chip label={player.name} key={i} style={{backgroundColor: colors[i%colors.length], color: 'white'}} className="select-none" />
+        <div style={{ paddingBottom: '1rem', gap: '.5rem', display: 'flex', overflow: 'auto' }}>
+          {selected.length ?
+            <Chip
+              label='X'
+              style={{border: 'solid 1px black', backgroundColor: 'grey', color: 'white'}}
+              className="select-none"
+              onClick={() => setSelected([])}
+            /> : <></>}
+          {coloredPlayers.map((player, i) => (
+            <Chip
+              label={player.name}
+              key={i}
+              style={{border: 'solid 1px black', backgroundColor: player.color, color: 'white', opacity: isHighlighted(player) ? '1' : '0.5'}}
+              className="select-none"
+              onClick={() => playerClicked(player)}
+            />
           ))}
+        </div>
+        <Typography variant="h6"> {t('stats.gameProgress')} </Typography>
+        <div style={{ overflow: 'hidden', overflowX: 'auto' }}>
+          <LineGraph players={selectedPlayers} accumalate />
         </div>
         <Typography variant="h6"> {t('stats.pointsPerRound')} </Typography>
         <div style={{ overflow: 'hidden', overflowX: 'auto' }}>
-          <BarChart players={players} colors={colors} />
-        </div>
-        <div style={{ margin: '1rem 0' }}>
-          {players.map((player, i) => (
-            <Chip label={player.name} key={i} style={{backgroundColor: colors[i%colors.length], color: 'white'}} />
-          ))}
+          <LineGraph players={selectedPlayers} />
         </div>
         <Typography variant="h6"> {t('stats.minMax')} </Typography>
         <div style={{ overflow: 'auto' }}>

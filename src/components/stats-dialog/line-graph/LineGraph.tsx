@@ -1,17 +1,17 @@
 import { CartesianGrid, Line, LineChart, Tooltip, XAxis, YAxis, ResponsiveContainer } from 'recharts';
 import { Payload } from 'recharts/types/component/DefaultTooltipContent';
-import { PlayerModel } from '../../../models/player.model';
+import { ColorPlayerModel } from '../../../models/player.model';
 import { PointsDataModel } from '../../../models/points-data.model';
 import { FilteredPlayerModel } from '../../../models/filtered-player.model';
 import { useEffect, useState } from 'react';
 import {useTranslation} from 'react-i18next';
 
 interface LineGraphProps {
-    players: PlayerModel[];
-    colors: string[];
+    players: ColorPlayerModel[];
+    accumalate?: boolean;
 }
 
-export function LineGraph({ players, colors }: LineGraphProps): JSX.Element {
+export function LineGraph({ players, accumalate }: LineGraphProps): JSX.Element {
     const [data, setData] = useState<PointsDataModel[]>([]);
     const [maxRounds, setMaxRounds] = useState<number>(0);
     const {t} = useTranslation();
@@ -22,7 +22,7 @@ export function LineGraph({ players, colors }: LineGraphProps): JSX.Element {
                 if (typeof cur?.points !== 'number') {
                     return acc;
                 }
-                if (acc.length === 0) {
+                if (!accumalate || acc.length === 0) {
                     return acc.concat(cur.points);
                 }
                 const lastSum = acc[acc.length - 1];
@@ -74,8 +74,8 @@ export function LineGraph({ players, colors }: LineGraphProps): JSX.Element {
                     labelFormatter={(label): string => `${t('stats.round')} ${label}`}
                     itemSorter={(item: Payload<number, string>): number => -(item.value || 0)}
                 />
-                {players.map((player, i) => (
-                    <Line type="monotone" dataKey={player.name} stroke={colors[i]} key={player.id} />
+                {players.map((player) => (
+                    <Line type="monotone" dataKey={player.name} stroke={player.color} key={player.id} />
                 ))}
             </LineChart>
         </ResponsiveContainer>
