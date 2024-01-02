@@ -54,6 +54,8 @@ export function NewGameDialog({open, game, onClose, onSubmit}: NewGameDialogProp
       setTimestamp(new Date());
       setName(game.name);
       setPlayers(game.players.map(player => ({...player, points: [{}]})));
+      setCommentFields(game.commentFields);
+      setShowStartingPlayer(game.showStartingPlayer);
     }
   }, [game, open]);
 
