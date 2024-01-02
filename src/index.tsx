@@ -16,12 +16,7 @@ import {checkVersion} from './store/version-checker';
 
 (async (): Promise<void> => {
   if (navigator.storage && navigator.storage.persist) {
-    const persistent = await navigator.storage.persist();
-    if (persistent) {
-      console.log('Storage will not be cleared except by explicit user action');
-    } else {
-      console.warn('Storage may be cleared by the UA under storage pressure.');
-    }
+    await navigator.storage.persist();
   }
   await checkVersion();
   await migrate();
