@@ -1,17 +1,15 @@
 export interface PlayerModel {
   id: string;
   name: string;
-  points: Points[];
+  points: PointModel[];
 }
 
 export interface ColorPlayerModel {
   id: string;
   name: string;
-  points: Points[];
+  points: PointModel[];
   color: string;
 }
-
-export type Points = PointModel | null;
 
 export interface PointModel {
   points?: number;

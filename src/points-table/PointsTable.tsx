@@ -1,12 +1,12 @@
 import './PointsTable.scss';
 import Player from './player/Player';
-import {PlayerModel, Points} from '../models/player.model';
+import {PlayerModel, PointModel} from '../models/player.model';
 import React, {useEffect, useState} from 'react';
 
 interface PointsTableProps {
   players: PlayerModel[];
   onPlayerNameChange?: (name: string, id: string) => void;
-  onPointsChange?: (points: Points[], id: string) => void;
+  onPointsChange?: (points: PointModel[], id: string) => void;
   readonly: boolean;
   showRows: boolean;
   commentFields: boolean;
@@ -25,7 +25,7 @@ export function PointsTable({
   const [rounds, setRounds] = useState<null[]>([]);
 
   const filteredPoints = players
-    .map(pl => pl.points.filter(p => typeof p?.points === 'number'));
+    .map(pl => pl.points.filter(p => typeof p.points === 'number'));
   const turn = filteredPoints
     .reduce((minLength, points) => minLength > points.length ? points.length : minLength, filteredPoints[0].length) % players.length;
 
@@ -39,7 +39,7 @@ export function PointsTable({
       <div className="player-names">
         <div className={`player-row-placeholder-names ${showRows ? 'placeholder-open' : 'placeholder-closed'}`}/>
         {players.map((player, index) => (
-          <input className={showStartingPlayer && turn === index ? 'highlighted player-name' : 'player-name'}
+          <input className={`player-name ${showStartingPlayer && turn === index ? 'highlighted' : ''}`}
                  type="text"
                  disabled={readonly}
                  key={index}
@@ -72,7 +72,7 @@ export function PointsTable({
         <div className={`player-row-placeholder-points ${showRows ? 'placeholder-open' : ' placeholder-closed'}`}/>
         {players.map((player, i) =>
           <div className="player-score player-header-cell" key={i}>
-            {player.points.reduce((sum: number, model: Points) => sum + (model?.points || 0), 0)}
+            {player.points.reduce((sum: number, model: PointModel) => sum + (model.points || 0), 0)}
           </div>
         )}
       </div>

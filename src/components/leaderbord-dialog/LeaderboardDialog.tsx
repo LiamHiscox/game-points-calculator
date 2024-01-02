@@ -1,5 +1,5 @@
 import './LeaderboardDialog.scss';
-import {PlayerModel, Points} from '../../models/player.model';
+import {PlayerModel, PointModel} from '../../models/player.model';
 import React, {useEffect, useState} from 'react';
 import Dialog from '@mui/material/Dialog';
 import {
@@ -47,7 +47,7 @@ export function LeaderboardDialog({players, open, onClose}: LeaderboardDialogPro
     .map<PlayerScores>(player => ({
       position: 0,
       name: player.name,
-      score: player.points.reduce((sum: number, points: Points) => sum + (points?.points || 0), 0),
+      score: player.points.reduce((sum: number, points: PointModel) => sum + (points.points || 0), 0),
       last: false
     }))
     .sort((a, b) => sortOrder === 'asc' ? (a.score - b.score) : (b.score - a.score))

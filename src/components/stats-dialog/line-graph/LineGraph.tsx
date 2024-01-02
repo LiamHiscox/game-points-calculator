@@ -19,7 +19,7 @@ export function LineGraph({ players, accumalate }: LineGraphProps): JSX.Element 
     useEffect(() => {
         const newPlayers = players.map<FilteredPlayerModel>(player => {
             const points = player.points.reduce((acc: number[], cur) => {
-                if (typeof cur?.points !== 'number') {
+                if (typeof cur.points !== 'number') {
                     return acc;
                 }
                 if (!accumalate || acc.length === 0) {

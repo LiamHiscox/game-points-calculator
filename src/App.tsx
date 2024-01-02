@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import './App.scss';
-import {PlayerModel, Points} from './models/player.model';
+import {PlayerModel, PointModel} from './models/player.model';
 import {useGameState} from './store/game.store';
 import {DeletePlayersDialog} from './components/delete-players-dialog/DeletePlayersDialog';
 import {useSnackbar} from 'notistack';
@@ -32,7 +32,7 @@ function App(): JSX.Element {
   if (game.players.length === 0) {
     setGame({
       ...game,
-      players: [{id: uuidv4(), name: 'Player 1', points: [null]}]
+      players: [{id: uuidv4(), name: 'Player 1', points: [{}]}]
     });
   }
 
@@ -43,7 +43,8 @@ function App(): JSX.Element {
   const canSaveGame = (game: GameModel): boolean => {
     return game
       .players
-      .map(player => player.points.filter(points => points !== null)).filter(points => points.length > 0)
+      .map(player => player.points.filter(points => typeof points.points === 'number'))
+      .filter(points => points.length > 0)
       .length >= game.players.length;
   }
 
@@ -69,7 +70,7 @@ function App(): JSX.Element {
     setHistoryOpen(false);
   }
 
-  const handlePointsChange = (points: Points[], id: string): void => {
+  const handlePointsChange = (points: PointModel[], id: string): void => {
     setGame({
       ...game,
       players: game.players.map(player => player.id === id ? {...player, points} : player)
@@ -79,7 +80,7 @@ function App(): JSX.Element {
   const addPlayer = (): void => {
     setGame({
       ...game,
-      players: game.players.concat({id: uuidv4(), name: `Player ${game.players.length + 1}`, points: [null]})
+      players: game.players.concat({id: uuidv4(), name: `Player ${game.players.length + 1}`, points: [{}]})
     });
     enqueueSnackbar(`${game.players.length + 1} players`);
   }
@@ -87,7 +88,7 @@ function App(): JSX.Element {
   const clearPoints = (save: boolean): void => {
     setNewGame({
       ...game,
-      players: game.players.map(player => ({...player, points: [null]}))
+      players: game.players.map(player => ({...player, points: [{}]}))
     }, save);
   }
 

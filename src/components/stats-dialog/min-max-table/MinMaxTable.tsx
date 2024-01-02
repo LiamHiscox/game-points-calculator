@@ -21,7 +21,7 @@ export function MinMaxTable({ players }: MinMaxTableProps): JSX.Element {
 
     useEffect(() => {
         const minMax = players.reduce((acc: MinMaxPointsModel[], player) => {
-            const points = player.points.reduce((total: number[], p) => typeof p?.points === 'number' ? total.concat(p?.points) : total, []);
+            const points = player.points.reduce((total: number[], p) => typeof p.points === 'number' ? total.concat(p.points) : total, []);
             const min = points.reduce((min, cur) => cur < min ? cur : min, points[0] || 0);
             const max = points.reduce((max, cur) => cur > max ? cur : max, points[0] || 0);
             return acc.concat({ name: player.name, min, max });

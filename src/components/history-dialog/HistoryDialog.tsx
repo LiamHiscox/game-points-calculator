@@ -18,7 +18,7 @@ import {
 import React, {useState} from 'react';
 import {GameModel} from '../../models/game.model';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import {Points} from '../../models/player.model';
+import {PointModel} from '../../models/player.model';
 import ZoomInIcon from '@mui/icons-material/ZoomIn';
 import DeleteIcon from '@mui/icons-material/Delete';
 import ReplayIcon from '@mui/icons-material/Replay';
@@ -124,7 +124,7 @@ export function HistoryDialog({open, onClose, onReturnPlaying, onDeleteGame, gam
                 <TableRow>
                   {game.players.map((player, pi) => (
                     <TableCell key={pi} component="th" scope="row">
-                      {player.points.reduce((sum: number, points: Points) => sum + (points?.points || 0), 0)}
+                      {player.points.reduce((sum: number, points: PointModel) => sum + (points.points || 0), 0)}
                     </TableCell>
                   ))}
                 </TableRow>

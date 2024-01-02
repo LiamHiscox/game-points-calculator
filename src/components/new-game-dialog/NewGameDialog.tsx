@@ -53,7 +53,7 @@ export function NewGameDialog({open, game, onClose, onSubmit}: NewGameDialogProp
       setId(uuidv4());
       setTimestamp(new Date());
       setName(game.name);
-      setPlayers(game.players.map(player => ({...player, points: [null]})));
+      setPlayers(game.players.map(player => ({...player, points: [{}]})));
     }
   }, [game, open]);
 
@@ -76,7 +76,7 @@ export function NewGameDialog({open, game, onClose, onSubmit}: NewGameDialogProp
 
   const addPlayer = (): void => {
     setFocus(true);
-    setPlayers(players.concat({id: uuidv4(), name: '', points: [null]}));
+    setPlayers(players.concat({id: uuidv4(), name: '', points: [{}]}));
   }
 
   const canSubmit = (): boolean => {
