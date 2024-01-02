@@ -15,8 +15,7 @@ import {
   Typography,
   Checkbox,
   FormControlLabel,
-  FormGroup,
-  Tooltip
+  FormGroup
 } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import AddIcon from '@mui/icons-material/Add';
@@ -29,7 +28,7 @@ import {UpTransition} from '../up-transition/UpTransition';
 import {DraggableList} from '../draggable-list/DraggableList';
 import {useTranslation} from 'react-i18next';
 import DragIndicatorIcon from '@mui/icons-material/DragIndicator';
-import HelpIcon from '@mui/icons-material/Help';
+import { HelpTooltip } from '../help-tooltip/HelpTooltip';
 
 interface NewGameDialogProps {
   open: boolean;
@@ -132,6 +131,7 @@ export function NewGameDialog({open, game, onClose, onSubmit}: NewGameDialogProp
                 label={t('newGame.showAdditionalTextField')}
               />
             </FormGroup>
+            <HelpTooltip title={t('newGame.showAdditionalTextFieldHelp')}/>
           </ListItem>
           <ListItem>
             <FormGroup>
@@ -143,11 +143,7 @@ export function NewGameDialog({open, game, onClose, onSubmit}: NewGameDialogProp
                 label={t('newGame.showStartingPlayer')}
               />
             </FormGroup>
-            <div>
-              <Tooltip title={t('newGame.showStartingPlayerHelp')} disableTouchListener>
-                <HelpIcon/>
-              </Tooltip>
-            </div>
+            <HelpTooltip title={t('newGame.showStartingPlayerHelp')}/>
           </ListItem>
           <ListItem>
             <Typography style={{fontWeight: 'bold'}}> {t('newGame.players')} </Typography>

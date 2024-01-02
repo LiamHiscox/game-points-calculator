@@ -50,8 +50,9 @@
   },
   "newGame": {
     "startNewGame": "Start New Game",
-    "game": "Game",
+    "game": "Name of Game",
     "showAdditionalTextField": "Show Additional Text Field",
+    "showAdditionalTextFieldHelp": "A text box appears next to each score box for additional notes.",
     "showStartingPlayer": "Highlight Starting Player",
     "showStartingPlayerHelp": "Sort the list of players according to your seating arrangement. The first player in the list starts.",
     "players": "Players",

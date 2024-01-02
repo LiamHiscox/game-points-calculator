@@ -50,8 +50,9 @@
   },
   "newGame": {
     "startNewGame": "Neues Spiel starten",
-    "game": "Spiel",
+    "game": "Spielname",
     "showAdditionalTextField": "Zusätzliches Textfeld anzeigen",
+    "showAdditionalTextFieldHelp": "Ein Textfeld wird neben jedem Punktefeld angezeigt für zusätzliche Notizen.",
     "showStartingPlayer": "Startenden Spieler Hervorheben",
     "showStartingPlayerHelp": "Sortiere die Spielerliste nach ihrer Sitzordnung. Der erste Spieler in der Liste beginnt.",
     "players": "Spieler",
