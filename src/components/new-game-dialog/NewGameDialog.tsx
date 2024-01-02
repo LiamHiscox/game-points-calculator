@@ -15,7 +15,8 @@ import {
   Typography,
   Checkbox,
   FormControlLabel,
-  FormGroup
+  FormGroup,
+  Tooltip
 } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import AddIcon from '@mui/icons-material/Add';
@@ -26,8 +27,9 @@ import {GameModel} from '../../models/game.model';
 import {PlayerModel} from '../../models/player.model';
 import {UpTransition} from '../up-transition/UpTransition';
 import {DraggableList} from '../draggable-list/DraggableList';
-import DragIndicatorIcon from '@mui/icons-material/DragIndicator';
 import {useTranslation} from 'react-i18next';
+import DragIndicatorIcon from '@mui/icons-material/DragIndicator';
+import HelpIcon from '@mui/icons-material/Help';
 
 interface NewGameDialogProps {
   open: boolean;
@@ -40,6 +42,7 @@ export function NewGameDialog({open, game, onClose, onSubmit}: NewGameDialogProp
   const [id, setId] = useState<string>('');
   const [timestamp, setTimestamp] = useState<Date>(new Date());
   const [commentFields, setCommentFields] = useState<boolean>(false);
+  const [showStartingPlayer, setShowStartingPlayer] = useState<boolean>(false);
   const [name, setName] = useState<string>('');
   const [players, setPlayers] = useState<PlayerModel[]>([]);
   const [focus, setFocus] = useState<boolean>(false);
@@ -131,6 +134,22 @@ export function NewGameDialog({open, game, onClose, onSubmit}: NewGameDialogProp
             </FormGroup>
           </ListItem>
           <ListItem>
+            <FormGroup>
+              <FormControlLabel
+                className="checkbox-form"
+                control={
+                  <Checkbox checked={showStartingPlayer} onClick={(): void => setShowStartingPlayer(!showStartingPlayer)}/>
+                }
+                label={t('newGame.showStartingPlayer')}
+              />
+            </FormGroup>
+            <div>
+              <Tooltip title={t('newGame.showStartingPlayerHelp')} disableTouchListener>
+                <HelpIcon/>
+              </Tooltip>
+            </div>
+          </ListItem>
+          <ListItem>
             <Typography style={{fontWeight: 'bold'}}> {t('newGame.players')} </Typography>
           </ListItem>
           <DraggableList items={players}
@@ -164,7 +183,7 @@ export function NewGameDialog({open, game, onClose, onSubmit}: NewGameDialogProp
       </div>
       <Button color="primary"
               variant="contained"
-              onClick={(): void => onSubmit({id, timestamp, commentFields, name, players})}
+              onClick={(): void => onSubmit({id, timestamp, commentFields, name, players, showStartingPlayer})}
               disabled={canSubmit()}
       >
         {t('newGame.start')}

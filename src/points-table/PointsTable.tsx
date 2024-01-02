@@ -10,6 +10,7 @@ interface PointsTableProps {
   readonly: boolean;
   showRows: boolean;
   commentFields: boolean;
+  showStartingPlayer: boolean;
 }
 
 export function PointsTable({
@@ -18,9 +19,15 @@ export function PointsTable({
                               onPointsChange,
                               readonly,
                               showRows,
-                              commentFields
+                              commentFields,
+                              showStartingPlayer
                             }: PointsTableProps): JSX.Element {
   const [rounds, setRounds] = useState<null[]>([]);
+
+  const filteredPoints = players
+    .map(pl => pl.points.filter(p => typeof p?.points === 'number'));
+  const turn = filteredPoints
+    .reduce((minLength, points) => minLength > points.length ? points.length : minLength, filteredPoints[0].length) % players.length;
 
   useEffect(() => {
     const max = players.reduce((m, {points}) => points.length > m ? points.length : m, 0);
@@ -32,7 +39,7 @@ export function PointsTable({
       <div className="player-names">
         <div className={`player-row-placeholder-names ${showRows ? 'placeholder-open' : 'placeholder-closed'}`}/>
         {players.map((player, index) => (
-          <input className="player-name"
+          <input className={showStartingPlayer && turn === index ? "highlighted player-name" : "player-name"}
                  type="text"
                  disabled={readonly}
                  key={index}

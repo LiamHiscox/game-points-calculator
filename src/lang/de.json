@@ -15,7 +15,8 @@
     "newGame": "Neues Spiel",
     "history": "Verlauf",
     "statistics": "Statistiken",
-    "additionalTextField": "Zusätzliches Textfeld"
+    "additionalTextField": "Zusätzliches Textfeld",
+    "showStartingPlayer": "Startender Spieler"
   },
   "confirmationDialog": {
     "saveCurrentGame": "Möchtest du das aktuelle Spiel im Verlauf speichern?",
@@ -51,6 +52,8 @@
     "startNewGame": "Neues Spiel starten",
     "game": "Spiel",
     "showAdditionalTextField": "Zusätzliches Textfeld anzeigen",
+    "showStartingPlayer": "Startenden Spieler Hervorheben",
+    "showStartingPlayerHelp": "Sortiere die Spielerliste nach ihrer Sitzordnung. Der erste Spieler in der Liste beginnt.",
     "players": "Spieler",
     "name": "Name",
     "start": "Starten"

@@ -165,6 +165,7 @@ export function HistoryDialog({open, onClose, onReturnPlaying, onDeleteGame, gam
         <PointsTable players={game?.players || []}
                      readonly={true}
                      showRows={false}
+                     showStartingPlayer={false}
                      commentFields={!!game?.commentFields}
         />
       </Dialog>

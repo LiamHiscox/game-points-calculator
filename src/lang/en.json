@@ -15,7 +15,8 @@
     "newGame": "New Game",
     "history": "History",
     "statistics": "Statistics",
-    "additionalTextField": "Additional Text Field"
+    "additionalTextField": "Additional Text Field",
+    "showStartingPlayer": "Starting Player"
   },
   "confirmationDialog": {
     "saveCurrentGame": "Do you want to save the current game to the history?",
@@ -51,6 +52,8 @@
     "startNewGame": "Start New Game",
     "game": "Game",
     "showAdditionalTextField": "Show Additional Text Field",
+    "showStartingPlayer": "Highlight Starting Player",
+    "showStartingPlayerHelp": "Sort the list of players according to your seating arrangement. The first player in the list starts.",
     "players": "Players",
     "name": "Name",
     "start": "Start"

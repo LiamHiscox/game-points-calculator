@@ -23,6 +23,8 @@ interface TopBarProps {
   gameName: string;
   canSaveGame: boolean;
   commentField: boolean;
+  showStartingPlayer: boolean;
+  showRows: boolean;
   onAddPlayer: () => void;
   onClearPoints: (save: boolean) => void;
   onOpenDelete: () => void;
@@ -30,15 +32,16 @@ interface TopBarProps {
   onNewGame: () => void;
   onNameChange: (name: string) => void;
   onOpenHistory: () => void;
-  showRows: boolean;
   onToggleRows: () => void;
   onOpenStats: () => void;
   onToggleCommentField: () => void;
+  onToggleShowStartingPlayer: () => void;
   onSortPlayers: () => void;
 }
 
 export function TopBar({
                          commentField,
+                         showStartingPlayer,
                          gameName,
                          canSaveGame,
                          onAddPlayer,
@@ -52,6 +55,7 @@ export function TopBar({
                          onToggleRows,
                          onOpenStats,
                          onToggleCommentField,
+                         onToggleShowStartingPlayer,
                          onSortPlayers
                        }: TopBarProps): JSX.Element {
   const [confirmationOpen, setConfirmationOpen] = React.useState(false);
@@ -145,6 +149,13 @@ export function TopBar({
             (<ListItemIcon> <CheckBoxOutlineBlankIcon color="primary"/> </ListItemIcon>)
           }
           <ListItemText primary={<Typography> {t('headers.additionalTextField')} </Typography>}/>
+        </MenuItem>
+        <MenuItem onClick={onToggleShowStartingPlayer}>
+          {showStartingPlayer ?
+            (<ListItemIcon> <CheckBoxIcon color="primary"/> </ListItemIcon>) :
+            (<ListItemIcon> <CheckBoxOutlineBlankIcon color="primary"/> </ListItemIcon>)
+          }
+          <ListItemText primary={<Typography> {t('headers.showStartingPlayer')} </Typography>}/>
         </MenuItem>
         <MenuItem onClick={nextLanguage}>
           <ListItemIcon> <LanguageIcon color="primary"/> </ListItemIcon>

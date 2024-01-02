@@ -117,6 +117,13 @@ function App(): JSX.Element {
     });
   }
 
+  const toggleShowStartingPlayer = (): void => {
+    setGame({
+      ...game,
+      showStartingPlayer: !game.showStartingPlayer
+    });
+  }
+
   const changePlayerSort = (players: PlayerModel[]): void => {
     setSortPlayersOpen(false);
     setGame({...game, players});
@@ -125,6 +132,7 @@ function App(): JSX.Element {
   return (
     <div className="app">
       <TopBar commentField={game.commentFields}
+              showStartingPlayer={game.showStartingPlayer}
               gameName={game.name}
               canSaveGame={canSaveGame(game)}
               onNameChange={setGameName}
@@ -138,10 +146,12 @@ function App(): JSX.Element {
               showRows={showRows}
               onToggleRows={handleToggleRows}
               onToggleCommentField={toggleCommentField}
+              onToggleShowStartingPlayer={toggleShowStartingPlayer}
               onSortPlayers={(): void => setSortPlayersOpen(true)}
       />
       <PointsTable onPlayerNameChange={setPlayerName}
                    onPointsChange={handlePointsChange}
+                   showStartingPlayer={game.showStartingPlayer}
                    players={game.players}
                    readonly={false}
                    showRows={showRows}
