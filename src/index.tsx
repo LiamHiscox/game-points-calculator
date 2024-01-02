@@ -14,45 +14,57 @@ import en from './lang/en.json';
 import de from './lang/de.json';
 import {checkVersion} from './store/version-checker';
 
-const container = document.getElementById('root');
-// eslint-disable-next-line
-const root = createRoot(container!);
-migrate();
-checkVersion();
-
-i18n
-  .use(LanguageDetector)
-  .use(initReactI18next) // passes i18n down to react-i18next
-  .init({
-    resources: {
-      de: {
-        translation: de
-      },
-      en: {
-        translation: en
-      }
-    },
-    fallbackLng: 'en',
-    supportedLngs: ['en', 'de'],
-    nonExplicitSupportedLngs: true,
-    interpolation: {
-      escapeValue: false // react already safes from xss => https://www.i18next.com/translation-function/interpolation#unescape
+(async (): Promise<void> => {
+  if (navigator.storage && navigator.storage.persist) {
+    const persistent = await navigator.storage.persist();
+    if (persistent) {
+      console.log('Storage will not be cleared except by explicit user action');
+    } else {
+      console.warn('Storage may be cleared by the UA under storage pressure.');
     }
-  });
+  }
+  await checkVersion();
+  await migrate();
 
-root.render(
-  <ThemeProvider theme={theme}>
-    <SnackbarProvider
-      maxSnack={1}
-      dense={true}
-      anchorOrigin={{
-        vertical: 'bottom',
-        horizontal: 'center',
-      }}
-    >
-      <App/>
-    </SnackbarProvider>
-  </ThemeProvider>
-);
+  const container = document.getElementById('root');
+  // eslint-disable-next-line
+  const root = createRoot(container!);
+  
+  i18n
+    .use(LanguageDetector)
+    .use(initReactI18next) // passes i18n down to react-i18next
+    .init({
+      resources: {
+        de: {
+          translation: de
+        },
+        en: {
+          translation: en
+        }
+      },
+      fallbackLng: 'en',
+      supportedLngs: ['en', 'de'],
+      nonExplicitSupportedLngs: true,
+      interpolation: {
+        escapeValue: false // react already safes from xss => https://www.i18next.com/translation-function/interpolation#unescape
+      }
+    });
+  
+  root.render(
+    <ThemeProvider theme={theme}>
+      <SnackbarProvider
+        maxSnack={1}
+        dense={true}
+        anchorOrigin={{
+          vertical: 'bottom',
+          horizontal: 'center',
+        }}
+      >
+        <App/>
+      </SnackbarProvider>
+    </ThemeProvider>
+  );
+  
+  serviceWorkerRegistration.register();
+})();
 
-serviceWorkerRegistration.register();
