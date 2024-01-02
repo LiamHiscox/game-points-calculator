@@ -1,0 +1,14 @@
+.dialog-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  .title {
+    padding-top: 20px;
+    padding-left: 24px;
+  }
+}
+.button-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}

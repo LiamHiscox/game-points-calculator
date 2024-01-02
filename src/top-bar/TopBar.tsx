@@ -5,7 +5,6 @@ import RotateLeftIcon from '@mui/icons-material/RotateLeft';
 import DeleteIcon from '@mui/icons-material/Delete';
 import AddIcon from '@mui/icons-material/Add';
 import GradeIcon from '@mui/icons-material/Grade';
-import AddCircleIcon from '@mui/icons-material/AddCircle';
 import HistoryIcon from '@mui/icons-material/History';
 import ShowChartIcon from '@mui/icons-material/ShowChart';
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
@@ -15,6 +14,7 @@ import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 import LanguageIcon from '@mui/icons-material/Language';
 import SortIcon from '@mui/icons-material/Sort';
+import StartIcon from '@mui/icons-material/Start';
 import React from 'react';
 import {useTranslation} from 'react-i18next';
 import i18n from 'i18next';
@@ -44,6 +44,7 @@ export function TopBar({
                          showStartingPlayer,
                          gameName,
                          canSaveGame,
+                         showRows,
                          onAddPlayer,
                          onClearPoints,
                          onOpenDelete,
@@ -51,7 +52,6 @@ export function TopBar({
                          onNewGame,
                          onNameChange,
                          onOpenHistory,
-                         showRows,
                          onToggleRows,
                          onOpenStats,
                          onToggleCommentField,
@@ -132,7 +132,7 @@ export function TopBar({
           <ListItemText primary={<Typography> {t('headers.leaderboard')} </Typography>}/>
         </MenuItem>
         <MenuItem onClick={onNewGame}>
-          <ListItemIcon> <AddCircleIcon color="primary"/> </ListItemIcon>
+          <ListItemIcon> <StartIcon color="primary"/> </ListItemIcon>
           <ListItemText primary={<Typography> {t('headers.newGame')} </Typography>}/>
         </MenuItem>
         <MenuItem onClick={onOpenHistory}>

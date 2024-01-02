@@ -15,6 +15,7 @@ import {useGamesState} from './store/games.store';
 import {GameModel} from './models/game.model';
 import {PwaInstallationDialog} from './components/pwa-installation-dialog/PwaInstallationDialog';
 import {SortPlayersDialog} from './components/sort-players-dialog/SortPlayersDialog';
+import { StartupActionsDialog } from './components/startup-actions-dialog/StartupActionsDialog';
 
 function App(): JSX.Element {
   const [game, setGame] = useGameState();
@@ -26,6 +27,7 @@ function App(): JSX.Element {
   const [statsOpen, setStatsOpen] = useState(false);
   const [sortPlayersOpen, setSortPlayersOpen] = useState(false);
   const [installationOpen, setInstallationOpen] = useState(true);
+  const [startupActionsOpen, setStartupActionsOpen] = useState(true);
   const [showRows, setShowRows] = useState(!!localStorage.getItem('showRows'));
   const {enqueueSnackbar} = useSnackbar();
 
@@ -130,6 +132,11 @@ function App(): JSX.Element {
     setGame({...game, players});
   }
 
+  const onStartNewGame = (): void => {
+    setStartupActionsOpen(false);
+    setNewGameOpen(true);
+  }
+
   return (
     <div className="app">
       <TopBar commentField={game.commentFields}
@@ -182,13 +189,17 @@ function App(): JSX.Element {
                    onClose={(): void => setStatsOpen(false)}
                    players={game.players}
       />
-      <PwaInstallationDialog open={installationOpen}
-                             onClose={(): void => setInstallationOpen(false)}
-      />
       <SortPlayersDialog open={sortPlayersOpen}
                          onClose={(): void => setSortPlayersOpen(false)}
                          onSubmit={changePlayerSort}
                          players={game.players}
+      />
+      <StartupActionsDialog open={startupActionsOpen}
+                            onCancel={(): void => setStartupActionsOpen(false)}
+                            onStartNewGame={onStartNewGame}
+      />
+      <PwaInstallationDialog open={installationOpen}
+                             onClose={(): void => setInstallationOpen(false)}
       />
     </div>
   );

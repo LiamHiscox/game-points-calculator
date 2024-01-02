@@ -48,6 +48,11 @@
     "notSupportedBrowser": "Diese App hat nur bestätigte Unterstützung für Safari auf IOS-, und für Chrome auf Android-Geräten!",
     "appInstalled": "App installiert!"
   },
+  "startupActions": {
+    "welcome": "Willkommen zurück!",
+    "startNewGame": "Neues Spiel starten",
+    "continueCurrent": "Aktuelles fortsetzen"
+  },
   "newGame": {
     "startNewGame": "Neues Spiel starten",
     "game": "Spielname",
