@@ -55,7 +55,7 @@
   },
   "newGame": {
     "startNewGame": "Start New Game",
-    "game": "Name of Game",
+    "game": "Game",
     "showAdditionalTextField": "Show Additional Text Field",
     "showAdditionalTextFieldHelp": "A text box appears next to each score box for additional notes.",
     "showStartingPlayer": "Highlight Starting Player",
