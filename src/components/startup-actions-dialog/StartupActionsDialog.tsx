@@ -27,7 +27,7 @@ export function StartupActionsDialog({open, onCancel, onStartNewGame}: StartupAc
   }, []);
 
   return (
-    <Dialog fullWidth={true} open={open} className="select-none">
+    <Dialog fullWidth={true} open={open} className="select-none" onClose={onCancel}>
       <div className="dialog-header">
         <Typography variant="h5" className="title"> {t('startupActions.welcome')} </Typography>
         <IconButton onClick={onCancel}> <CloseIcon/> </IconButton>
