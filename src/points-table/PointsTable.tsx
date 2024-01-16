@@ -1,7 +1,7 @@
 import './PointsTable.scss';
 import Player from './player/Player';
 import {PlayerModel, PointModel} from '../models/player.model';
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 
 interface PointsTableProps {
   players: PlayerModel[];
@@ -23,6 +23,7 @@ export function PointsTable({
                               showStartingPlayer
                             }: PointsTableProps): JSX.Element {
   const [rounds, setRounds] = useState<null[]>([]);
+  const playerTableContainerRef = useRef<HTMLDivElement>(null);
 
   const filteredPoints = players
     .map(pl => pl.points.filter(p => typeof p.points === 'number'));
@@ -34,8 +35,13 @@ export function PointsTable({
     setRounds(new Array(max).fill(null));
   }, [players]);
 
+  const scrollToInput = (index: number): void => {
+    const top = 40 * (index - 1);
+    playerTableContainerRef.current?.scrollTo({top, behavior: 'smooth'});
+  }
+
   return (
-    <div className="player-table-container">
+    <div className="player-table-container" ref={playerTableContainerRef}>
       <div className="player-names">
         <div className={`player-row-placeholder-names ${showRows ? 'placeholder-open' : 'placeholder-closed'}`}/>
         {players.map((player, index) => (
@@ -62,6 +68,7 @@ export function PointsTable({
             <Player key={i}
                     player={player}
                     onPointsChange={(points): void => onPointsChange && onPointsChange(points, player.id)}
+                    onInputFocus={scrollToInput}
                     readonly={readonly}
                     commentFields={commentFields}
             />

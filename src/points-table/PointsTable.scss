@@ -20,6 +20,11 @@
   padding: 0;
 }
 
+.highlighted {
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+}
+
 .player-header-cell {
   height: 2.5rem;
   display: flex;
@@ -114,9 +119,4 @@
   color: $secondaryText;
   flex: 1;
   user-select: none;
-}
-
-.highlighted {
-  text-decoration: underline;
-  text-decoration-thickness: 2px;
 }

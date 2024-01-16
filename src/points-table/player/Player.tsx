@@ -5,6 +5,7 @@ import {PlayerModel, PointModel} from '../../models/player.model';
 interface PlayerProps {
   player: PlayerModel;
   onPointsChange: (points: PointModel[]) => void;
+  onInputFocus: (index: number) => void;
   commentFields: boolean;
   readonly: boolean;
 }
@@ -12,6 +13,7 @@ interface PlayerProps {
 function Player({
                   player,
                   onPointsChange,
+                  onInputFocus,
                   readonly,
                   commentFields
                 }: PlayerProps): JSX.Element {
@@ -55,8 +57,9 @@ function Player({
                  type="number"
                  value={typeof p.points === 'number' ? p.points : ''}
                  onChange={(e): void => handlePointsChange(e, i)}
-                 onClick={(e): void => {
-                   e.currentTarget.select()
+                 onClick={(e): void => { 
+                   e.currentTarget.select();
+                   onInputFocus(i);
                  }}
                  disabled={readonly}
           />
@@ -66,7 +69,8 @@ function Player({
                    value={p?.comment || ''}
                    onChange={(e): void => handleCommentChange(e, i)}
                    onClick={(e): void => {
-                     e.currentTarget.select()
+                     e.currentTarget.select();
+                     onInputFocus(i);
                    }}
                    disabled={readonly}
             />
