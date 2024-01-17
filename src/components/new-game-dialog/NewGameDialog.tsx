@@ -38,7 +38,7 @@ interface NewGameDialogProps {
 }
 
 interface VirtualKeyboardApi {
-  addEventListener: (event: 'geometrychange', cb: (e: React.ChangeEvent<{boundingRect: { x: number, y: number, width: number, height: number }}>) => void) => void;
+  addEventListener: (event: 'geometrychange', cb: (e: React.ChangeEvent<{boundingRect: { height: number }}>) => void) => void;
 }
 
 export function NewGameDialog({open, game, onClose, onSubmit}: NewGameDialogProps): JSX.Element {
@@ -49,6 +49,7 @@ export function NewGameDialog({open, game, onClose, onSubmit}: NewGameDialogProp
   const [name, setName] = useState<string>('');
   const [players, setPlayers] = useState<PlayerModel[]>([]);
   const [focus, setFocus] = useState<boolean>(false);
+  const [keyboardVisible, setKeyboardVisible] = useState<boolean>(false);
   const [focusIndex, setFocusIndex] = useState<number| null>(null);
   const inputEl = useRef<HTMLInputElement>(null);
   const newGameListRef = useRef<HTMLDivElement>(null);
@@ -56,13 +57,13 @@ export function NewGameDialog({open, game, onClose, onSubmit}: NewGameDialogProp
 
   if ('virtualKeyboard' in navigator) {
     (navigator.virtualKeyboard as VirtualKeyboardApi).addEventListener('geometrychange', (e) => {
-      if (focusIndex !== null) {
+      const { height } = e.target.boundingRect;
+      const visible = height > 0;
+      if (visible !== keyboardVisible && focusIndex !== null) {
         const top = 165 + 72 * focusIndex;
         newGameListRef.current?.scrollTo({top, behavior: 'smooth'});
       }
-
-      const { x, y, width, height } = e.target.boundingRect;
-      alert(`geometrychange ${x} ${y} ${width} ${height}`);
+      setKeyboardVisible(visible);
     });
   }
 
