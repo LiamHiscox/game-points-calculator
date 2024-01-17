@@ -1,7 +1,10 @@
 @import "src/variables";
 
-.player-container {
+.player-container-padding {
   padding-bottom: calc(#{$height} - 13rem);
+}
+
+.player-container {
   display: flex;
   flex-direction: column;
   flex: 1;

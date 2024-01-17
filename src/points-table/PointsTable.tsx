@@ -45,7 +45,7 @@ export function PointsTable({
       <div className="player-names">
         <div className={`player-row-placeholder-names ${showRows ? 'placeholder-open' : 'placeholder-closed'}`}/>
         {players.map((player, index) => (
-          <input className={`player-name ${showStartingPlayer && turn === index ? 'highlighted' : ''}`}
+          <input className={`player-name ${showStartingPlayer && turn === index ? 'highlighted' : 'non-highlighted'}`}
                  type="text"
                  disabled={readonly}
                  key={index}

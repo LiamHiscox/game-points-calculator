@@ -50,7 +50,7 @@ function Player({
   }
 
   return (
-    <div className="player-container">
+    <div className={readonly ? 'player-container' : 'player-container player-container-padding'}>
       {player.points.map((p, i) => (
         <div className="player-points player-input-cell" key={i}>
           <input className={typeof p.points === 'number' ? 'points-input' : 'points-input empty-input'}
