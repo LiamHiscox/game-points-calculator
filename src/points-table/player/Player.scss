@@ -1,7 +1,7 @@
 @import "src/variables";
 
 .player-container-padding {
-  padding-bottom: calc(#{$height} - 13rem);
+  padding-bottom: calc(#{$height} - 13rem - env(keyboard-inset-height, 0));
 }
 
 .player-container {
