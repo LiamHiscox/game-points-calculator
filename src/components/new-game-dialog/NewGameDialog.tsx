@@ -54,9 +54,9 @@ export function NewGameDialog({open, game, onClose, onSubmit}: NewGameDialogProp
   const {t} = useTranslation();
 
   if ('virtualKeyboard' in navigator) {
-    (navigator.virtualKeyboard as VirtualKeyboardApi).addEventListener('geometrychange', (event) => {
-      const { x, y, width, height } = event.target.boundingRect;
-      console.log(x, y, width, height);
+    (navigator.virtualKeyboard as VirtualKeyboardApi).addEventListener('geometrychange', () => {
+      // const { x, y, width, height } = event.target.boundingRect;
+      alert('geometrychange');
     });
   }
 
@@ -101,7 +101,7 @@ export function NewGameDialog({open, game, onClose, onSubmit}: NewGameDialogProp
 
   const handlePlayerFocus = (index: number): void => {
     const top = 165 + 72 * index;
-    setTimeout(() => newGameListRef.current?.scrollTo({top, behavior: 'smooth'}), 100);
+    newGameListRef.current?.scrollTo({top, behavior: 'smooth'})
   } 
 
   return (
