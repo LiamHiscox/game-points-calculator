@@ -14,9 +14,9 @@ import en from './lang/en.json';
 import de from './lang/de.json';
 import {checkVersion} from './store/version-checker';
 
-interface VirtualKeyboardApi {
-  overlaysContent: boolean;
-}
+// interface VirtualKeyboardApi {
+//   overlaysContent: boolean;
+// }
 
 (async (): Promise<void> => {
   if (navigator.storage && navigator.storage.persist) {
@@ -26,7 +26,7 @@ interface VirtualKeyboardApi {
   checkVersion();
 
   if ('virtualKeyboard' in navigator) {
-    (navigator.virtualKeyboard as VirtualKeyboardApi).overlaysContent = true;
+    // (navigator.virtualKeyboard as VirtualKeyboardApi).overlaysContent = true;
   }
 
   const container = document.getElementById('root');
