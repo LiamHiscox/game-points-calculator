@@ -55,17 +55,19 @@ export function NewGameDialog({open, game, onClose, onSubmit}: NewGameDialogProp
   const newGameListRef = useRef<HTMLDivElement>(null);
   const {t} = useTranslation();
 
-  if ('virtualKeyboard' in navigator) {
-    (navigator.virtualKeyboard as VirtualKeyboardApi).addEventListener('geometrychange', (e) => {
-      const { height } = e.target.boundingRect;
-      const visible = height > 0;
-      if (visible !== keyboardVisible && focusIndex !== null) {
-        const top = 165 + 72 * focusIndex;
-        newGameListRef.current?.scrollTo({top, behavior: 'smooth'});
-      }
-      setKeyboardVisible(visible);
-    });
-  }
+  useEffect(() => {
+    if ('virtualKeyboard' in navigator) {
+      (navigator.virtualKeyboard as VirtualKeyboardApi).addEventListener('geometrychange', (e) => {
+        const { height } = e.target.boundingRect;
+        const visible = height > 0;
+        if (visible !== keyboardVisible && focusIndex !== null) {
+          const top = 165 + 72 * focusIndex;
+          newGameListRef.current?.scrollTo({top, behavior: 'smooth'});
+        }
+        setKeyboardVisible(visible);
+      });
+    }
+  }, []);
 
   useEffect(() => {
     if (open) {
