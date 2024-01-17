@@ -46,6 +46,7 @@ export function NewGameDialog({open, game, onClose, onSubmit}: NewGameDialogProp
   const [players, setPlayers] = useState<PlayerModel[]>([]);
   const [focus, setFocus] = useState<boolean>(false);
   const inputEl = useRef<HTMLInputElement>(null);
+  const newGameListRef = useRef<HTMLDivElement>(null);
   const {t} = useTranslation();
 
   useEffect(() => {
@@ -87,6 +88,11 @@ export function NewGameDialog({open, game, onClose, onSubmit}: NewGameDialogProp
     return emptyPlayerName || emptyGameName;
   }
 
+  const handlePlayerFocus = (index: number): void => {
+    const top = 165 + 72 * index;
+    newGameListRef.current?.scrollTo({top, behavior: 'smooth'});
+  } 
+
   return (
     <Dialog fullScreen
             open={open}
@@ -102,7 +108,7 @@ export function NewGameDialog({open, game, onClose, onSubmit}: NewGameDialogProp
           </IconButton>
         </Toolbar>
       </AppBar>
-      <div className="new-game-list">
+      <div className="new-game-list" ref={newGameListRef}>
         <List>
           <ListItem>
             <FormControl variant="outlined" className="player-name-form-control">
@@ -164,6 +170,7 @@ export function NewGameDialog({open, game, onClose, onSubmit}: NewGameDialogProp
                                         value={player.name}
                                         style={{flex: '1'}}
                                         onChange={(e): void => handleNameChange(e.target.value, index)}
+                                        onFocus={(): void => handlePlayerFocus(index)}
                                         error={!player.name}
                              />
                              <IconButton onClick={(): void => handleDelete(index)}>
