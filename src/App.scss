@@ -4,5 +4,8 @@
   display: flex;
   flex-direction: column;
   height: $height;
-  padding-bottom: env(keyboard-inset-height, 0px);
+}
+
+.keyboard-placeholder {
+  height: env(keyboard-inset-height, 0px);
 }
