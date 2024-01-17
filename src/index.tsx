@@ -14,20 +14,12 @@ import en from './lang/en.json';
 import de from './lang/de.json';
 import {checkVersion} from './store/version-checker';
 
-interface VirtualKeyboardApi {
-  overlaysContent: boolean;
-}
-
 (async (): Promise<void> => {
   if (navigator.storage && navigator.storage.persist) {
     await navigator.storage.persist();
   }
   await migrate();
   checkVersion();
-
-  if ('virtualKeyboard' in navigator) {
-    (navigator.virtualKeyboard as VirtualKeyboardApi).overlaysContent = true;
-  }
 
   const container = document.getElementById('root');
   // eslint-disable-next-line
