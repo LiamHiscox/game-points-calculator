@@ -56,6 +56,10 @@ export function NewGameDialog({open, game, onClose, onSubmit}: NewGameDialogProp
   const {t} = useTranslation();
 
   useEffect(() => {
+    alert('Hello World');
+  });
+
+  useEffect(() => {
     if ('virtualKeyboard' in navigator) {
       (navigator.virtualKeyboard as VirtualKeyboardApi).addEventListener('geometrychange', (e) => {
         const { height } = e.target.boundingRect;
