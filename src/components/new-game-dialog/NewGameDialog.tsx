@@ -37,6 +37,10 @@ interface NewGameDialogProps {
   onSubmit: (game: GameModel) => void;
 }
 
+interface VirtualKeyboardApi {
+  addEventListener: (event: 'geometrychange', cb: (e: React.ChangeEvent<{boundingRect: { x: number, y: number, width: number, height: number }}>) => void) => void;
+}
+
 export function NewGameDialog({open, game, onClose, onSubmit}: NewGameDialogProps): JSX.Element {
   const [id, setId] = useState<string>('');
   const [timestamp, setTimestamp] = useState<Date>(new Date());
@@ -48,6 +52,13 @@ export function NewGameDialog({open, game, onClose, onSubmit}: NewGameDialogProp
   const inputEl = useRef<HTMLInputElement>(null);
   const newGameListRef = useRef<HTMLDivElement>(null);
   const {t} = useTranslation();
+
+  if ('virtualKeyboard' in navigator) {
+    (navigator.virtualKeyboard as VirtualKeyboardApi).addEventListener('geometrychange', (event) => {
+      const { x, y, width, height } = event.target.boundingRect;
+      console.log(x, y, width, height);
+    });
+  }
 
   useEffect(() => {
     if (open) {
@@ -90,7 +101,7 @@ export function NewGameDialog({open, game, onClose, onSubmit}: NewGameDialogProp
 
   const handlePlayerFocus = (index: number): void => {
     const top = 165 + 72 * index;
-    newGameListRef.current?.scrollTo({top, behavior: 'smooth'});
+    setTimeout(() => newGameListRef.current?.scrollTo({top, behavior: 'smooth'}), 100);
   } 
 
   return (
