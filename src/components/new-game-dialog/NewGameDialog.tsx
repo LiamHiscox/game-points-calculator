@@ -186,6 +186,7 @@ export function NewGameDialog({open, game, onClose, onSubmit}: NewGameDialogProp
       >
         {t('newGame.start')}
       </Button>
+      <div className="keyboard-placeholder"/>
     </Dialog>
   );
 }

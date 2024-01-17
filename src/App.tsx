@@ -201,7 +201,7 @@ function App(): JSX.Element {
       <PwaInstallationDialog open={installationOpen}
                              onClose={(): void => setInstallationOpen(false)}
       />
-      <div className='keyboard-placeholder'/>
+      <div className="keyboard-placeholder"/>
     </div>
   );
 }
