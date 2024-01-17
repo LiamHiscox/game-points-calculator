@@ -37,11 +37,6 @@ interface NewGameDialogProps {
   onSubmit: (game: GameModel) => void;
 }
 
-interface VirtualKeyboardApi {
-  addEventListener: (event: 'geometrychange', cb: (e: React.ChangeEvent<{boundingRect: { height: number }}>) => void) => void;
-  boundingRect: { height: number };
-}
-
 export function NewGameDialog({open, game, onClose, onSubmit}: NewGameDialogProps): JSX.Element {
   const [id, setId] = useState<string>('');
   const [timestamp, setTimestamp] = useState<Date>(new Date());
@@ -50,23 +45,9 @@ export function NewGameDialog({open, game, onClose, onSubmit}: NewGameDialogProp
   const [name, setName] = useState<string>('');
   const [players, setPlayers] = useState<PlayerModel[]>([]);
   const [focus, setFocus] = useState<boolean>(false);
-  const [keyboardVisible, setKeyboardVisible] = useState<boolean>(false);
-  const [focusIndex, setFocusIndex] = useState<number| null>(null);
   const inputEl = useRef<HTMLInputElement>(null);
   const newGameListRef = useRef<HTMLDivElement>(null);
   const {t} = useTranslation();
-
-  useEffect(() => {
-    if ('virtualKeyboard' in navigator) {
-      const { height } = (navigator.virtualKeyboard as VirtualKeyboardApi).boundingRect;
-      const visible = height > 0;
-      if (visible !== keyboardVisible && focusIndex !== null) {
-        const top = 165 + 72 * focusIndex;
-        newGameListRef.current?.scrollTo({top, behavior: 'smooth'});
-      }
-      setKeyboardVisible(visible);
-    }
-  });
 
   useEffect(() => {
     if (open) {
@@ -78,13 +59,6 @@ export function NewGameDialog({open, game, onClose, onSubmit}: NewGameDialogProp
       setShowStartingPlayer(game.showStartingPlayer);
     }
   }, [game, open]);
-
-  useEffect(() => {
-    if (focusIndex !== null) {
-      const top = 165 + 72 * focusIndex;
-      newGameListRef.current?.scrollTo({top, behavior: 'smooth'});
-    }
-  }, [focusIndex]);
 
   const handleDelete = (index: number): void => {
     setPlayers(players.filter((_, i) => i !== index));
@@ -117,7 +91,6 @@ export function NewGameDialog({open, game, onClose, onSubmit}: NewGameDialogProp
   const handlePlayerFocus = (index: number): void => {
     const top = 165 + 72 * index;
     newGameListRef.current?.scrollTo({top, behavior: 'smooth'});
-    setFocusIndex(index);
   } 
 
   return (
