@@ -49,14 +49,20 @@ export function NewGameDialog({open, game, onClose, onSubmit}: NewGameDialogProp
   const [name, setName] = useState<string>('');
   const [players, setPlayers] = useState<PlayerModel[]>([]);
   const [focus, setFocus] = useState<boolean>(false);
+  const [focusIndex, setFocusIndex] = useState<number| null>(null);
   const inputEl = useRef<HTMLInputElement>(null);
   const newGameListRef = useRef<HTMLDivElement>(null);
   const {t} = useTranslation();
 
   if ('virtualKeyboard' in navigator) {
-    (navigator.virtualKeyboard as VirtualKeyboardApi).addEventListener('geometrychange', () => {
+    (navigator.virtualKeyboard as VirtualKeyboardApi).addEventListener('geometrychange', (event) => {
+      if(focusIndex !== null) {
+        const top = 165 + 72 * focusIndex;
+        newGameListRef.current?.scrollTo({top, behavior: 'smooth'});
+      }
+      
       // const { x, y, width, height } = event.target.boundingRect;
-      alert('geometrychange');
+      // alert(`geometrychange ${x} ${y} ${width} ${height}`);
     });
   }
 
@@ -70,6 +76,13 @@ export function NewGameDialog({open, game, onClose, onSubmit}: NewGameDialogProp
       setShowStartingPlayer(game.showStartingPlayer);
     }
   }, [game, open]);
+
+  useEffect(() => {
+    if (focusIndex !== null) {
+      const top = 165 + 72 * focusIndex;
+      newGameListRef.current?.scrollTo({top, behavior: 'smooth'});
+    }
+  }, [focusIndex]);
 
   const handleDelete = (index: number): void => {
     setPlayers(players.filter((_, i) => i !== index));
@@ -101,7 +114,8 @@ export function NewGameDialog({open, game, onClose, onSubmit}: NewGameDialogProp
 
   const handlePlayerFocus = (index: number): void => {
     const top = 165 + 72 * index;
-    newGameListRef.current?.scrollTo({top, behavior: 'smooth'})
+    newGameListRef.current?.scrollTo({top, behavior: 'smooth'});
+    setFocusIndex(index);
   } 
 
   return (
