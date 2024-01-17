@@ -3,9 +3,9 @@
 .app {
   display: flex;
   flex-direction: column;
-  height: $height;
+  height: calc(#{$height} - env(keyboard-inset-height, 0));
 }
 
-.keyboard-placeholder {
-  height: env(keyboard-inset-height, 0);
-}
+// .keyboard-placeholder {
+//   height: env(keyboard-inset-height, 0);
+// }
