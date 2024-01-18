@@ -37,6 +37,7 @@ export function PointsTable({
 
   const scrollToInput = (index: number): void => {
     const top = 40 * (index - 1);
+    window.scrollTo({top: 0});
     playerTableContainerRef.current?.scrollTo({top, behavior: 'smooth'});
   }
 
