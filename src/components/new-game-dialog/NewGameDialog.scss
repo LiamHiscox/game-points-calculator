@@ -1,3 +1,9 @@
+.new-game-form {
+  overflow: auto;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
 .player-name-form-control {
   flex: 1;
 }
@@ -6,7 +12,6 @@
 }
 .new-game-list {
   flex: 1;
-  overflow: auto;
 }
 .drag-icon-container {
   display: flex;

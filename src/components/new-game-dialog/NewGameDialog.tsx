@@ -46,7 +46,7 @@ export function NewGameDialog({open, game, onClose, onSubmit}: NewGameDialogProp
   const [players, setPlayers] = useState<PlayerModel[]>([]);
   const [focus, setFocus] = useState<boolean>(false);
   const inputEl = useRef<HTMLInputElement>(null);
-  const newGameListRef = useRef<HTMLDivElement>(null);
+  const dialogRef = useRef<HTMLDivElement>(null);
   const {t} = useTranslation();
 
   useEffect(() => {
@@ -89,8 +89,8 @@ export function NewGameDialog({open, game, onClose, onSubmit}: NewGameDialogProp
   }
 
   const handlePlayerFocus = (index: number): void => {
-    const top = 165 + 72 * index;
-    newGameListRef.current?.scrollTo({top, behavior: 'smooth'});
+    const top = 155 + 72 * index;
+    dialogRef.current?.scrollTo({top, behavior: 'smooth'});
   } 
 
   return (
@@ -99,101 +99,102 @@ export function NewGameDialog({open, game, onClose, onSubmit}: NewGameDialogProp
             onClose={onClose}
             TransitionComponent={UpTransition}
     >
-      <AppBar position="static">
-        <Toolbar className="new-game-toolbar">
-          <div/>
-          <Typography variant="h6"> {t('newGame.startNewGame')} </Typography>
-          <IconButton onClick={onClose} color="inherit">
-            <CloseIcon/>
-          </IconButton>
-        </Toolbar>
-      </AppBar>
-      <div className="new-game-list" ref={newGameListRef}>
-        <List>
-          <ListItem>
-            <FormControl variant="outlined" className="player-name-form-control">
-              <InputLabel> {t('newGame.game')} </InputLabel>
-              <OutlinedInput type="text"
-                             inputRef={inputEl}
-                             value={name}
-                             error={!name}
-                             onChange={(e): void => handleGameNameChange(e.target.value)}
-                             endAdornment={
-                               <InputAdornment position="end">
-                                 <IconButton onClick={handleClear}>
-                                   <CloseIcon color="primary"/>
-                                 </IconButton>
-                               </InputAdornment>
-                             }
-                             label={t('newGame.game')}
-              />
-            </FormControl>
-          </ListItem>
-          <ListItem>
-            <FormGroup>
-              <FormControlLabel
-                className="checkbox-form"
-                control={
-                  <Checkbox checked={commentFields} onClick={(): void => setCommentFields(!commentFields)}/>
-                }
-                label={t('newGame.showAdditionalTextField')}
-              />
-            </FormGroup>
-            <HelpTooltip title={t('newGame.showAdditionalTextFieldHelp')}/>
-          </ListItem>
-          <ListItem>
-            <FormGroup>
-              <FormControlLabel
-                className="checkbox-form"
-                control={
-                  <Checkbox checked={showStartingPlayer} onClick={(): void => setShowStartingPlayer(!showStartingPlayer)}/>
-                }
-                label={t('newGame.showStartingPlayer')}
-              />
-            </FormGroup>
-            <HelpTooltip title={t('newGame.showStartingPlayerHelp')}/>
-          </ListItem>
-          <ListItem>
-            <Typography style={{fontWeight: 'bold'}}> {t('newGame.players')} </Typography>
-          </ListItem>
-          <DraggableList items={players}
-                         onSortChange={(sorted): void => setPlayers(sorted)}
-                         listItemId={(player): string => player.id}
-                         renderListItem={(player, index): JSX.Element => (
-                           <>
-                             <div className="drag-icon-container">
-                               <DragIndicatorIcon color="primary"/>
-                             </div>
-                             <TextField label={t('newGame.name')}
-                                        variant="outlined"
-                                        autoFocus={focus && index === players.length - 1}
-                                        value={player.name}
-                                        style={{flex: '1'}}
-                                        onChange={(e): void => handleNameChange(e.target.value, index)}
-                                        onFocus={(): void => handlePlayerFocus(index)}
-                                        error={!player.name}
-                             />
-                             <IconButton onClick={(): void => handleDelete(index)}>
-                               <DeleteIcon color="primary"/>
-                             </IconButton>
-                           </>
-                         )}
-          />
-          <ListItem style={{justifyContent: 'center'}}>
-            <IconButton onClick={addPlayer}>
-              <AddIcon color="primary"/>
+      <div ref={dialogRef} className='new-game-form'>
+        <AppBar position="static">
+          <Toolbar className="new-game-toolbar">
+            <div/>
+            <Typography variant="h6"> {t('newGame.startNewGame')} </Typography>
+            <IconButton onClick={onClose} color="inherit">
+              <CloseIcon/>
             </IconButton>
-          </ListItem>
-        </List>
+          </Toolbar>
+        </AppBar>
+        <div className="new-game-list">
+          <List>
+            <ListItem>
+              <FormControl variant="outlined" className="player-name-form-control">
+                <InputLabel> {t('newGame.game')} </InputLabel>
+                <OutlinedInput type="text"
+                              inputRef={inputEl}
+                              value={name}
+                              error={!name}
+                              onChange={(e): void => handleGameNameChange(e.target.value)}
+                              endAdornment={
+                                <InputAdornment position="end">
+                                  <IconButton onClick={handleClear}>
+                                    <CloseIcon color="primary"/>
+                                  </IconButton>
+                                </InputAdornment>
+                              }
+                              label={t('newGame.game')}
+                />
+              </FormControl>
+            </ListItem>
+            <ListItem>
+              <FormGroup>
+                <FormControlLabel
+                  className="checkbox-form"
+                  control={
+                    <Checkbox checked={commentFields} onClick={(): void => setCommentFields(!commentFields)}/>
+                  }
+                  label={t('newGame.showAdditionalTextField')}
+                />
+              </FormGroup>
+              <HelpTooltip title={t('newGame.showAdditionalTextFieldHelp')}/>
+            </ListItem>
+            <ListItem>
+              <FormGroup>
+                <FormControlLabel
+                  className="checkbox-form"
+                  control={
+                    <Checkbox checked={showStartingPlayer} onClick={(): void => setShowStartingPlayer(!showStartingPlayer)}/>
+                  }
+                  label={t('newGame.showStartingPlayer')}
+                />
+              </FormGroup>
+              <HelpTooltip title={t('newGame.showStartingPlayerHelp')}/>
+            </ListItem>
+            <ListItem>
+              <Typography style={{fontWeight: 'bold'}}> {t('newGame.players')} </Typography>
+            </ListItem>
+            <DraggableList items={players}
+                          onSortChange={(sorted): void => setPlayers(sorted)}
+                          listItemId={(player): string => player.id}
+                          renderListItem={(player, index): JSX.Element => (
+                            <>
+                              <div className="drag-icon-container">
+                                <DragIndicatorIcon color="primary"/>
+                              </div>
+                              <TextField label={t('newGame.name')}
+                                          variant="outlined"
+                                          autoFocus={focus && index === players.length - 1}
+                                          value={player.name}
+                                          style={{flex: '1'}}
+                                          onChange={(e): void => handleNameChange(e.target.value, index)}
+                                          onFocus={(): void => handlePlayerFocus(index)}
+                                          error={!player.name}
+                              />
+                              <IconButton onClick={(): void => handleDelete(index)}>
+                                <DeleteIcon color="primary"/>
+                              </IconButton>
+                            </>
+                          )}
+            />
+            <ListItem style={{justifyContent: 'center'}}>
+              <IconButton onClick={addPlayer}>
+                <AddIcon color="primary"/>
+              </IconButton>
+            </ListItem>
+          </List>
+        </div>
+        <Button color="primary"
+                variant="contained"
+                onClick={(): void => onSubmit({id, timestamp, commentFields, name, players, showStartingPlayer})}
+                disabled={canSubmit()}
+        >
+          {t('newGame.start')}
+        </Button>
       </div>
-      <Button color="primary"
-              variant="contained"
-              onClick={(): void => onSubmit({id, timestamp, commentFields, name, players, showStartingPlayer})}
-              disabled={canSubmit()}
-      >
-        {t('newGame.start')}
-      </Button>
-      <div className="keyboard-placeholder"/>
     </Dialog>
   );
 }
