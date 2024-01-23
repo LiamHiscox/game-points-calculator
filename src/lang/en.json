@@ -27,7 +27,8 @@
   },
   "stats": {
     "gameProgress": "Game Progress",
-    "pointsPerRound": "Points Per Round",
+    "pointsPerRound": "Points per round",
+    "standingsPerRound": "Standings per round",
     "minMax": "Min/Max",
     "max": "Max",
     "min": "Min",

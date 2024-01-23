@@ -3,6 +3,7 @@ import { AppBar, Chip, Dialog, IconButton, Toolbar, Typography } from '@mui/mate
 import { PlayerModel, ColorPlayerModel } from '../../models/player.model';
 import { MinMaxTable } from './min-max-table/MinMaxTable';
 import { LineGraph } from './line-graph/LineGraph';
+import { StandingsGraph } from './standings-graph/StandingsGraph';
 import { UpTransition } from '../up-transition/UpTransition';
 import CloseIcon from '@mui/icons-material/Close';
 import { useTranslation } from 'react-i18next';
@@ -86,6 +87,10 @@ export function StatsDialog({ open, players, onClose }: StatsDialogProps): JSX.E
         <Typography variant="h6"> {t('stats.pointsPerRound')} </Typography>
         <div style={{ overflow: 'hidden', overflowX: 'auto' }}>
           <LineGraph players={selectedPlayers} />
+        </div>
+        <Typography variant="h6"> {t('stats.standingsPerRound')} </Typography>
+        <div style={{ overflow: 'hidden', overflowX: 'auto' }}>
+          <StandingsGraph players={selectedPlayers} />
         </div>
         <Typography variant="h6"> {t('stats.minMax')} </Typography>
         <div style={{ overflow: 'auto' }}>

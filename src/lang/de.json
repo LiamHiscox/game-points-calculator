@@ -28,6 +28,7 @@
   "stats": {
     "gameProgress": "Spielfortschritt",
     "pointsPerRound": "Punkte pro Runde",
+    "positionPerRound": "Platzierung pro Runde",
     "minMax": "Min/Max",
     "max": "Max",
     "min": "Min",
