@@ -1,6 +1,6 @@
 import './LeaderboardDialog.scss';
 import {PlayerModel, PointModel} from '../../models/player.model';
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import Dialog from '@mui/material/Dialog';
 import {
   Avatar,
@@ -16,6 +16,7 @@ import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import logo from './poop.png';
 import {useTranslation} from 'react-i18next';
 import {UpTransition} from '../up-transition/UpTransition';
+import { useOrderState } from '../../store/leaderboard.store';
 
 interface LeaderboardDialogProps {
   players: PlayerModel[];
@@ -30,15 +31,8 @@ interface PlayerScores {
   last: boolean;
 }
 
-type Order = 'asc' | 'desc';
-
-const initialOrder = (): Order => {
-  const order = localStorage.getItem('order');
-  return order === 'asc' || order === 'desc' ? order : 'asc';
-}
-
 export function LeaderboardDialog({players, open, onClose}: LeaderboardDialogProps): JSX.Element {
-  const [sortOrder, setSortOrder] = useState<Order>(initialOrder());
+  const [sortOrder, setSortOrder] = useOrderState();
   const {t} = useTranslation();
 
   useEffect(() => localStorage.setItem('order', sortOrder), [sortOrder]);

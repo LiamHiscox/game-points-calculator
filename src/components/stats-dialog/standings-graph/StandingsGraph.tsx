@@ -5,12 +5,14 @@ import { PointsDataModel } from '../../../models/points-data.model';
 import { FilteredPlayerModel } from '../../../models/filtered-player.model';
 import { useEffect, useState } from 'react';
 import {useTranslation} from 'react-i18next';
+import { useOrderState } from '../../../store/leaderboard.store';
 
 interface StandingsGraphProps {
     players: ColorPlayerModel[];
 }
 
 export function StandingsGraph({ players }: StandingsGraphProps): JSX.Element {
+    const [sortOrder] = useOrderState();
     const [data, setData] = useState<PointsDataModel[]>([]);
     const [maxRounds, setMaxRounds] = useState<number>(0);
     const [ticks, setTicks] = useState<number[]>([]);
@@ -48,7 +50,7 @@ export function StandingsGraph({ players }: StandingsGraphProps): JSX.Element {
             .map<PointsDataModel>((_, index) => {
                 const roundPoints = paddedPlayers
                     .reduce((acc: { name: string; points: number; }[], cur) => (acc.concat({ name: cur.name, points: cur.points[index] })), [])
-                    .sort((a, b) => a.points - b.points)
+                    .sort((a, b) => sortOrder === 'asc' ? a.points - b.points : b.points - a.points)
                     .map((player, pi, playerPoints) => {
                         let p = pi;
                         for (let i = pi; i >= 0; i--) {
@@ -77,15 +79,15 @@ export function StandingsGraph({ players }: StandingsGraphProps): JSX.Element {
 
     const stepSize = 30;
     const heightSteps = 40;
-    const height = players.length * heightSteps;
+    const height = (players.length + 1) * heightSteps;
     const width = maxRounds * stepSize > window.innerWidth * 0.75 ? maxRounds * stepSize : '100%';
 
     return (
-        <ResponsiveContainer width={width} height={height > 300 ? 300 : height} className="select-none">
+        <ResponsiveContainer width={width} height={height} className="select-none">
             <LineChart margin={{left: -30, top: 10, right: 10}} data={data}>
                 <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="round" label="Round" />
-                <YAxis ticks={ticks}/>
+                <XAxis dataKey="round" />
+                <YAxis ticks={ticks}/ >
                 <Tooltip
                     isAnimationActive={false}
                     labelFormatter={(label): string => `${t('stats.round')} ${label}`}

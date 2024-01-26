@@ -68,7 +68,7 @@ export function LineGraph({ players, accumalate }: LineGraphProps): JSX.Element 
             <LineChart margin={{left: -30, top: 10, right: 10}} data={data}>
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis dataKey="round" label="Round" />
-                <YAxis />
+                <YAxis/>
                 <Tooltip
                     isAnimationActive={false}
                     labelFormatter={(label): string => `${t('stats.round')} ${label}`}

@@ -61,8 +61,8 @@ export function StatsDialog({ open, players, onClose }: StatsDialogProps): JSX.E
           <IconButton onClick={onClose} color="inherit"> <CloseIcon/> </IconButton>
         </Toolbar>
       </AppBar>
-      <div className="content-container content-padding">
-        <div style={{ paddingBottom: '1rem', gap: '.5rem', display: 'flex', overflow: 'auto' }}>
+      <div style={{position: 'relative'}}>
+        <div className='player-chips-container'>
           {selected.length ?
             <Chip
               label='X'
@@ -80,21 +80,23 @@ export function StatsDialog({ open, players, onClose }: StatsDialogProps): JSX.E
             />
           ))}
         </div>
-        <Typography variant="h6"> {t('stats.gameProgress')} </Typography>
-        <div style={{ overflow: 'hidden', overflowX: 'auto' }}>
-          <LineGraph players={selectedPlayers} accumalate />
-        </div>
-        <Typography variant="h6"> {t('stats.pointsPerRound')} </Typography>
-        <div style={{ overflow: 'hidden', overflowX: 'auto' }}>
-          <LineGraph players={selectedPlayers} />
-        </div>
-        <Typography variant="h6"> {t('stats.standingsPerRound')} </Typography>
-        <div style={{ overflow: 'hidden', overflowX: 'auto' }}>
-          <StandingsGraph players={selectedPlayers} />
-        </div>
-        <Typography variant="h6"> {t('stats.minMax')} </Typography>
-        <div style={{ overflow: 'auto' }}>
-          <MinMaxTable players={players} />
+        <div className="content-container content-padding">
+          <Typography variant="h6"> {t('stats.gameProgress')} </Typography>
+          <div style={{ overflow: 'hidden', overflowX: 'auto', paddingBottom: '1rem' }}>
+            <LineGraph players={selectedPlayers} accumalate />
+          </div>
+          <Typography variant="h6"> {t('stats.pointsPerRound')} </Typography>
+          <div style={{ overflow: 'hidden', overflowX: 'auto', paddingBottom: '1rem' }}>
+            <LineGraph players={selectedPlayers} />
+          </div>
+          <Typography variant="h6"> {t('stats.standingsPerRound')} </Typography>
+          <div style={{ overflow: 'hidden', overflowX: 'auto', paddingBottom: '1rem' }}>
+            <StandingsGraph players={selectedPlayers} />
+          </div>
+          <Typography variant="h6"> {t('stats.minMax')} </Typography>
+          <div style={{ overflow: 'auto', paddingBottom: '1rem' }}>
+            <MinMaxTable players={players} />
+          </div>
         </div>
       </div>
     </Dialog>

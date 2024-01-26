@@ -4,7 +4,20 @@
 }
 .content-container {
   overflow: auto;
+  position: relative;
 }
 .content-padding {
   padding: 1rem;
+}
+.player-chips-container {
+  gap: 0.5rem;
+  display: flex;
+  overflow: auto;
+  position: sticky;
+  top: 0;
+  padding: 1rem;
+  background-color: white;
+  z-index: 1;
+  box-sizing: border-box;
+  box-shadow: 0 3px 5px #e6eef5;
 }
