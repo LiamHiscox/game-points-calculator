@@ -1,4 +1,4 @@
-import { CartesianGrid, Line, LineChart, Tooltip, XAxis, YAxis, ResponsiveContainer } from 'recharts';
+import { CartesianGrid, Line, LineChart, Tooltip, XAxis, YAxis, ResponsiveContainer, Text } from 'recharts';
 import { Payload } from 'recharts/types/component/DefaultTooltipContent';
 import { ColorPlayerModel } from '../../../models/player.model';
 import { PointsDataModel } from '../../../models/points-data.model';
@@ -11,11 +11,25 @@ interface StandingsGraphProps {
     players: ColorPlayerModel[];
 }
 
+const CustomizedLabelB = (): JSX.Element => {
+    return (
+        <Text
+            x={0}
+            y={0}
+            dx={-200}
+            dy={20}
+            textAnchor="start"
+            transform="rotate(-90)"
+        >
+            Least To Most Points
+        </Text>
+    );
+};
+
 export function StandingsGraph({ players }: StandingsGraphProps): JSX.Element {
     const [sortOrder] = useOrderState();
     const [data, setData] = useState<PointsDataModel[]>([]);
     const [maxRounds, setMaxRounds] = useState<number>(0);
-    const [ticks, setTicks] = useState<number[]>([]);
     const {t} = useTranslation();
 
     useEffect(() => {
@@ -68,18 +82,13 @@ export function StandingsGraph({ players }: StandingsGraphProps): JSX.Element {
                 };
             });
 
-        const ticks = new Array(players.length)
-            .fill(null)
-            .map((_, i) => i+1);
-
-        setTicks(ticks);
         setData(data);
         setMaxRounds(maxRounds);
     }, [players]);
 
     const stepSize = 30;
     const heightSteps = 40;
-    const height = (players.length + 1) * heightSteps;
+    const height = players.length * heightSteps;
     const width = maxRounds * stepSize > window.innerWidth * 0.75 ? maxRounds * stepSize : '100%';
 
     return (
@@ -87,7 +96,7 @@ export function StandingsGraph({ players }: StandingsGraphProps): JSX.Element {
             <LineChart margin={{left: -30, top: 10, right: 10}} data={data}>
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis dataKey="round" />
-                <YAxis ticks={ticks}/ >
+                <YAxis label={<CustomizedLabelB/>} tick={false} />
                 <Tooltip
                     isAnimationActive={false}
                     labelFormatter={(label): string => `${t('stats.round')} ${label}`}
