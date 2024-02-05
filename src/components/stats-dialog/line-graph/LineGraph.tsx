@@ -16,8 +16,12 @@ const CustomTooltip = ({ active, payload }: TooltipProps<number, string>): JSX.E
         <div className="custom-tooltip">
             {payload.sort((a, b) => b.value! - a.value!).map(p => (
                 <div key={p.dataKey} className="label">
+                    <span style={{display: 'flex'}}>
                     <div className="label-color" style={{backgroundColor: p.color}}/>
-                    <span style={{color: p.color}}>{p.name}</span>
+                    <span style={{color: p.color}}>{p.name}: </span>
+                    </span>
+                    <span>&nbsp;</span>
+                    <span>{p.value}</span>
                 </div>
             ))}
         </div>
