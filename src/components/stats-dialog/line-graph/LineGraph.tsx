@@ -1,20 +1,35 @@
-import { CartesianGrid, Line, LineChart, Tooltip, XAxis, YAxis, ResponsiveContainer } from 'recharts';
-import { Payload } from 'recharts/types/component/DefaultTooltipContent';
+import './LineGraph.scss';
+import { CartesianGrid, Line, LineChart, Tooltip, XAxis, YAxis, ResponsiveContainer, TooltipProps, Legend } from 'recharts';
 import { ColorPlayerModel } from '../../../models/player.model';
 import { PointsDataModel } from '../../../models/points-data.model';
 import { FilteredPlayerModel } from '../../../models/filtered-player.model';
 import { useEffect, useState } from 'react';
-import {useTranslation} from 'react-i18next';
 
 interface LineGraphProps {
     players: ColorPlayerModel[];
     accumalate?: boolean;
 }
 
+const CustomTooltip = ({ active, payload }: TooltipProps<number, string>): JSX.Element | null => {
+    if (active && payload && payload.length) {
+      return (
+        <div className="custom-tooltip">
+            {payload.sort((a, b) => b.value! - a.value!).map(p => (
+                <div key={p.dataKey} className="label">
+                    <div className="label-color" style={{backgroundColor: p.color}}/>
+                    <span style={{color: p.color}}>{p.name}</span>
+                </div>
+            ))}
+        </div>
+      );
+    }
+  
+    return null;
+};
+
 export function LineGraph({ players, accumalate }: LineGraphProps): JSX.Element {
     const [data, setData] = useState<PointsDataModel[]>([]);
     const [maxRounds, setMaxRounds] = useState<number>(0);
-    const {t} = useTranslation();
 
     useEffect(() => {
         const newPlayers = players.map<FilteredPlayerModel>(player => {
@@ -64,15 +79,15 @@ export function LineGraph({ players, accumalate }: LineGraphProps): JSX.Element 
     const width = maxRounds * stepSize > window.innerWidth * 0.75 ? maxRounds * stepSize : '100%';
 
     return (
-        <ResponsiveContainer width={width} height={height > 300 ? 300 : height} className="select-none">
+        <ResponsiveContainer width={width} height={height > 300 ? 300 : height} style={{overflow: 'hidden'}} className="select-none">
             <LineChart margin={{left: -30, top: 10, right: 10}} data={data}>
                 <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="round" label="Round" />
+                <XAxis dataKey="round" />
                 <YAxis/>
+                <Legend/>
                 <Tooltip
                     isAnimationActive={false}
-                    labelFormatter={(label): string => `${t('stats.round')} ${label}`}
-                    itemSorter={(item: Payload<number, string>): number => -(item.value || 0)}
+                    content={<CustomTooltip />}
                 />
                 {players.map((player) => (
                     <Line type="monotone" dataKey={player.name} stroke={player.color} key={player.id} />

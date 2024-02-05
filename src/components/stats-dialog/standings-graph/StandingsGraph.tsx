@@ -1,36 +1,50 @@
-import { CartesianGrid, Line, LineChart, Tooltip, XAxis, YAxis, ResponsiveContainer, Text } from 'recharts';
-import { Payload } from 'recharts/types/component/DefaultTooltipContent';
+import './StandingsGraph.scss';
+import { CartesianGrid, Line, LineChart, Tooltip, XAxis, YAxis, ResponsiveContainer, Text, Legend, TooltipProps } from 'recharts';
 import { ColorPlayerModel } from '../../../models/player.model';
 import { PointsDataModel } from '../../../models/points-data.model';
 import { FilteredPlayerModel } from '../../../models/filtered-player.model';
 import { useEffect, useState } from 'react';
-import {useTranslation} from 'react-i18next';
-import { useOrderState } from '../../../store/leaderboard.store';
 
 interface StandingsGraphProps {
     players: ColorPlayerModel[];
 }
 
-const CustomizedLabelB = (): JSX.Element => {
+const CustomizedLabel = ({padding}: {padding: number}): JSX.Element => {
     return (
         <Text
+            height={330}
             x={0}
             y={0}
-            dx={-200}
+            dx={-110 - padding}
             dy={20}
             textAnchor="start"
             transform="rotate(-90)"
         >
-            Least To Most Points
+            Least To Most
         </Text>
     );
 };
 
+const CustomTooltip = ({ active, payload }: TooltipProps<number, string>): JSX.Element | null => {
+    if (active && payload && payload.length) {
+      return (
+        <div className="custom-tooltip">
+            {payload.sort((a, b) => b.value! - a.value!).map(p => (
+                <div key={p.dataKey} className="label">
+                    <div className="label-color" style={{backgroundColor: p.color}}/>
+                    <span style={{color: p.color}}>{p.name}</span>
+                </div>
+            ))}
+        </div>
+      );
+    }
+  
+    return null;
+};
+
 export function StandingsGraph({ players }: StandingsGraphProps): JSX.Element {
-    const [sortOrder] = useOrderState();
     const [data, setData] = useState<PointsDataModel[]>([]);
     const [maxRounds, setMaxRounds] = useState<number>(0);
-    const {t} = useTranslation();
 
     useEffect(() => {
         const newPlayers = players.map<FilteredPlayerModel>(player => {
@@ -64,7 +78,7 @@ export function StandingsGraph({ players }: StandingsGraphProps): JSX.Element {
             .map<PointsDataModel>((_, index) => {
                 const roundPoints = paddedPlayers
                     .reduce((acc: { name: string; points: number; }[], cur) => (acc.concat({ name: cur.name, points: cur.points[index] })), [])
-                    .sort((a, b) => sortOrder === 'asc' ? a.points - b.points : b.points - a.points)
+                    .sort((a, b) => a.points - b.points)
                     .map((player, pi, playerPoints) => {
                         let p = pi;
                         for (let i = pi; i >= 0; i--) {
@@ -88,19 +102,21 @@ export function StandingsGraph({ players }: StandingsGraphProps): JSX.Element {
 
     const stepSize = 30;
     const heightSteps = 40;
-    const height = players.length * heightSteps;
+    const height = (players.length * heightSteps) + 60;
     const width = maxRounds * stepSize > window.innerWidth * 0.75 ? maxRounds * stepSize : '100%';
 
     return (
-        <ResponsiveContainer width={width} height={height} className="select-none">
+        <ResponsiveContainer width={width} height={height} style={{overflow: 'hidden'}} className="select-none">
             <LineChart margin={{left: -30, top: 10, right: 10}} data={data}>
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis dataKey="round" />
-                <YAxis label={<CustomizedLabelB/>} tick={false} />
+                <YAxis
+                    label={<CustomizedLabel padding={players.length > 3 ? (players.length - 3) * 18 : 0}/>}
+                    tick={false}/>
+                <Legend/>
                 <Tooltip
                     isAnimationActive={false}
-                    labelFormatter={(label): string => `${t('stats.round')} ${label}`}
-                    itemSorter={(item: Payload<number, string>): number => -(item.value || 0)}
+                    content={<CustomTooltip />}
                 />
                 {players.map((player) => (
                     <Line type="monotone" dataKey={player.name} stroke={player.color} key={player.id} />

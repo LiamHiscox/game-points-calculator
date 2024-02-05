@@ -54,7 +54,7 @@ export function StatsDialog({ open, players, onClose }: StatsDialogProps): JSX.E
 
   return (
     <Dialog open={open} onClose={onClose} fullScreen TransitionComponent={UpTransition}>
-      <AppBar position="static">
+      <AppBar position="sticky">
         <Toolbar className="tool-bar">
           <div/>
           <Typography variant="h6"> {t('headers.statistics')} </Typography>
