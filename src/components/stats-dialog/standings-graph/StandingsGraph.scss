@@ -1,18 +1,18 @@
-.custom-tooltip {
+.standing-graph-tooltip {
     background-color: white;
     box-shadow: 0 3px 5px #e6eef5;
     border: 1px solid #e6eef5;
     padding: .5rem;
-}
-.label {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-
-    .label-color {
-        height: .8rem;
-        width: .8rem;
-        margin-right: .5rem;
+    .label {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+    
+        .label-color {
+            height: .8rem;
+            width: .8rem;
+            margin-right: .5rem;
+        }
     }
 }
 .recharts-legend-wrapper {

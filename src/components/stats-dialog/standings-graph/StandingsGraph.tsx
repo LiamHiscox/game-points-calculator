@@ -28,7 +28,7 @@ const CustomizedLabel = ({padding}: {padding: number}): JSX.Element => {
 const CustomTooltip = ({ active, payload }: TooltipProps<number, string>): JSX.Element | null => {
     if (active && payload && payload.length) {
       return (
-        <div className="custom-tooltip">
+        <div className="standing-graph-tooltip">
             {payload.sort((a, b) => b.value! - a.value!).map(p => (
                 <div key={p.dataKey} className="label">
                     <div className="label-color" style={{backgroundColor: p.color}}/>
