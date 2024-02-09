@@ -101,7 +101,7 @@ export function StandingsGraph({ players }: StandingsGraphProps): JSX.Element {
     }, [players]);
 
     const stepSize = 30;
-    const heightSteps = 40;
+    const heightSteps = 30;
     const height = (players.length * heightSteps) + 60;
     const width = maxRounds * stepSize > window.innerWidth * 0.75 ? maxRounds * stepSize : '100%';
 
@@ -112,7 +112,8 @@ export function StandingsGraph({ players }: StandingsGraphProps): JSX.Element {
                 <XAxis dataKey="round" />
                 <YAxis
                     label={<CustomizedLabel padding={players.length > 3 ? (players.length - 3) * 18 : 0}/>}
-                    tick={false}/>
+                    tick={false}
+                    domain={[1, players.length]}/>
                 <Legend/>
                 <Tooltip
                     isAnimationActive={false}

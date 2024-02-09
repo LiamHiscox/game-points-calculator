@@ -10,6 +10,11 @@ interface LineGraphProps {
     accumalate?: boolean;
 }
 
+interface MinMaxPointsModel {
+    min: number | null;
+    max: number | null;
+}
+
 const CustomTooltip = ({ active, payload }: TooltipProps<number, string>): JSX.Element | null => {
     if (active && payload && payload.length) {
       return (
@@ -34,6 +39,8 @@ const CustomTooltip = ({ active, payload }: TooltipProps<number, string>): JSX.E
 export function LineGraph({ players, accumalate }: LineGraphProps): JSX.Element {
     const [data, setData] = useState<PointsDataModel[]>([]);
     const [maxRounds, setMaxRounds] = useState<number>(0);
+    const [min, setMin] = useState<number>(0);
+    const [max, setMax] = useState<number>(0);
 
     useEffect(() => {
         const newPlayers = players.map<FilteredPlayerModel>(player => {
@@ -74,6 +81,20 @@ export function LineGraph({ players, accumalate }: LineGraphProps): JSX.Element 
                 };
             });
 
+        const minMax = players.reduce((acc: MinMaxPointsModel, player) => {
+            const points = player.points.reduce((total: number[], p) => typeof p.points === 'number' ? total.concat(p.points) : total, []);
+            if (points.length === 0) {
+                return acc;
+            }
+            const playerMin = points.reduce((min, cur) => cur < min ? cur : min, points[0]);
+            const playerMax = points.reduce((max, cur) => cur > max ? cur : max, points[0]);
+            const min = acc.min === null || playerMin < acc.min ? playerMin : acc.min;
+            const max = acc.max === null || playerMax > acc.max ? playerMax : acc.max;
+            return { min, max };
+        }, {min: null, max: null});
+    
+        setMin(minMax.min || 0);
+        setMax(minMax.max || 0);
         setData(data);
         setMaxRounds(maxRounds);
     }, [players]);
@@ -87,7 +108,7 @@ export function LineGraph({ players, accumalate }: LineGraphProps): JSX.Element 
             <LineChart margin={{left: -30, top: 10, right: 10}} data={data}>
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis dataKey="round" />
-                <YAxis/>
+                <YAxis domain={[min, max]}/>
                 <Legend/>
                 <Tooltip
                     isAnimationActive={false}
