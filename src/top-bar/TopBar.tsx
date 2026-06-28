@@ -57,7 +57,7 @@ export function TopBar({
                          onToggleCommentField,
                          onToggleShowStartingPlayer,
                          onSortPlayers
-                       }: TopBarProps): JSX.Element {
+                       }: TopBarProps): React.JSX.Element {
   const [confirmationOpen, setConfirmationOpen] = React.useState(false);
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const {t} = useTranslation();

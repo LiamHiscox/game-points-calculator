@@ -1,8 +1,9 @@
 import './LineGraph.scss';
-import { CartesianGrid, Line, LineChart, Tooltip, XAxis, YAxis, ResponsiveContainer, TooltipProps, Legend } from 'recharts';
-import { ColorPlayerModel } from '../../../models/player.model';
-import { PointsDataModel } from '../../../models/points-data.model';
-import { FilteredPlayerModel } from '../../../models/filtered-player.model';
+import { CartesianGrid, Line, LineChart, Tooltip, XAxis, YAxis, ResponsiveContainer, Legend } from 'recharts';
+import type { TooltipProps } from 'recharts';
+import type { ColorPlayerModel } from '../../../models/player.model';
+import type { PointsDataModel } from '../../../models/points-data.model';
+import type { FilteredPlayerModel } from '../../../models/filtered-player.model';
 import { useEffect, useState } from 'react';
 
 interface LineGraphProps {
@@ -15,7 +16,7 @@ interface MinMaxPointsModel {
     max: number | null;
 }
 
-const CustomTooltip = ({ active, payload }: TooltipProps<number, string>): JSX.Element | null => {
+const CustomTooltip = ({ active, payload }: TooltipProps<number, string>): React.JSX.Element | null => {
     if (active && payload && payload.length) {
       return (
         <div className="line-graph-tooltip">
@@ -36,7 +37,7 @@ const CustomTooltip = ({ active, payload }: TooltipProps<number, string>): JSX.E
     return null;
 };
 
-export function LineGraph({ players, accumalate }: LineGraphProps): JSX.Element {
+export function LineGraph({ players, accumalate }: LineGraphProps): React.JSX.Element {
     const [data, setData] = useState<PointsDataModel[]>([]);
     const [maxRounds, setMaxRounds] = useState<number>(0);
     const [min, setMin] = useState<number>(0);

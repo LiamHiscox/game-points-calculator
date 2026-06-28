@@ -1,4 +1,4 @@
-import {GameModel} from '../models/game.model';
+import type {GameModel} from '../models/game.model';
 import {useEffect, useState} from 'react';
 import Dexie from 'dexie';
 import {useSnackbar} from 'notistack';

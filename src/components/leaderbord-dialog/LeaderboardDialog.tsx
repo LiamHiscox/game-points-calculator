@@ -1,5 +1,5 @@
 import './LeaderboardDialog.scss';
-import {PlayerModel, PointModel} from '../../models/player.model';
+import type {PlayerModel, PointModel} from '../../models/player.model';
 import React, {useEffect} from 'react';
 import Dialog from '@mui/material/Dialog';
 import {
@@ -31,7 +31,7 @@ interface PlayerScores {
   last: boolean;
 }
 
-export function LeaderboardDialog({players, open, onClose}: LeaderboardDialogProps): JSX.Element {
+export function LeaderboardDialog({players, open, onClose}: LeaderboardDialogProps): React.JSX.Element {
   const [sortOrder, setSortOrder] = useOrderState();
   const {t} = useTranslation();
 
@@ -64,7 +64,7 @@ export function LeaderboardDialog({players, open, onClose}: LeaderboardDialogPro
     .reverse();
 
   return (
-    <Dialog open={open} fullWidth onClose={onClose} TransitionComponent={UpTransition}>
+    <Dialog open={open} fullWidth onClose={onClose} slots={{transition: UpTransition}}>
       <div className="leaderboard-dialog">
         {
           sortOrder === 'asc' ? (

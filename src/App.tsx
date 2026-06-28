@@ -1,6 +1,6 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import './App.scss';
-import {PlayerModel, PointModel} from './models/player.model';
+import type {PlayerModel, PointModel} from './models/player.model';
 import {useGameState} from './store/game.store';
 import {DeletePlayersDialog} from './components/delete-players-dialog/DeletePlayersDialog';
 import {useSnackbar} from 'notistack';
@@ -12,12 +12,12 @@ import {NewGameDialog} from './components/new-game-dialog/NewGameDialog';
 import {HistoryDialog} from './components/history-dialog/HistoryDialog';
 import {StatsDialog} from './components/stats-dialog/StatsDialog';
 import {useGamesState} from './store/games.store';
-import {GameModel} from './models/game.model';
+import type {GameModel} from './models/game.model';
 import {PwaInstallationDialog} from './components/pwa-installation-dialog/PwaInstallationDialog';
 import {SortPlayersDialog} from './components/sort-players-dialog/SortPlayersDialog';
-import { StartupActionsDialog } from './components/startup-actions-dialog/StartupActionsDialog';
+import { shouldOpenStartUpDialog, StartupActionsDialog } from './components/startup-actions-dialog/StartupActionsDialog';
 
-function App(): JSX.Element {
+function App(): React.JSX.Element {
   const [game, setGame] = useGameState();
   const {games, deleteGame, replayGame, addGame} = useGamesState();
   const [deleteOpen, setDeleteOpen] = useState(false);
@@ -27,9 +27,14 @@ function App(): JSX.Element {
   const [statsOpen, setStatsOpen] = useState(false);
   const [sortPlayersOpen, setSortPlayersOpen] = useState(false);
   const [installationOpen, setInstallationOpen] = useState(true);
-  const [startupActionsOpen, setStartupActionsOpen] = useState(true);
+  const [startupActionsOpen, setStartupActionsOpen] = useState(false);
   const [showRows, setShowRows] = useState(!!localStorage.getItem('showRows'));
   const {enqueueSnackbar} = useSnackbar();
+
+
+  useEffect(() => {
+    setStartupActionsOpen(shouldOpenStartUpDialog());
+  }, []);
 
   if (game.players.length === 0) {
     setGame({

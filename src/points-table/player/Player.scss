@@ -1,7 +1,7 @@
-@import "src/variables";
+@use "../../variables";
 
 .player-container-padding {
-  padding-bottom: calc(#{$height} - 13rem - env(keyboard-inset-height, 0));
+  padding-bottom: calc(#{variables.$height} - 13rem - env(keyboard-inset-height, 0));
 }
 
 .player-container {
@@ -9,7 +9,7 @@
   flex-direction: column;
   flex: 1;
   box-sizing: border-box;
-  min-width: $min-width;
+  min-width: variables.$min-width;
   border-right: 1px solid #e6eef5;
   background-color: white;
 
@@ -18,7 +18,7 @@
   }
 
   .player-input-cell {
-    min-width: $min-width;
+    min-width: variables.$min-width;
     text-align: center;
     display: flex;
   }

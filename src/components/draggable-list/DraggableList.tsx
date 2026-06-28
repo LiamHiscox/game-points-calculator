@@ -1,51 +1,23 @@
-import './DraggableList.scss';
-import {List, ListItem} from '@mui/material';
-import {DragDropContext, Draggable, Droppable, DropResult} from 'react-beautiful-dnd';
+import {List} from '@mui/material';
+import React from 'react';
+import { DraggableListItem } from './draggable-list-item/DraggableListItem';
+import { DragDropProvider } from '@dnd-kit/react';
+import { move } from '@dnd-kit/helpers';
 
 interface DraggableListProps<T> {
   items: T[];
   onSortChange: (items: T[]) => void;
-  renderListItem: (item: T, index: number) => JSX.Element;
-  listItemId: (item: T) => string;
+  renderListItem: (item: T, index: number) => React.JSX.Element;
 }
 
-export function DraggableList<T>({items, onSortChange, renderListItem, listItemId}: DraggableListProps<T>): JSX.Element {
-  const handleDrop = (droppedItem: DropResult): void => {
-    if (!droppedItem.destination) {
-      return;
-    }
-    const sourceIndex = droppedItem.source.index;
-    const item = items[sourceIndex];
-    const updatedItems = items.filter((_, i) => i !== sourceIndex);
-    updatedItems.splice(droppedItem.destination.index, 0, item);
-    onSortChange(updatedItems);
-  }
-
+export function DraggableList<T extends {id: string;}>({items, onSortChange, renderListItem}: DraggableListProps<T>): React.JSX.Element {
   return (
-      <DragDropContext onDragEnd={handleDrop}>
-        <Droppable droppableId="list-container">
-          {(provided): JSX.Element => (
-            <List className="list-container"
-                  {...provided.droppableProps}
-                  ref={provided.innerRef}
-            >
-              {items.map((item, index) => (
-                <Draggable key={listItemId(item)} draggableId={listItemId(item)} index={index}>
-                  {(provided, snapshot): JSX.Element => (
-                    <ListItem className={snapshot.isDragging ? 'selected' : ''}
-                              ref={provided.innerRef}
-                              {...provided.dragHandleProps}
-                              {...provided.draggableProps}
-                    >
-                      {renderListItem(item, index)}
-                    </ListItem>
-                  )}
-                </Draggable>
-              ))}
-              {provided.placeholder}
-            </List>
-          )}
-        </Droppable>
-      </DragDropContext>
+    <DragDropProvider onDragEnd={(event) => { onSortChange(move(items, event)); }}>
+      <List>
+        {items.map((item, index) => (
+          <DraggableListItem key={item.id} item={item} index={index} renderListItem={renderListItem}/>
+        ))}
+      </List>
+    </DragDropProvider>
   );
 }

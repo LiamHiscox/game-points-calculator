@@ -16,9 +16,9 @@ import {
   Toolbar
 } from '@mui/material';
 import React, {useState} from 'react';
-import {GameModel} from '../../models/game.model';
+import type {GameModel} from '../../models/game.model';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import {PointModel} from '../../models/player.model';
+import type {PointModel} from '../../models/player.model';
 import ZoomInIcon from '@mui/icons-material/ZoomIn';
 import DeleteIcon from '@mui/icons-material/Delete';
 import ReplayIcon from '@mui/icons-material/Replay';
@@ -38,7 +38,7 @@ interface NewGameDialogProps {
   games: GameModel[];
 }
 
-export function HistoryDialog({open, onClose, onReturnPlaying, onDeleteGame, games}: NewGameDialogProps): JSX.Element {
+export function HistoryDialog({open, onClose, onReturnPlaying, onDeleteGame, games}: NewGameDialogProps): React.JSX.Element {
   const [game, setGame] = useState<GameModel | null>(null);
   const [showGame, setShowGame] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
@@ -89,7 +89,7 @@ export function HistoryDialog({open, onClose, onReturnPlaying, onDeleteGame, gam
   }
 
   return (
-    <Dialog fullScreen open={open} onClose={handleClose} TransitionComponent={UpTransition}>
+    <Dialog fullScreen open={open} onClose={handleClose} slots={{transition: UpTransition}}>
       <AppBar position="static">
         <Toolbar className="tool-bar">
           <div></div>
@@ -152,7 +152,7 @@ export function HistoryDialog({open, onClose, onReturnPlaying, onDeleteGame, gam
       <Dialog open={showGame}
               onClose={(): void => setShowGame(false)}
               fullScreen
-              TransitionComponent={UpTransition}>
+              slots={{transition: UpTransition}}>
         <AppBar position="static">
           <Toolbar className="history-points-bar">
             <div/>

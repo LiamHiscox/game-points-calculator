@@ -1,15 +1,16 @@
 import './StandingsGraph.scss';
-import { CartesianGrid, Line, LineChart, Tooltip, XAxis, YAxis, ResponsiveContainer, Text, Legend, TooltipProps } from 'recharts';
-import { ColorPlayerModel } from '../../../models/player.model';
-import { PointsDataModel } from '../../../models/points-data.model';
-import { FilteredPlayerModel } from '../../../models/filtered-player.model';
+import { CartesianGrid, Line, LineChart, Tooltip, XAxis, YAxis, ResponsiveContainer, Text, Legend } from 'recharts';
+import type { TooltipProps } from 'recharts';
+import type { ColorPlayerModel } from '../../../models/player.model';
+import type { PointsDataModel } from '../../../models/points-data.model';
+import type { FilteredPlayerModel } from '../../../models/filtered-player.model';
 import { useEffect, useState } from 'react';
 
 interface StandingsGraphProps {
     players: ColorPlayerModel[];
 }
 
-const CustomizedLabel = ({padding}: {padding: number}): JSX.Element => {
+const CustomizedLabel = ({padding}: {padding: number}): React.JSX.Element => {
     return (
         <Text
             height={330}
@@ -25,7 +26,7 @@ const CustomizedLabel = ({padding}: {padding: number}): JSX.Element => {
     );
 };
 
-const CustomTooltip = ({ active, payload }: TooltipProps<number, string>): JSX.Element | null => {
+const CustomTooltip = ({ active, payload }: TooltipProps<number, string>): React.JSX.Element | null => {
     if (active && payload && payload.length) {
       return (
         <div className="standing-graph-tooltip">
@@ -42,7 +43,7 @@ const CustomTooltip = ({ active, payload }: TooltipProps<number, string>): JSX.E
     return null;
 };
 
-export function StandingsGraph({ players }: StandingsGraphProps): JSX.Element {
+export function StandingsGraph({ players }: StandingsGraphProps): React.JSX.Element {
     const [data, setData] = useState<PointsDataModel[]>([]);
     const [maxRounds, setMaxRounds] = useState<number>(0);
 

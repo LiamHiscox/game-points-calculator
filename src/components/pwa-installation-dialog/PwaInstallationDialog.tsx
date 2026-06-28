@@ -1,6 +1,6 @@
 import './PwaInstallationDialog.scss';
 import React, {useEffect, useState} from 'react';
-import {BeforeInstallPromptEvent} from '../../models/before-installed-prompt-event.model';
+import type {BeforeInstallPromptEvent} from '../../models/before-installed-prompt-event.model';
 import {Button, Dialog, DialogContent, Fade, IconButton, Typography, Zoom} from '@mui/material';
 import IosShareIcon from '@mui/icons-material/IosShare';
 import AddBoxOutlinedIcon from '@mui/icons-material/AddBoxOutlined';
@@ -16,7 +16,7 @@ interface PwaInstallationDialogProps {
   onClose: () => void;
 }
 
-export function PwaInstallationDialog({open, onClose}: PwaInstallationDialogProps): JSX.Element {
+export function PwaInstallationDialog({open, onClose}: PwaInstallationDialogProps): React.JSX.Element {
   const [prompt, setPrompt] = useState<null | BeforeInstallPromptEvent>(null);
   const [userInstalled, setUserInstalled] = useState<boolean>(false);
   const [userAgent] = useState<string>(navigator.userAgent.toLowerCase());

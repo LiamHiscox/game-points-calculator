@@ -4,7 +4,6 @@ import CloseIcon from '@mui/icons-material/Close';
 import StartIcon from '@mui/icons-material/Start';
 import KeyboardReturnIcon from '@mui/icons-material/KeyboardReturn';
 import {useTranslation} from 'react-i18next';
-import { useEffect } from 'react';
 
 interface StartupActionsDialogProps {
   open: boolean;
@@ -12,19 +11,17 @@ interface StartupActionsDialogProps {
   onStartNewGame: () => void;
 }
 
-export function StartupActionsDialog({open, onCancel, onStartNewGame}: StartupActionsDialogProps): JSX.Element {
-  const {t} = useTranslation();
+export function shouldOpenStartUpDialog(): boolean {
   const lastLogin = 'lastLogin';
   const timeLimit = 1000* 60 * 60 * 4;
+  const lastLoginString = localStorage.getItem(lastLogin);
+  const now = new Date().getTime();
+  localStorage.setItem(lastLogin, ''+now);
+  return !lastLoginString || (+lastLoginString + timeLimit) < now;
+}
 
-  useEffect(() => {
-    const lastLoginString = localStorage.getItem(lastLogin);
-    const now = new Date().getTime();
-    if (lastLoginString && +lastLoginString + timeLimit > now) {
-      onCancel();
-    }
-    localStorage.setItem(lastLogin, ''+now);
-  }, []);
+export function StartupActionsDialog({open, onCancel, onStartNewGame}: StartupActionsDialogProps): React.JSX.Element {
+  const {t} = useTranslation();
 
   return (
     <Dialog fullWidth={true} open={open} className="select-none" onClose={onCancel}>
@@ -40,7 +37,7 @@ export function StartupActionsDialog({open, onCancel, onStartNewGame}: StartupAc
                   fullWidth>
             {t('startupActions.startNewGame')}
           </Button>
-          <Typography textAlign='center' fontWeight={600}> OR </Typography>
+          <Typography sx={{textAlign: 'center', fontWeight: 600}}> OR </Typography>
           <Button onClick={onCancel}
                   variant='contained'
                   startIcon={<KeyboardReturnIcon/>}

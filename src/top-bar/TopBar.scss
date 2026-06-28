@@ -1,7 +1,7 @@
-@import "../variables";
+@use "../variables";
 
 .top-bar {
-  background-color: $primary;
+  background-color: variables.$primary;
   display: flex;
 
   .empty-container {
@@ -10,7 +10,7 @@
   }
   .game-name-input {
     color: white;
-    background-color: $primary;
+    background-color: variables.$primary;
     border: 0;
     flex: 1;
     height: 3rem;

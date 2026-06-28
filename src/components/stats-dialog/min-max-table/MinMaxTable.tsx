@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Table, TableBody, TableCell, TableHead, TableRow } from '@mui/material';
-import { PlayerModel } from '../../../models/player.model';
+import type { PlayerModel } from '../../../models/player.model';
 import {useTranslation} from 'react-i18next';
 
 interface MinMaxPointsModel {
@@ -13,7 +13,7 @@ interface MinMaxTableProps {
     players: PlayerModel[];
 }
 
-export function MinMaxTable({ players }: MinMaxTableProps): JSX.Element {
+export function MinMaxTable({ players }: MinMaxTableProps): React.JSX.Element {
     const [minMaxData, setMinMaxData] = useState<MinMaxPointsModel[]>([]);
     const [min, setMin] = useState<number>(0);
     const [max, setMax] = useState<number>(0);

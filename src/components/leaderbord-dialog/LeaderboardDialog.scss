@@ -1,4 +1,4 @@
-@import "src/variables";
+@use "../../variables";
 
 .leaderboard-dialog {
   overflow: hidden;
@@ -30,7 +30,7 @@
   .default-place {
     .MuiAvatar-colorDefault {
       background-color: white;
-      color: $primary;
+      color: variables.$primary;
     }
   }
 }

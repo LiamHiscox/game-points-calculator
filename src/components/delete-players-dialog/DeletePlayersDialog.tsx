@@ -1,5 +1,5 @@
 import Dialog from '@mui/material/Dialog';
-import {PlayerModel} from '../../models/player.model';
+import type {PlayerModel} from '../../models/player.model';
 import {Button, Divider, IconButton, List, ListItem, ListItemSecondaryAction, ListItemText} from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import {useState} from 'react';
@@ -15,7 +15,7 @@ interface DeletePlayersDialogProps {
   onDelete: (id: string) => void;
 }
 
-export function DeletePlayersDialog({players, open, onClose, onDelete}: DeletePlayersDialogProps): JSX.Element {
+export function DeletePlayersDialog({players, open, onClose, onDelete}: DeletePlayersDialogProps): React.JSX.Element {
   const [confirmationOpen, setConfirmationOpen] = useState(false);
   const [deleteId, setDeleteId] = useState('');
   const [deleteName, setDeleteName] = useState('');
@@ -33,7 +33,7 @@ export function DeletePlayersDialog({players, open, onClose, onDelete}: DeletePl
   }
 
   return (
-    <Dialog open={open} fullWidth onClose={onClose} TransitionComponent={UpTransition}>
+    <Dialog open={open} fullWidth onClose={onClose} slots={{transition: UpTransition}}>
       <List>
         {players.map((player, i) => (
           <ListItem key={i}>

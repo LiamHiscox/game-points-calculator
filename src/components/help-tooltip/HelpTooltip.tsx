@@ -6,7 +6,7 @@ interface HelpTooltipProps {
   title: string;
 }
 
-export function HelpTooltip(props: HelpTooltipProps): JSX.Element {
+export function HelpTooltip(props: HelpTooltipProps): React.JSX.Element {
   const [tooltipOpen, setTooltipOpen] = React.useState(false);
 
   const handleTooltipClose = (): void => {
@@ -20,10 +20,13 @@ export function HelpTooltip(props: HelpTooltipProps): JSX.Element {
   return (
     <ClickAwayListener onClickAway={handleTooltipClose}>
     <div>
+      {/* TODO check if this property is even needed */}
       <Tooltip
         title={props.title}
-        PopperProps={{
-          disablePortal: true,
+        slotProps={{
+          popper: {
+            disablePortal: true
+          }
         }}
         onClose={handleTooltipClose}
         open={tooltipOpen}

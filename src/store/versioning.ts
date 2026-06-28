@@ -1,7 +1,8 @@
 import {gameKey} from './game.store';
-import {GameModel} from '../models/game.model';
-import {PlayerModel, PointModel} from '../models/player.model';
+import type {GameModel} from '../models/game.model';
+import type {PlayerModel, PointModel} from '../models/player.model';
 import {GamesDatabase} from './games.store';
+import type { UpdateSpec } from 'dexie';
 
 const currentVersion = 2;
 
@@ -39,7 +40,7 @@ export async function migrate(): Promise<void> {
 }
 
 
-const updateGamePoints = (game: GameModel): GameModel => {
+const updateGamePoints = (game: GameModel): UpdateSpec<GameModel> => {
   const players = game.players.map<PlayerModel>(player => {
     const newPoints = player.points.map(_p => {
       const points = _p as PointModel | number;
@@ -53,7 +54,7 @@ const updateGamePoints = (game: GameModel): GameModel => {
   return {...game, players};
 }
 
-const updateGamePointsModel = (game: GameModel): GameModel => {
+const updateGamePointsModel = (game: GameModel): UpdateSpec<GameModel> => {
   const players = game.players.map<PlayerModel>(player => {
     const newPoints = player.points.map(_p => {
       const points = _p as PointModel | null;

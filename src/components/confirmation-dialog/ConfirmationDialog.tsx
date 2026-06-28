@@ -12,11 +12,11 @@ interface LeaderboardDialogProps {
   onCancel: () => void;
 }
 
-export function ConfirmationDialog({message, open, onConfirm, onDecline, onCancel}: LeaderboardDialogProps): JSX.Element {
+export function ConfirmationDialog({message, open, onConfirm, onDecline, onCancel}: LeaderboardDialogProps): React.JSX.Element {
   const {t} = useTranslation();
 
   return (
-    <Dialog open={open} fullWidth onClose={onCancel} TransitionComponent={UpTransition}>
+    <Dialog open={open} fullWidth onClose={onCancel} slots={{transition: UpTransition}}>
       <DialogContent className="select-none">
         {message}
       </DialogContent>

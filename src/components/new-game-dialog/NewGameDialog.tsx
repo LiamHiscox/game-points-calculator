@@ -22,8 +22,8 @@ import AddIcon from '@mui/icons-material/Add';
 import CloseIcon from '@mui/icons-material/Close';
 import React, {useEffect, useRef, useState} from 'react';
 import {v4 as uuidv4} from 'uuid';
-import {GameModel} from '../../models/game.model';
-import {PlayerModel} from '../../models/player.model';
+import type {GameModel} from '../../models/game.model';
+import type {PlayerModel} from '../../models/player.model';
 import {UpTransition} from '../up-transition/UpTransition';
 import {DraggableList} from '../draggable-list/DraggableList';
 import {useTranslation} from 'react-i18next';
@@ -37,7 +37,7 @@ interface NewGameDialogProps {
   onSubmit: (game: GameModel) => void;
 }
 
-export function NewGameDialog({open, game, onClose, onSubmit}: NewGameDialogProps): JSX.Element {
+export function NewGameDialog({open, game, onClose, onSubmit}: NewGameDialogProps): React.JSX.Element {
   const [id, setId] = useState<string>('');
   const [timestamp, setTimestamp] = useState<Date>(new Date());
   const [commentFields, setCommentFields] = useState<boolean>(false);
@@ -97,7 +97,7 @@ export function NewGameDialog({open, game, onClose, onSubmit}: NewGameDialogProp
     <Dialog fullScreen
             open={open}
             onClose={onClose}
-            TransitionComponent={UpTransition}
+            slots={{transition: UpTransition}}
     >
       <div ref={dialogRef} className='new-game-form'>
         <AppBar position="static">
@@ -159,8 +159,7 @@ export function NewGameDialog({open, game, onClose, onSubmit}: NewGameDialogProp
             </ListItem>
             <DraggableList items={players}
                           onSortChange={(sorted): void => setPlayers(sorted)}
-                          listItemId={(player): string => player.id}
-                          renderListItem={(player, index): JSX.Element => (
+                          renderListItem={(player, index): React.JSX.Element => (
                             <>
                               <div className="drag-icon-container">
                                 <DragIndicatorIcon color="primary"/>

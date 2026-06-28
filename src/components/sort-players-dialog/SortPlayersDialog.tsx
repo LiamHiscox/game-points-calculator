@@ -4,7 +4,7 @@ import {
   DialogActions,
   ListItemText
 } from '@mui/material';
-import {PlayerModel} from '../../models/player.model';
+import type {PlayerModel} from '../../models/player.model';
 import {UpTransition} from '../up-transition/UpTransition';
 import {useEffect, useState} from 'react';
 import DragIndicatorIcon from '@mui/icons-material/DragIndicator';
@@ -18,18 +18,17 @@ interface SortPlayersDialogProps {
   onSubmit: (players: PlayerModel[]) => void;
 }
 
-export function SortPlayersDialog({open, players, onClose, onSubmit}: SortPlayersDialogProps): JSX.Element {
+export function SortPlayersDialog({open, players, onClose, onSubmit}: SortPlayersDialogProps): React.JSX.Element {
   const [sortedPlayers, setSortedPlayers] = useState<PlayerModel[]>([]);
   const {t} = useTranslation();
 
   useEffect(() => setSortedPlayers(players), [players]);
 
   return (
-    <Dialog open={open} onClose={onClose} fullWidth TransitionComponent={UpTransition}>
+    <Dialog open={open} onClose={onClose} fullWidth slots={{transition: UpTransition}}>
       <DraggableList items={sortedPlayers}
                      onSortChange={(sorted): void => setSortedPlayers(sorted)}
-                     listItemId={(player): string => player.id}
-                     renderListItem={(player): JSX.Element => (<>
+                     renderListItem={(player): React.JSX.Element => (<>
                        <ListItemText primary={player.name}/>
                        <DragIndicatorIcon color="primary"/>
                      </>)}

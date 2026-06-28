@@ -1,6 +1,6 @@
 import './StatsDialog.scss';
 import { AppBar, Chip, Dialog, IconButton, Toolbar, Typography } from '@mui/material';
-import { PlayerModel, ColorPlayerModel } from '../../models/player.model';
+import type { PlayerModel, ColorPlayerModel } from '../../models/player.model';
 import { MinMaxTable } from './min-max-table/MinMaxTable';
 import { LineGraph } from './line-graph/LineGraph';
 import { StandingsGraph } from './standings-graph/StandingsGraph';
@@ -34,7 +34,7 @@ const colors = [
   '#000000'
 ];
 
-export function StatsDialog({ open, players, onClose }: StatsDialogProps): JSX.Element {
+export function StatsDialog({ open, players, onClose }: StatsDialogProps): React.JSX.Element {
   const {t} = useTranslation();
   const [selected, setSelected] = useState<string[]>([]);
   const coloredPlayers = players.map<ColorPlayerModel>((p, i) => ({color: colors[i%colors.length], ...p}));
@@ -54,7 +54,7 @@ export function StatsDialog({ open, players, onClose }: StatsDialogProps): JSX.E
   }
 
   return (
-    <Dialog open={open} onClose={onClose} fullScreen TransitionComponent={UpTransition}>
+    <Dialog open={open} onClose={onClose} fullScreen slots={{transition: UpTransition}}>
       <AppBar position="sticky">
         <Toolbar className="tool-bar">
           <div/>

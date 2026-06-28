@@ -1,6 +1,6 @@
 import React from 'react';
 import './Player.scss';
-import {PlayerModel, PointModel} from '../../models/player.model';
+import type {PlayerModel, PointModel} from '../../models/player.model';
 
 interface PlayerProps {
   player: PlayerModel;
@@ -16,7 +16,7 @@ function Player({
                   onInputFocus,
                   readonly,
                   commentFields
-                }: PlayerProps): JSX.Element {
+                }: PlayerProps): React.JSX.Element {
 
   if (
     player.points.length === 0

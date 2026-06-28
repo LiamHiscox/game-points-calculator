@@ -1,6 +1,6 @@
 import './PointsTable.scss';
 import Player from './player/Player';
-import {PlayerModel, PointModel} from '../models/player.model';
+import type {PlayerModel, PointModel} from '../models/player.model';
 import React, {useEffect, useRef, useState} from 'react';
 
 interface PointsTableProps {
@@ -21,7 +21,7 @@ export function PointsTable({
                               showRows,
                               commentFields,
                               showStartingPlayer
-                            }: PointsTableProps): JSX.Element {
+                            }: PointsTableProps): React.JSX.Element {
   const [rounds, setRounds] = useState<null[]>([]);
   const playerTableContainerRef = useRef<HTMLDivElement>(null);
 
