@@ -4,7 +4,8 @@
     "save": "Save",
     "close": "Close",
     "yes": "Yes",
-    "no": "No"
+    "no": "No",
+    "clear": "Clear"
   },
   "headers": {
     "clearPoints": "Clear Points",

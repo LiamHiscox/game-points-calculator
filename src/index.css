@@ -21,3 +21,11 @@ input {
 h1, h2, h3, h4, h5, h6, label, p {
   user-select: none;
 }
+.recharts-wrapper:focus,
+.recharts-wrapper *:focus {
+  outline: none;
+}
+.recharts-wrapper:focus-visible,
+.recharts-wrapper *:focus-visible {
+  outline: revert;
+}

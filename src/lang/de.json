@@ -4,7 +4,8 @@
     "save": "Speichern",
     "close": "Schließen",
     "yes": "Ja",
-    "no": "Nein"
+    "no": "Nein",
+    "clear": "clear"
   },
   "headers": {
     "clearPoints": "Punkte Löschen",

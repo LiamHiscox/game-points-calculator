@@ -5,9 +5,10 @@ import { MinMaxTable } from './min-max-table/MinMaxTable';
 import { LineGraph } from './line-graph/LineGraph';
 import { StandingsGraph } from './standings-graph/StandingsGraph';
 import { UpTransition } from '../up-transition/UpTransition';
-import CloseIcon from '@mui/icons-material/Close';
 import { useTranslation } from 'react-i18next';
 import { useState } from 'react';
+import CloseIcon from '@mui/icons-material/Close';
+import ReplayIcon from '@mui/icons-material/Replay';
 
 interface StatsDialogProps {
   open: boolean;
@@ -64,18 +65,20 @@ export function StatsDialog({ open, players, onClose }: StatsDialogProps): React
       </AppBar>
       <div style={{position: 'relative'}}>
         <div className='player-chips-container'>
-          {selected.length ?
-            <Chip
-              label='X'
-              style={{border: 'solid 1px black', backgroundColor: 'grey', color: 'white'}}
-              className="select-none"
-              onClick={() => setSelected([])}
-            /> : <></>}
+          <IconButton color='primary' onClick={() => setSelected([])} disabled={selected.length === 0}>
+            <ReplayIcon/>
+          </IconButton>
           {coloredPlayers.map((player, i) => (
             <Chip
               label={player.name}
               key={i}
-              style={{border: 'solid 1px black', backgroundColor: player.color, color: 'white', opacity: isHighlighted(player) ? '1' : '0.5'}}
+              style={{
+                border: 'solid 1px black',
+                backgroundColor: player.color,
+                color: 'white',
+                opacity: isHighlighted(player) ? '1' : '0.5',
+                transition: 'opacity .5s'
+              }}
               className="select-none"
               onClick={() => playerClicked(player)}
             />
