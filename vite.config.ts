@@ -4,6 +4,7 @@ import react from '@vitejs/plugin-react'
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  base: '/game-points-calculator/dist/',
   plugins: [react(), VitePWA({
     registerType: 'autoUpdate',
     injectRegister: false,
