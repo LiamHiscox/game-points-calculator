@@ -1,6 +1,6 @@
 import './LineGraph.scss';
 import { CartesianGrid, Line, LineChart, Tooltip, XAxis, YAxis, ResponsiveContainer, Legend } from 'recharts';
-import type { TooltipProps } from 'recharts';
+import type { TooltipContentProps } from 'recharts';
 import type { ColorPlayerModel } from '../../../models/player.model';
 import type { PointsDataModel } from '../../../models/points-data.model';
 import type { FilteredPlayerModel } from '../../../models/filtered-player.model';
@@ -16,12 +16,12 @@ interface MinMaxPointsModel {
     max: number | null;
 }
 
-const CustomTooltip = ({ active, payload }: TooltipProps<number, string>): React.JSX.Element | null => {
+const CustomTooltip = ({ active, payload }: TooltipContentProps): React.JSX.Element | null => {
     if (active && payload && payload.length) {
       return (
         <div className="line-graph-tooltip">
-            {payload.sort((a, b) => b.value! - a.value!).map(p => (
-                <div key={p.dataKey} className="label">
+            {[...payload].sort((a, b) => (b.value! as number) - (a.value! as number)).map(p => (
+                <div key={p.dataKey as string} className="label">
                     <span style={{display: 'flex', alignItems: 'center'}}>
                         <div className="label-color" style={{backgroundColor: p.color}}/>
                         <span style={{color: p.color}}>{p.name}: </span>
@@ -111,10 +111,7 @@ export function LineGraph({ players, accumalate }: LineGraphProps): React.JSX.El
                 <XAxis dataKey="round" />
                 <YAxis domain={[min, max]}/>
                 <Legend/>
-                <Tooltip
-                    isAnimationActive={false}
-                    content={<CustomTooltip />}
-                />
+                <Tooltip isAnimationActive={false} content={CustomTooltip}/>
                 {players.map((player) => (
                     <Line type="monotone" dataKey={player.name} stroke={player.color} key={player.id} />
                 ))}

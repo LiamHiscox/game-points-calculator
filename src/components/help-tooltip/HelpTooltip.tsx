@@ -23,11 +23,6 @@ export function HelpTooltip(props: HelpTooltipProps): React.JSX.Element {
       {/* TODO check if this property is even needed */}
       <Tooltip
         title={props.title}
-        slotProps={{
-          popper: {
-            disablePortal: true
-          }
-        }}
         onClose={handleTooltipClose}
         open={tooltipOpen}
         disableFocusListener
@@ -36,6 +31,7 @@ export function HelpTooltip(props: HelpTooltipProps): React.JSX.Element {
         arrow
         slotProps={{
           popper: {
+            disablePortal: true,
             modifiers: [
               {
                 name: 'offset',

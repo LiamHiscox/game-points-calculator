@@ -1,6 +1,6 @@
 import './StandingsGraph.scss';
 import { CartesianGrid, Line, LineChart, Tooltip, XAxis, YAxis, ResponsiveContainer, Text, Legend } from 'recharts';
-import type { TooltipProps } from 'recharts';
+import type { TooltipContentProps } from 'recharts';
 import type { ColorPlayerModel } from '../../../models/player.model';
 import type { PointsDataModel } from '../../../models/points-data.model';
 import type { FilteredPlayerModel } from '../../../models/filtered-player.model';
@@ -26,12 +26,12 @@ const CustomizedLabel = ({padding}: {padding: number}): React.JSX.Element => {
     );
 };
 
-const CustomTooltip = ({ active, payload }: TooltipProps<number, string>): React.JSX.Element | null => {
+const CustomTooltip = ({ active, payload }: TooltipContentProps): React.JSX.Element | null => {
     if (active && payload && payload.length) {
       return (
         <div className="standing-graph-tooltip">
-            {payload.sort((a, b) => b.value! - a.value!).map(p => (
-                <div key={p.dataKey} className="label">
+            {[...payload].sort((a, b) => (b.value! as number) - (a.value! as number)).map(p => (
+                <div key={p.dataKey as string} className="label">
                     <div className="label-color" style={{backgroundColor: p.color}}/>
                     <span style={{color: p.color}}>{p.name}</span>
                 </div>
@@ -116,10 +116,7 @@ export function StandingsGraph({ players }: StandingsGraphProps): React.JSX.Elem
                     tick={false}
                     domain={[1, players.length]}/>
                 <Legend/>
-                <Tooltip
-                    isAnimationActive={false}
-                    content={<CustomTooltip />}
-                />
+                <Tooltip isAnimationActive={false} content={CustomTooltip}/>
                 {players.map((player) => (
                     <Line type="monotone" dataKey={player.name} stroke={player.color} key={player.id} />
                 ))}
