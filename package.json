@@ -2,7 +2,7 @@
   "name": "game-points-calculator",
   "private": true,
   "version": "4.0.2",
-  "homepage": "https://liamhiscox.github.io/game-points-calculator/dist/",
+  "homepage": "https://liamhiscox.github.io/game-points-calculator/build/",
   "type": "module",
   "scripts": {
     "dev": "vite",

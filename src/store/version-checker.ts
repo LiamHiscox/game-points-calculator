@@ -9,7 +9,7 @@ const versionKey = 'package-version';
 export const checkVersion = async (): Promise<void> => {
   const localVersion = localStorage.getItem(versionKey);
   try {
-    const response = await fetch(packageJson.homepage.replace('/dist/', '') + '/package.json');
+    const response = await fetch(packageJson.homepage.replace('/build/', '') + '/package.json');
     if (!response.ok) return;
     const remotePackageJson = await response.json() as PackageJson;
     const remoteVersion = remotePackageJson.version;
