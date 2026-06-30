@@ -73,13 +73,12 @@ export function StatsDialog({ open, players, onClose }: StatsDialogProps): React
               label={player.name}
               key={i}
               style={{
-                border: 'solid 1px black',
                 backgroundColor: player.color,
                 color: 'white',
                 opacity: isHighlighted(player) ? '1' : '0.5',
-                transition: 'opacity .5s'
+                transition: 'opacity .5s, box-shadow .5s',
               }}
-              className="select-none"
+              className={`select-none ${isHighlighted(player) ? 'player-chip' : ''}`}
               onClick={() => playerClicked(player)}
             />
           ))}

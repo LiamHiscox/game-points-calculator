@@ -38,15 +38,13 @@
   "pwaInstallation": {
     "installationGuide": "Installation Guide",
     "addAppToHomeScreen": "Add App To Home Screen",
-    "iosStep1Left": "While viewing the website, tap the",
-    "iosStep1Right": "button in the menu bar",
+    "iosStep1": "In your browser, tap Share ",
     "iosStep2": "Scroll down the list of options",
     "iosStep3": "Tap 'Add to Home Screen",
-    "androidStep1Left": "While viewing the website, tap the",
-    "androidStep1Right": "button next to the URL bar",
+    "androidStep1": "At the top right of your browser tap More ",
     "androidStep2": "Scroll down the list of options",
     "androidStep3Left": "Tap",
-    "androidStep3Right": "Install app",
+    "androidStep3Right": "Add to Home screen",
     "notSupportedBrowser": "This app only has confirmed support for Safari on IOS and Chrome on Android devices!",
     "appInstalled": "App Installed!"
   },

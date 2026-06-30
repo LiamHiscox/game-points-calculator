@@ -4,9 +4,9 @@ import type {BeforeInstallPromptEvent} from '../../models/before-installed-promp
 import {Button, Dialog, DialogContent, Fade, IconButton, Typography, Zoom} from '@mui/material';
 import IosShareIcon from '@mui/icons-material/IosShare';
 import AddBoxOutlinedIcon from '@mui/icons-material/AddBoxOutlined';
+import InstallDesktopIcon from '@mui/icons-material/InstallDesktop';
 import SwipeUpOutlinedIcon from '@mui/icons-material/SwipeUpOutlined';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
-import AddToHomeScreenIcon from '@mui/icons-material/AddToHomeScreen';
 import CloseIcon from '@mui/icons-material/Close';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import {useTranslation} from 'react-i18next';
@@ -23,7 +23,7 @@ export function PwaInstallationDialog({open, onClose}: PwaInstallationDialogProp
   const {t} = useTranslation();
 
   const isStandalone = window.matchMedia('(display-mode: standalone)').matches;
-  const showInstallButton = userInstalled && !!prompt;
+  const showInstallButton = !userInstalled && !!prompt;
 
   const isIOS = /ipad|iphone|ipod/.test(userAgent);
   const isSafari = /safari/.test(userAgent);
@@ -67,16 +67,16 @@ export function PwaInstallationDialog({open, onClose}: PwaInstallationDialogProp
           )}
           {showIOSHelp && (
             <ol className="ordered-list">
-              <li> {t('pwaInstallation.iosStep1Left')} &nbsp;<IosShareIcon/>&nbsp; {t('pwaInstallation.iosStep1Right')} </li>
+              <li> {t('pwaInstallation.iosStep1')} &nbsp;<IosShareIcon/> </li>
               <li> {t('pwaInstallation.iosStep2')} &nbsp;<SwipeUpOutlinedIcon/></li>
               <li> {t('pwaInstallation.iosStep3')} &nbsp;<AddBoxOutlinedIcon/>'</li>
             </ol>
           )}
           {isChrome && (
             <ol className="ordered-list">
-              <li> {t('pwaInstallation.androidStep1Left')} <MoreVertIcon/> {t('pwaInstallation.androidStep1Right')} </li>
+              <li> {t('pwaInstallation.androidStep1')} <MoreVertIcon/> </li>
               <li> {t('pwaInstallation.androidStep2')} &nbsp;<SwipeUpOutlinedIcon/></li>
-              <li> {t('pwaInstallation.androidStep3Left')} '<AddToHomeScreenIcon/>&nbsp; {t('pwaInstallation.androidStep3Right')}' </li>
+              <li> {t('pwaInstallation.androidStep3Left')} '<InstallDesktopIcon/>&nbsp; {t('pwaInstallation.androidStep3Right')}' </li>
             </ol>
           )}
           {!showInstallButton && !showIOSHelp && !isChrome && (

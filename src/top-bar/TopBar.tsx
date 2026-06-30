@@ -25,6 +25,7 @@ interface TopBarProps {
   commentField: boolean;
   showStartingPlayer: boolean;
   showRows: boolean;
+  showMenu: boolean;
   onAddPlayer: () => void;
   onClearPoints: (save: boolean) => void;
   onOpenDelete: () => void;
@@ -45,6 +46,7 @@ export function TopBar({
                          gameName,
                          canSaveGame,
                          showRows,
+                         showMenu,
                          onAddPlayer,
                          onClearPoints,
                          onOpenDelete,
@@ -103,7 +105,7 @@ export function TopBar({
                  e.currentTarget.select()
                }}
         />
-        <IconButton onClick={handleClick}>
+        <IconButton onClick={handleClick} style={{opacity: showMenu ? '1' : '0' }}>
           <MoreVertIcon className="top-bar-icon"/>
         </IconButton>
       </div>

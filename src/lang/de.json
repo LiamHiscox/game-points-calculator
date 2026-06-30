@@ -38,15 +38,13 @@
   "pwaInstallation": {
     "installationGuide": "Installationsanleitung",
     "addAppToHomeScreen": "App zum Startbildschirm hinzufügen",
-    "iosStep1Left": "Tippe beim Anzeigen der Website auf den",
-    "iosStep1Right": "Button in der Menüleiste",
+    "iosStep1": "Tippe oben rechts im Browser auf Mehr ",
     "iosStep2": "Scrolle in der Liste der Optionen nach unten",
     "iosStep3": "Tippe auf 'Zum Startbildschirm hinzufügen",
-    "androidStep1Left": "Tippe beim Anzeigen der Website auf den",
-    "androidStep1Right": "Button neben der URL-Leiste",
+    "androidStep1": "Tippe oben rechts im Browser auf Mehr ",
     "androidStep2": "Scrolle in der Liste der Optionen nach unten",
     "androidStep3Left": "Tippe auf",
-    "androidStep3Right": "App installieren",
+    "androidStep3Right": "Zum Startbildschirm hinzufügen",
     "notSupportedBrowser": "Diese App hat nur bestätigte Unterstützung für Safari auf IOS-, und für Chrome auf Android-Geräten!",
     "appInstalled": "App installiert!"
   },

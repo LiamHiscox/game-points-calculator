@@ -147,6 +147,7 @@ function App(): React.JSX.Element {
       <TopBar commentField={game.commentFields}
               showStartingPlayer={game.showStartingPlayer}
               gameName={game.name}
+              showMenu={!installationOpen}
               canSaveGame={canSaveGame(game)}
               onNameChange={setGameName}
               onAddPlayer={addPlayer}
