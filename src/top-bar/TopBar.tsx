@@ -18,6 +18,7 @@ import StartIcon from '@mui/icons-material/Start';
 import React from 'react';
 import {useTranslation} from 'react-i18next';
 import i18n from 'i18next';
+import packageJson from '../../package.json';
 
 interface TopBarProps {
   gameName: string;
@@ -166,6 +167,9 @@ export function TopBar({
             {i18n.language.startsWith('en') && 'Deutsch'}
           </Typography>}/>
         </MenuItem>
+        <Typography align='right' variant='overline' component='div' color='secondary' className='version-text'>
+          {packageJson.version}
+        </Typography>
       </Menu>
       <ConfirmationDialog
         message={canSaveGame ? t('confirmationDialog.saveCurrentGame') : t('confirmationDialog.clearAllPoints')}

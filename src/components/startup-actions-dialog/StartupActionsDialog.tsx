@@ -37,7 +37,7 @@ export function StartupActionsDialog({open, onCancel, onStartNewGame}: StartupAc
                   fullWidth>
             {t('startupActions.startNewGame')}
           </Button>
-          <Typography sx={{textAlign: 'center', fontWeight: 600}}> OR </Typography>
+          <Typography sx={{textAlign: 'center', fontWeight: 600}}> t('common.or') </Typography>
           <Button onClick={onCancel}
                   variant='contained'
                   startIcon={<KeyboardReturnIcon/>}

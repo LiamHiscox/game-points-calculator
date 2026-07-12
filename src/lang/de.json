@@ -5,7 +5,8 @@
     "close": "Schließen",
     "yes": "Ja",
     "no": "Nein",
-    "clear": "clear"
+    "clear": "Löschen",
+    "or": "ODER"
   },
   "headers": {
     "clearPoints": "Punkte Löschen",
@@ -22,14 +23,14 @@
   "confirmationDialog": {
     "saveCurrentGame": "Möchtest du das aktuelle Spiel im Verlauf speichern?",
     "clearAllPoints": "Bist du sicher, dass du alle Punkte löschen möchtest?",
-    "deleteGame": "Bist du sicher, dass du folgendes Spiel löschen möchtest:",
-    "deletePlayer": "Bist du sicher, dass du folgenden Spieler löschen möchtest:",
+    "deleteGame": "Bist du sicher, dass du folgendes Spiel löschen möchtest: ",
+    "deletePlayer": "Bist du sicher, dass du folgenden Spieler löschen möchtest: ",
     "replayGame": "Bist du sicher, dass du folgendes wiederholen möchtest: "
   },
   "stats": {
     "gameProgress": "Spielfortschritt",
     "pointsPerRound": "Punkte pro Runde",
-    "positionPerRound": "Platzierung pro Runde",
+    "standingsPerRound": "Platzierung pro Runde",
     "minMax": "Min/Max",
     "max": "Max",
     "min": "Min",
@@ -38,10 +39,10 @@
   "pwaInstallation": {
     "installationGuide": "Installationsanleitung",
     "addAppToHomeScreen": "App zum Startbildschirm hinzufügen",
-    "iosStep1": "Tippe oben rechts im Browser auf Mehr ",
+    "iosStep1": "Tippe in deinem Browser auf 'Teilen ",
     "iosStep2": "Scrolle in der Liste der Optionen nach unten",
     "iosStep3": "Tippe auf 'Zum Startbildschirm hinzufügen",
-    "androidStep1": "Tippe oben rechts im Browser auf Mehr ",
+    "androidStep1": "Tippe oben rechts im Browser auf 'Mehr ",
     "androidStep2": "Scrolle in der Liste der Optionen nach unten",
     "androidStep3Left": "Tippe auf",
     "androidStep3Right": "Zum Startbildschirm hinzufügen",

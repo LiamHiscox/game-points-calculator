@@ -5,7 +5,8 @@
     "close": "Close",
     "yes": "Yes",
     "no": "No",
-    "clear": "Clear"
+    "clear": "Clear",
+    "or": "OR"
   },
   "headers": {
     "clearPoints": "Clear Points",
@@ -22,9 +23,9 @@
   "confirmationDialog": {
     "saveCurrentGame": "Do you want to save the current game to the history?",
     "clearAllPoints": "Are you sure you want to clear all points?",
-    "deleteGame": "Are you sure you want to delete",
-    "deletePlayer": "Are you sure you want to delete",
-    "replayGame": "Are you sure you want to replay"
+    "deleteGame": "Are you sure you want to delete: ",
+    "deletePlayer": "Are you sure you want to delete: ",
+    "replayGame": "Are you sure you want to replay: "
   },
   "stats": {
     "gameProgress": "Game Progress",
@@ -38,10 +39,10 @@
   "pwaInstallation": {
     "installationGuide": "Installation Guide",
     "addAppToHomeScreen": "Add App To Home Screen",
-    "iosStep1": "In your browser, tap Share ",
+    "iosStep1": "In your browser, tap 'Share ",
     "iosStep2": "Scroll down the list of options",
     "iosStep3": "Tap 'Add to Home Screen",
-    "androidStep1": "At the top right of your browser tap More ",
+    "androidStep1": "At the top right of your browser tap 'More ",
     "androidStep2": "Scroll down the list of options",
     "androidStep3Left": "Tap",
     "androidStep3Right": "Add to Home screen",

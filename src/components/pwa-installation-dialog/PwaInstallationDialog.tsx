@@ -67,14 +67,14 @@ export function PwaInstallationDialog({open, onClose}: PwaInstallationDialogProp
           )}
           {showIOSHelp && (
             <ol className="ordered-list">
-              <li> {t('pwaInstallation.iosStep1')} &nbsp;<IosShareIcon/> </li>
+              <li> {t('pwaInstallation.iosStep1')} &nbsp;<IosShareIcon/>'</li>
               <li> {t('pwaInstallation.iosStep2')} &nbsp;<SwipeUpOutlinedIcon/></li>
               <li> {t('pwaInstallation.iosStep3')} &nbsp;<AddBoxOutlinedIcon/>'</li>
             </ol>
           )}
           {isChrome && (
             <ol className="ordered-list">
-              <li> {t('pwaInstallation.androidStep1')} <MoreVertIcon/> </li>
+              <li> {t('pwaInstallation.androidStep1')} <MoreVertIcon/>'</li>
               <li> {t('pwaInstallation.androidStep2')} &nbsp;<SwipeUpOutlinedIcon/></li>
               <li> {t('pwaInstallation.androidStep3Left')} '<InstallDesktopIcon/>&nbsp; {t('pwaInstallation.androidStep3Right')}' </li>
             </ol>
