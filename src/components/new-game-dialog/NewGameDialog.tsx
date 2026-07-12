@@ -77,6 +77,21 @@ export function NewGameDialog({open, game, onClose, onSubmit}: NewGameDialogProp
     setPlayers(players.map((player, i) => index === i ? {...player, name} : player));
   }
 
+  const handleKeyUp = (key: string, index: number): void => {
+    if (key != 'Enter') return;
+    if (index == players.length - 1) {
+      addPlayer()
+    } else {
+      document.getElementById(`player-name-input-${index + 1}`)?.focus()
+    }
+  }
+
+  const handlePlayerClear = (index: number) => {
+    const updated = players.map((p, i) => i != index ? p : { ...p, name: '' });
+    setPlayers(updated);
+    document.getElementById(`player-name-input-${index}`)?.focus()
+  }
+
   const addPlayer = (): void => {
     setFocus(true);
     setPlayers(players.concat({id: uuidv4(), name: '', points: [{}]}));
@@ -164,15 +179,29 @@ export function NewGameDialog({open, game, onClose, onSubmit}: NewGameDialogProp
                               <div className="drag-icon-container">
                                 <DragIndicatorIcon color="primary"/>
                               </div>
-                              <TextField label={t('newGame.name')}
+                              <TextField id={`player-name-input-${index}`}
+                                          label={t('newGame.name')}
                                           variant="outlined"
                                           autoFocus={focus && index === players.length - 1}
                                           value={player.name}
                                           style={{flex: '1'}}
+                                          onKeyUp={(event) => handleKeyUp(event.key, index)}
+                                          onSubmit={() => console.log('onSubmit')}
                                           onChange={(e): void => handleNameChange(e.target.value, index)}
                                           onFocus={(): void => handlePlayerFocus(index)}
+                                                    slotProps={{
+                                                      input: {
+                                                        endAdornment: (
+                                                          <InputAdornment position="end">
+                                                            <IconButton onClick={() => handlePlayerClear(index)}>
+                                                              <CloseIcon color="primary"/>
+                                                            </IconButton>
+                                                          </InputAdornment>
+                                                        ),
+                                                      },
+                                                    }}
                                           error={!player.name}
-                              />
+                                />
                               <IconButton onClick={(): void => handleDelete(index)}>
                                 <DeleteIcon color="primary"/>
                               </IconButton>

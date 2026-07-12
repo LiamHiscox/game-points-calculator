@@ -47,7 +47,7 @@ export function DeletePlayersDialog({players, open, onClose, onDelete}: DeletePl
         ))}
       </List>
       <Divider/>
-      <Button color="primary" onClick={onClose}> t('common.close') </Button>
+      <Button color="primary" onClick={onClose}> { t('common.close') } </Button>
       <ConfirmationDialog message={`${t('confirmationDialog.deletePlayer')} ${deleteName}?`}
                           open={confirmationOpen}
                           onConfirm={handleConfirm}
