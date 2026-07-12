@@ -41,6 +41,14 @@ export function PointsTable({
     playerTableContainerRef.current?.scrollTo({top, behavior: 'smooth'});
   }
 
+  const handleChangePointsFocus = (playerIndex: number, inputIndex: number): void => {
+    const newPlayerIndex = (playerIndex + 1) % players.length;
+    const isMaxInput = inputIndex === players[playerIndex].points.length - 1;
+    const maxIndex = players[newPlayerIndex].points.length - 1;
+    const maxInputIndex = !isMaxInput && inputIndex < maxIndex ? inputIndex : maxIndex;
+    document.getElementById(`points-input-${newPlayerIndex}-${maxInputIndex}`)?.focus();
+  }
+
   return (
     <div className="player-table-container" ref={playerTableContainerRef}>
       <div className="player-names">
@@ -65,11 +73,13 @@ export function PointsTable({
           ))}
         </div>
         <div className="player-table">
-          {players.map((player, i) => (
-            <Player key={i}
+          {players.map((player, playerIndex) => (
+            <Player key={playerIndex}
                     player={player}
+                    playerIndex={playerIndex}
                     onPointsChange={(points): void => onPointsChange && onPointsChange(points, player.id)}
                     onInputFocus={scrollToInput}
+                    handleChangePointsFocus={(inputIndex) => handleChangePointsFocus(playerIndex, inputIndex)}
                     readonly={readonly}
                     commentFields={commentFields}
             />

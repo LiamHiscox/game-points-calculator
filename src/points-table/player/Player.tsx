@@ -4,16 +4,20 @@ import type {PlayerModel, PointModel} from '../../models/player.model';
 
 interface PlayerProps {
   player: PlayerModel;
+  playerIndex: number;
   onPointsChange: (points: PointModel[]) => void;
   onInputFocus: (index: number) => void;
+  handleChangePointsFocus: (index: number) => void;
   commentFields: boolean;
   readonly: boolean;
 }
 
 function Player({
                   player,
+                  playerIndex,
                   onPointsChange,
                   onInputFocus,
+                  handleChangePointsFocus,
                   readonly,
                   commentFields
                 }: PlayerProps): React.JSX.Element {
@@ -38,6 +42,11 @@ function Player({
     onPointsChange(trimPoints(newPoints));
   }
 
+  const handlePointsKeyUp = (key: string, index: number) => {
+    if (key !== 'Tab' && key !== 'Enter') return;
+    handleChangePointsFocus(index);
+  }
+
   const trimPoints = (points: PointModel[]): PointModel[] => {
     const reverseIndex = points
       .concat()
@@ -54,8 +63,10 @@ function Player({
       {player.points.map((p, i) => (
         <div className="player-points player-input-cell" key={i}>
           <input className={typeof p.points === 'number' ? 'points-input' : 'points-input empty-input'}
+                 id={`points-input-${playerIndex}-${i}`}
                  type="number"
                  value={typeof p.points === 'number' ? p.points : ''}
+                 onKeyUp={(e) => handlePointsKeyUp(e.key, i)}
                  onChange={(e): void => handlePointsChange(e, i)}
                  onClick={(e): void => { 
                    e.currentTarget.select();
