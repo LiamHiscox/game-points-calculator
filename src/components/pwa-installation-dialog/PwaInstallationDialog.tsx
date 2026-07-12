@@ -103,6 +103,7 @@ export function PwaInstallationDialog({open, onClose}: PwaInstallationDialogProp
       </Dialog>
     );
   }
+  onClose()
   return (
     <></>
   );
