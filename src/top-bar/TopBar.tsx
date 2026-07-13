@@ -1,5 +1,5 @@
 import './TopBar.scss';
-import {IconButton, ListItemIcon, ListItemText, Menu, MenuItem, Typography} from '@mui/material';
+import {Autocomplete, IconButton, ListItemIcon, ListItemText, Menu, MenuItem, Typography} from '@mui/material';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import RotateLeftIcon from '@mui/icons-material/RotateLeft';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -15,20 +15,21 @@ import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 import LanguageIcon from '@mui/icons-material/Language';
 import SortIcon from '@mui/icons-material/Sort';
 import StartIcon from '@mui/icons-material/Start';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {useTranslation} from 'react-i18next';
 import i18n from 'i18next';
 import packageJson from '../../package.json';
 
 interface TopBarProps {
   gameName: string;
+  gameNames: string[];
   canSaveGame: boolean;
   commentField: boolean;
   showStartingPlayer: boolean;
   showRows: boolean;
   showMenu: boolean;
   onAddPlayer: () => void;
-  onClearPoints: (save: boolean) => void;
+  onStartNewRound: (save: boolean) => void;
   onOpenDelete: () => void;
   onOpenLeaderBoard: () => void;
   onNewGame: () => void;
@@ -45,11 +46,12 @@ export function TopBar({
                          commentField,
                          showStartingPlayer,
                          gameName,
+                         gameNames,
                          canSaveGame,
                          showRows,
                          showMenu,
                          onAddPlayer,
-                         onClearPoints,
+                         onStartNewRound,
                          onOpenDelete,
                          onOpenLeaderBoard,
                          onNewGame,
@@ -61,21 +63,23 @@ export function TopBar({
                          onToggleShowStartingPlayer,
                          onSortPlayers
                        }: TopBarProps): React.JSX.Element {
-  const [confirmationOpen, setConfirmationOpen] = React.useState(false);
-  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const [innerGameName, setInnerGameName] = useState(gameName);
+  const [confirmationOpen, setConfirmationOpen] = useState(false);
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const {t} = useTranslation();
+
+  useEffect(() => setInnerGameName(gameName), [gameName]);
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>): void => {
     setAnchorEl(event.currentTarget);
   };
 
-  const handleClearPoints = (): void => {
-    setConfirmationOpen(true);
-  }
-
-  const handleClearConfirmation = (save: boolean): void => {
-    setConfirmationOpen(false);
-    onClearPoints(save);
+  const handleBlur = () => {
+    if (innerGameName) {
+      onNameChange(innerGameName);
+    } else {
+      setInnerGameName(gameName);
+    }
   }
 
   const handleClose = (): void => {
@@ -98,14 +102,19 @@ export function TopBar({
             <KeyboardArrowRightIcon className="top-bar-icon"/>
           }
         </IconButton>
-        <input type="text"
-               className="game-name-input"
-               value={gameName}
-               onChange={(e): void => onNameChange(e.target.value)}
-               onClick={(e): void => {
-                 e.currentTarget.select()
-               }}
-        />
+        <Autocomplete
+          freeSolo
+          fullWidth
+          inputValue={innerGameName}
+          onBlur={handleBlur}
+          onInputChange={(_, value): void => setInnerGameName(value)}
+          options={gameNames}
+          renderInput={(params) => (
+            <div ref={params.slotProps.input.ref} className='game-name-container'>
+              <input type="text" {...params.slotProps.htmlInput} onClick={(e): void => {e.currentTarget.select()}} className="game-name-input" />
+            </div>
+          )}
+      />
         <IconButton onClick={handleClick} style={{opacity: showMenu ? '1' : '0' }}>
           <MoreVertIcon className="top-bar-icon"/>
         </IconButton>
@@ -114,9 +123,9 @@ export function TopBar({
             open={!!anchorEl}
             onClose={handleClose}
       >
-        <MenuItem onClick={handleClearPoints}>
+        <MenuItem onClick={() => onStartNewRound(true)}>
           <ListItemIcon> <RotateLeftIcon color="primary"/> </ListItemIcon>
-          <ListItemText primary={<Typography> {t('headers.clearPoints')} </Typography>}/>
+          <ListItemText primary={<Typography> {t('headers.newRound')} </Typography>}/>
         </MenuItem>
         <MenuItem onClick={onOpenDelete}>
           <ListItemIcon> <DeleteIcon color="primary"/> </ListItemIcon>
@@ -171,13 +180,6 @@ export function TopBar({
           {packageJson.version}
         </Typography>
       </Menu>
-      <ConfirmationDialog
-        message={canSaveGame ? t('confirmationDialog.saveCurrentGame') : t('confirmationDialog.clearAllPoints')}
-        open={confirmationOpen}
-        onConfirm={(): void => handleClearConfirmation(true)}
-        onDecline={(): void => canSaveGame ? handleClearConfirmation(false) : setConfirmationOpen(false)}
-        onCancel={(): void => setConfirmationOpen(false)}
-      />
     </>
   );
 }

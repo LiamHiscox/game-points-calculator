@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 import './App.scss';
 import type {PlayerModel, PointModel} from './models/player.model';
 import {useGameState} from './store/game.store';
@@ -16,6 +16,7 @@ import type {GameModel} from './models/game.model';
 import {PwaInstallationDialog} from './components/pwa-installation-dialog/PwaInstallationDialog';
 import {SortPlayersDialog} from './components/sort-players-dialog/SortPlayersDialog';
 import { shouldOpenStartUpDialog, StartupActionsDialog } from './components/startup-actions-dialog/StartupActionsDialog';
+import { getGameNames, getPlayerNames } from './util/game-model.util';
 
 function App(): React.JSX.Element {
   const [game, setGame] = useGameState();
@@ -31,6 +32,8 @@ function App(): React.JSX.Element {
   const [showRows, setShowRows] = useState(!!localStorage.getItem('showRows'));
   const {enqueueSnackbar} = useSnackbar();
 
+  const gameNames = useMemo(() => getGameNames(games.concat(game)), [games, game]);
+  const playerNames = useMemo(() => getPlayerNames(games.concat(game)), [games, game]);
 
   useEffect(() => {
     setStartupActionsOpen(shouldOpenStartUpDialog());
@@ -92,7 +95,7 @@ function App(): React.JSX.Element {
     enqueueSnackbar(`${game.players.length + 1} players`);
   }
 
-  const clearPoints = (save: boolean): void => {
+  const startNewRound = (save: boolean): void => {
     setNewGame({
       ...game,
       players: game.players.map(player => ({...player, points: [{}]}))
@@ -147,11 +150,12 @@ function App(): React.JSX.Element {
       <TopBar commentField={game.commentFields}
               showStartingPlayer={game.showStartingPlayer}
               gameName={game.name}
+              gameNames={gameNames}
               showMenu={!installationOpen}
               canSaveGame={canSaveGame(game)}
               onNameChange={setGameName}
               onAddPlayer={addPlayer}
-              onClearPoints={clearPoints}
+              onStartNewRound={startNewRound}
               onOpenDelete={(): void => setDeleteOpen(true)}
               onOpenLeaderBoard={(): void => setLeaderboardOpen(true)}
               onNewGame={(): void => setNewGameOpen(true)}
@@ -167,6 +171,7 @@ function App(): React.JSX.Element {
                    onPointsChange={handlePointsChange}
                    showStartingPlayer={game.showStartingPlayer}
                    players={game.players}
+                   playerNames={playerNames}
                    readonly={false}
                    showRows={showRows}
                    commentFields={game.commentFields}
@@ -181,7 +186,8 @@ function App(): React.JSX.Element {
                          onClose={(): void => setLeaderboardOpen(false)}
       />
       <NewGameDialog open={newGameOpen}
-                     game={game}
+                     gameNames={gameNames}
+                     playerNames={playerNames}
                      onClose={(): void => setNewGameOpen(false)}
                      onSubmit={setNewGame}
       />

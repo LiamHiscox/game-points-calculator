@@ -49,9 +49,9 @@ function Player({
     handleChangePointsFocus(index);
   }
 
-    const handleCommentKeyUp = (key: string, index: number) => {
-      if (key !== 'Enter') return;
-      handleChangeCommentFocus(index);
+  const handleCommentKeyUp = (key: string, index: number) => {
+    if (key !== 'Enter') return;
+    handleChangeCommentFocus(index);
   }
 
   const trimPoints = (points: PointModel[]): PointModel[] => {

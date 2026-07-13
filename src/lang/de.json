@@ -9,7 +9,7 @@
     "or": "ODER"
   },
   "headers": {
-    "clearPoints": "Punkte Löschen",
+    "newRound": "Neue Runde",
     "removePlayers": "Spieler Löschen",
     "addPlayer": "Spieler Hinzufügen",
     "sortPlayers": "Spieler Sortieren",

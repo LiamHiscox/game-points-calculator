@@ -3,19 +3,16 @@ import {
   AppBar,
   Button,
   Dialog,
-  FormControl,
   IconButton,
-  InputAdornment,
-  InputLabel,
   List,
   ListItem,
-  OutlinedInput,
   TextField,
   Toolbar,
   Typography,
   Checkbox,
   FormControlLabel,
-  FormGroup
+  FormGroup,
+  Autocomplete,
 } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import AddIcon from '@mui/icons-material/Add';
@@ -32,20 +29,20 @@ import { HelpTooltip } from '../help-tooltip/HelpTooltip';
 
 interface NewGameDialogProps {
   open: boolean;
-  game: GameModel;
+  gameNames: string[];
+  playerNames: string[];
   onClose: () => void;
   onSubmit: (game: GameModel) => void;
 }
 
-export function NewGameDialog({open, game, onClose, onSubmit}: NewGameDialogProps): React.JSX.Element {
+export function NewGameDialog({open, gameNames, playerNames, onClose, onSubmit}: NewGameDialogProps): React.JSX.Element {
   const [id, setId] = useState<string>('');
   const [timestamp, setTimestamp] = useState<Date>(new Date());
   const [commentFields, setCommentFields] = useState<boolean>(false);
   const [showStartingPlayer, setShowStartingPlayer] = useState<boolean>(false);
   const [name, setName] = useState<string>('');
-  const [players, setPlayers] = useState<PlayerModel[]>([]);
+  const [players, setPlayers] = useState<PlayerModel[]>([{ id: uuidv4(), name: '', points: [] }]);
   const [focus, setFocus] = useState<boolean>(false);
-  const inputEl = useRef<HTMLInputElement>(null);
   const dialogRef = useRef<HTMLDivElement>(null);
   const {t} = useTranslation();
 
@@ -53,24 +50,11 @@ export function NewGameDialog({open, game, onClose, onSubmit}: NewGameDialogProp
     if (open) {
       setId(uuidv4());
       setTimestamp(new Date());
-      setName(game.name);
-      setPlayers(game.players.map(player => ({...player, points: [{}]})));
-      setCommentFields(game.commentFields);
-      setShowStartingPlayer(game.showStartingPlayer);
     }
-  }, [game, open]);
+  }, [open]);
 
   const handleDelete = (index: number): void => {
     setPlayers(players.filter((_, i) => i !== index));
-  }
-
-  const handleClear = (): void => {
-    inputEl?.current?.focus();
-    setName('');
-  }
-
-  const handleGameNameChange = (newName: string): void => {
-    setName(newName);
   }
 
   const handleNameChange = (name: string, index: number): void => {
@@ -84,12 +68,6 @@ export function NewGameDialog({open, game, onClose, onSubmit}: NewGameDialogProp
     } else {
       document.getElementById(`player-name-input-${index + 1}`)?.focus()
     }
-  }
-
-  const handlePlayerClear = (index: number) => {
-    const updated = players.map((p, i) => i != index ? p : { ...p, name: '' });
-    setPlayers(updated);
-    document.getElementById(`player-name-input-${index}`)?.focus()
   }
 
   const addPlayer = (): void => {
@@ -106,6 +84,18 @@ export function NewGameDialog({open, game, onClose, onSubmit}: NewGameDialogProp
   const handlePlayerFocus = (index: number): void => {
     const top = 155 + 72 * index;
     dialogRef.current?.scrollTo({top, behavior: 'smooth'});
+  }
+
+  const handleSubmit = (): void => {
+    setName('');
+    setPlayers([{
+      id: uuidv4(),
+      name: '',
+      points: []
+    }]);
+    setCommentFields(false);
+    setShowStartingPlayer(false);
+    onSubmit({id, timestamp, commentFields, name, players, showStartingPlayer});
   } 
 
   return (
@@ -127,23 +117,16 @@ export function NewGameDialog({open, game, onClose, onSubmit}: NewGameDialogProp
         <div className="new-game-list">
           <List>
             <ListItem>
-              <FormControl variant="outlined" className="player-name-form-control">
-                <InputLabel> {t('newGame.game')} </InputLabel>
-                <OutlinedInput type="text"
-                              inputRef={inputEl}
-                              value={name}
-                              error={!name}
-                              onChange={(e): void => handleGameNameChange(e.target.value)}
-                              endAdornment={
-                                <InputAdornment position="end">
-                                  <IconButton onClick={handleClear}>
-                                    <CloseIcon color="primary"/>
-                                  </IconButton>
-                                </InputAdornment>
-                              }
-                              label={t('newGame.game')}
-                />
-              </FormControl>
+              <Autocomplete
+                freeSolo
+                fullWidth
+                options={gameNames}
+                onInputChange={(_, value) => setName(value)}
+                inputValue={name}
+                renderInput={(props) => (
+                  <TextField {...props} error={!name} label={t('newGame.game')} />
+                )}
+              />
             </ListItem>
             <ListItem>
               <FormGroup>
@@ -179,29 +162,26 @@ export function NewGameDialog({open, game, onClose, onSubmit}: NewGameDialogProp
                               <div className="drag-icon-container">
                                 <DragIndicatorIcon color="primary"/>
                               </div>
-                              <TextField id={`player-name-input-${index}`}
-                                          label={t('newGame.name')}
-                                          variant="outlined"
-                                          autoFocus={focus && index === players.length - 1}
-                                          value={player.name}
-                                          style={{flex: '1'}}
-                                          onKeyUp={(event) => handleKeyUp(event.key, index)}
-                                          onSubmit={() => console.log('onSubmit')}
-                                          onChange={(e): void => handleNameChange(e.target.value, index)}
-                                          onFocus={(): void => handlePlayerFocus(index)}
-                                                    slotProps={{
-                                                      input: {
-                                                        endAdornment: (
-                                                          <InputAdornment position="end">
-                                                            <IconButton onClick={() => handlePlayerClear(index)}>
-                                                              <CloseIcon color="primary"/>
-                                                            </IconButton>
-                                                          </InputAdornment>
-                                                        ),
-                                                      },
-                                                    }}
-                                          error={!player.name}
-                                />
+                              <Autocomplete
+                                freeSolo
+                                fullWidth
+                                options={playerNames}
+                                inputValue={player.name}
+                                onInputChange={(_, value): void => handleNameChange(value, index)}
+                                renderInput={(props) => (
+                                  <TextField
+                                    {...props}
+                                    id={`player-name-input-${index}`}
+                                    label={t('newGame.name')}
+                                    variant="outlined"
+                                    autoFocus={focus && index === players.length - 1}
+                                    onKeyUp={(event) => handleKeyUp(event.key, index)}
+                                    onSubmit={() => console.log('onSubmit')}
+                                    onFocus={(): void => handlePlayerFocus(index)}
+                                    error={!player.name}
+                                  />
+                                )}
+                              />
                               <IconButton onClick={(): void => handleDelete(index)}>
                                 <DeleteIcon color="primary"/>
                               </IconButton>
@@ -217,7 +197,7 @@ export function NewGameDialog({open, game, onClose, onSubmit}: NewGameDialogProp
         </div>
         <Button color="primary"
                 variant="contained"
-                onClick={(): void => onSubmit({id, timestamp, commentFields, name, players, showStartingPlayer})}
+                onClick={handleSubmit}
                 disabled={canSubmit()}
         >
           {t('newGame.start')}

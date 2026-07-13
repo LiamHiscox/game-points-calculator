@@ -2,6 +2,7 @@ import type {GameModel} from '../models/game.model';
 import {useEffect, useState} from 'react';
 import Dexie from 'dexie';
 import {useSnackbar} from 'notistack';
+import { useGameState } from './game.store';
 
 export class GamesDatabase extends Dexie {
   public games: Dexie.Table<GameModel, string>;
@@ -23,9 +24,14 @@ export interface GameStateProps {
 }
 
 export const useGamesState = (): GameStateProps => {
+  const [game] = useGameState();
   const [games, setStateGames] = useState<GameModel[]>([]);
   const [db] = useState(new GamesDatabase());
   const {enqueueSnackbar} = useSnackbar();
+
+  useEffect(() => {
+
+  }, [games, game]);
 
   useEffect(() => {
     db.transaction('r', db.games, async () => {

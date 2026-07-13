@@ -15,12 +15,17 @@
   border: 4px solid variables.$secondary;
 }
 
+.player-name-container {
+  flex: 1;
+  display: flex;
+}
+
 .player-name {
+  flex: 1;
   height: 2.5rem;
   box-sizing: border-box;
   background-color: variables.$secondary;
   color: variables.$secondaryText;
-  flex: 1;
   font-weight: bold;
   min-width: variables.$min-width-border;
   text-align: center;

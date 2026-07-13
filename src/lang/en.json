@@ -9,7 +9,7 @@
     "or": "OR"
   },
   "headers": {
-    "clearPoints": "Clear Points",
+    "clearPoints": "New Round",
     "removePlayers": "Remove Players",
     "addPlayer": "Add Player",
     "sortPlayers": "Sort Players",

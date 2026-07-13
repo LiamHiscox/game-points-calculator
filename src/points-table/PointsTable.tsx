@@ -2,9 +2,11 @@ import './PointsTable.scss';
 import Player from './player/Player';
 import type {PlayerModel, PointModel} from '../models/player.model';
 import React, {useEffect, useRef, useState} from 'react';
+import { Autocomplete } from '@mui/material';
 
 interface PointsTableProps {
   players: PlayerModel[];
+  playerNames: string[];
   onPlayerNameChange?: (name: string, id: string) => void;
   onPointsChange?: (points: PointModel[], id: string) => void;
   readonly: boolean;
@@ -15,6 +17,7 @@ interface PointsTableProps {
 
 export function PointsTable({
                               players,
+                              playerNames,
                               onPlayerNameChange,
                               onPointsChange,
                               readonly,
@@ -24,6 +27,14 @@ export function PointsTable({
                             }: PointsTableProps): React.JSX.Element {
   const [rounds, setRounds] = useState<null[]>([]);
   const playerTableContainerRef = useRef<HTMLDivElement>(null);
+  const [innerPlayers, setInnerPlayers] = useState<PlayerModel[]>(players);
+  const [screenWidth, setScreenWidth] = useState(window.screen.width);
+
+  useEffect(() => {
+    window.addEventListener('resize', () => setScreenWidth(window.screen.width), true);
+  }, [])
+
+  useEffect(() => setInnerPlayers(players), [players]);
 
   const filteredPoints = players
     .map(pl => pl.points.filter(p => typeof p.points === 'number'));
@@ -34,6 +45,20 @@ export function PointsTable({
     const max = players.reduce((m, {points}) => points.length > m ? points.length : m, 0);
     setRounds(new Array(max).fill(null));
   }, [players]);
+
+  const handlePlayerNameChange = (name: string, id: string): void => {
+    setInnerPlayers(players.map(player => player.id === id ? {...player, name} : player));
+  }
+
+  const handleBlur = (playerId: string) => {
+    if (!onPlayerNameChange) return;
+    const innerPlayer = innerPlayers.find(p => p.id === playerId);
+    if (innerPlayer?.name) {
+      onPlayerNameChange(innerPlayer.name, playerId);
+    } else {
+      setInnerPlayers(players);
+    }
+  }
 
   const scrollToInput = (index: number): void => {
     const top = 40 * (index - 1);
@@ -57,18 +82,43 @@ export function PointsTable({
     document.getElementById(`comment-input-${newPlayerIndex}-${maxInputIndex}`)?.focus();
   }
 
+/*
+<input className={`player-name ${showStartingPlayer && turn === index ? 'highlighted' : 'non-highlighted'}`}
+        type="text"
+        disabled={readonly}
+        key={index}
+        value={player.name}
+        onBlur={() => handleBlur(player.id)}
+        onChange={(e): void => onPlayerNameChange && handlePlayerNameChange(e.target.value, player.id)}
+        onClick={(e): void => {e.currentTarget.select()}}
+/>
+*/
+
   return (
     <div className="player-table-container" ref={playerTableContainerRef}>
       <div className="player-names">
         <div className={`player-row-placeholder-names ${showRows ? 'placeholder-open' : 'placeholder-closed'}`}/>
-        {players.map((player, index) => (
-          <input className={`player-name ${showStartingPlayer && turn === index ? 'highlighted' : 'non-highlighted'}`}
-                 type="text"
-                 disabled={readonly}
-                 key={index}
-                 value={player.name}
-                 onChange={(e): void => onPlayerNameChange && onPlayerNameChange(e.target.value, player.id)}
-                 onClick={(e): void => {e.currentTarget.select()}}
+        {innerPlayers.map((player, index) => (
+          <Autocomplete
+            key={player.id}
+            freeSolo
+            inputValue={player.name}
+            onBlur={() => handleBlur(player.id)}
+            onInputChange={(_, value): void => onPlayerNameChange && handlePlayerNameChange(value, player.id)}
+            options={playerNames}
+            disabled={readonly}
+            style={{flex: '1', display: 'flex'}}
+            renderInput={(params) => (
+              <div ref={params.slotProps.input.ref} className='player-name-container'>
+                <input
+                  type="text"
+                  {...params.slotProps.htmlInput}
+                  onClick={(e): void => {e.currentTarget.select()}}
+                  style={{width: `${screenWidth / players.length}px`}}
+                  className={`player-name ${showStartingPlayer && turn === index ? 'highlighted' : 'non-highlighted'}`}
+                />
+              </div>
+            )}
           />
         ))}
       </div>
