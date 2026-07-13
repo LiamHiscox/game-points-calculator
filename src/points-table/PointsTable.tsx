@@ -49,6 +49,14 @@ export function PointsTable({
     document.getElementById(`points-input-${newPlayerIndex}-${maxInputIndex}`)?.focus();
   }
 
+  const handleChangeCommentFocus = (playerIndex: number, inputIndex: number): void => {
+    const newPlayerIndex = (playerIndex + 1) % players.length;
+    const isMaxInput = inputIndex === players[playerIndex].points.length - 1;
+    const maxIndex = players[newPlayerIndex].points.length - 1;
+    const maxInputIndex = !isMaxInput && inputIndex < maxIndex ? inputIndex : maxIndex;
+    document.getElementById(`comment-input-${newPlayerIndex}-${maxInputIndex}`)?.focus();
+  }
+
   return (
     <div className="player-table-container" ref={playerTableContainerRef}>
       <div className="player-names">
@@ -80,6 +88,7 @@ export function PointsTable({
                     onPointsChange={(points): void => onPointsChange && onPointsChange(points, player.id)}
                     onInputFocus={scrollToInput}
                     handleChangePointsFocus={(inputIndex) => handleChangePointsFocus(playerIndex, inputIndex)}
+                    handleChangeCommentFocus={(inputIndex) => handleChangeCommentFocus(playerIndex, inputIndex)}
                     readonly={readonly}
                     commentFields={commentFields}
             />

@@ -31,14 +31,18 @@
       height: 2.5rem;
       text-align: center;
     }
+    .points-input-form {
+      flex: 2;
+    }
     .points-input {
       @include player-input;
-      flex: 2;
+    }
+    .comment-input-form {
+      flex: 1;
     }
     .comment-input {
       @include player-input;
       background-color: #ebebeb;
-      flex: 1;
     }
     .empty-input {
       background-color: aliceblue;

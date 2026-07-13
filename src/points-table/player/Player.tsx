@@ -8,6 +8,7 @@ interface PlayerProps {
   onPointsChange: (points: PointModel[]) => void;
   onInputFocus: (index: number) => void;
   handleChangePointsFocus: (index: number) => void;
+  handleChangeCommentFocus: (index: number) => void;
   commentFields: boolean;
   readonly: boolean;
 }
@@ -18,6 +19,7 @@ function Player({
                   onPointsChange,
                   onInputFocus,
                   handleChangePointsFocus,
+                  handleChangeCommentFocus,
                   readonly,
                   commentFields
                 }: PlayerProps): React.JSX.Element {
@@ -43,8 +45,13 @@ function Player({
   }
 
   const handlePointsKeyUp = (key: string, index: number) => {
-    if (key !== 'Tab' && key !== 'Enter') return;
+    if (key !== 'Enter') return;
     handleChangePointsFocus(index);
+  }
+
+    const handleCommentKeyUp = (key: string, index: number) => {
+      if (key !== 'Enter') return;
+      handleChangeCommentFocus(index);
   }
 
   const trimPoints = (points: PointModel[]): PointModel[] => {
@@ -62,29 +69,37 @@ function Player({
     <div className={readonly ? 'player-container' : 'player-container player-container-padding'}>
       {player.points.map((p, i) => (
         <div className="player-points player-input-cell" key={i}>
-          <input className={typeof p.points === 'number' ? 'points-input' : 'points-input empty-input'}
-                 id={`points-input-${playerIndex}-${i}`}
-                 type="number"
-                 value={typeof p.points === 'number' ? p.points : ''}
-                 onKeyUp={(e) => handlePointsKeyUp(e.key, i)}
-                 onChange={(e): void => handlePointsChange(e, i)}
-                 onClick={(e): void => { 
-                   e.currentTarget.select();
-                   onInputFocus(i);
-                 }}
-                 disabled={readonly}
-          />
-          {commentFields && !(readonly && typeof p.points !== 'number') && (
-            <input className="comment-input"
-                   type="text"
-                   value={p?.comment || ''}
-                   onChange={(e): void => handleCommentChange(e, i)}
-                   onClick={(e): void => {
-                     e.currentTarget.select();
-                     onInputFocus(i);
-                   }}
-                   disabled={readonly}
+          <form className="points-input-form" onSubmit={e => e.preventDefault()}>
+            <input className={typeof p.points === 'number' ? 'points-input' : 'points-input empty-input'}
+                  enterKeyHint='go'
+                  id={`points-input-${playerIndex}-${i}`}
+                  type="number"
+                  value={typeof p.points === 'number' ? p.points : ''}
+                  onSubmit={e => e.preventDefault()}
+                  onKeyUp={(e) => handlePointsKeyUp(e.key, i)}
+                  onChange={(e): void => handlePointsChange(e, i)}
+                  onClick={(e): void => { 
+                    e.currentTarget.select();
+                    onInputFocus(i);
+                  }}
+                  disabled={readonly}
             />
+          </form>
+          {commentFields && !(readonly && typeof p.points !== 'number') && (
+            <form className="comment-input-form" onSubmit={e => e.preventDefault()}>
+              <input className="comment-input"
+                    id={`comment-input-${playerIndex}-${i}`}
+                    type="text"
+                    value={p?.comment || ''}
+                    onKeyUp={(e) => handleCommentKeyUp(e.key, i)}
+                    onChange={(e): void => handleCommentChange(e, i)}
+                    onClick={(e): void => {
+                      e.currentTarget.select();
+                      onInputFocus(i);
+                    }}
+                    disabled={readonly}
+              />
+            </form>
           )}
         </div>
       ))}
