@@ -163,6 +163,7 @@ export function HistoryDialog({open, onClose, onReturnPlaying, onDeleteGame, gam
           </Toolbar>
         </AppBar>
         <PointsTable players={game?.players || []}
+                     playerNames={[]}
                      readonly={true}
                      showRows={false}
                      showStartingPlayer={false}

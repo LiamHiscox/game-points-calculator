@@ -58,8 +58,8 @@ function App(): React.JSX.Element {
       .length >= game.players.length;
   }
 
-  const setNewGame = (newGame: GameModel, save = true): void => {
-    if (canSaveGame(game) && save) {
+  const setNewGame = (newGame: GameModel): void => {
+    if (canSaveGame(game)) {
       addGame(game);
     }
     setGame({...newGame, id: uuidv4(), timestamp: new Date(), players: newGame.players});
@@ -95,11 +95,11 @@ function App(): React.JSX.Element {
     enqueueSnackbar(`${game.players.length + 1} players`);
   }
 
-  const startNewRound = (save: boolean): void => {
+  const startNewRound = (): void => {
     setNewGame({
       ...game,
       players: game.players.map(player => ({...player, points: [{}]}))
-    }, save);
+    });
   }
 
   const setPlayerName = (name: string, id: string): void => {
@@ -152,7 +152,6 @@ function App(): React.JSX.Element {
               gameName={game.name}
               gameNames={gameNames}
               showMenu={!installationOpen}
-              canSaveGame={canSaveGame(game)}
               onNameChange={setGameName}
               onAddPlayer={addPlayer}
               onStartNewRound={startNewRound}

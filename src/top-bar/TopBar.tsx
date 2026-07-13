@@ -9,7 +9,6 @@ import HistoryIcon from '@mui/icons-material/History';
 import ShowChartIcon from '@mui/icons-material/ShowChart';
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
 import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
-import {ConfirmationDialog} from '../components/confirmation-dialog/ConfirmationDialog';
 import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 import LanguageIcon from '@mui/icons-material/Language';
@@ -23,13 +22,12 @@ import packageJson from '../../package.json';
 interface TopBarProps {
   gameName: string;
   gameNames: string[];
-  canSaveGame: boolean;
   commentField: boolean;
   showStartingPlayer: boolean;
   showRows: boolean;
   showMenu: boolean;
   onAddPlayer: () => void;
-  onStartNewRound: (save: boolean) => void;
+  onStartNewRound: () => void;
   onOpenDelete: () => void;
   onOpenLeaderBoard: () => void;
   onNewGame: () => void;
@@ -47,7 +45,6 @@ export function TopBar({
                          showStartingPlayer,
                          gameName,
                          gameNames,
-                         canSaveGame,
                          showRows,
                          showMenu,
                          onAddPlayer,
@@ -64,7 +61,6 @@ export function TopBar({
                          onSortPlayers
                        }: TopBarProps): React.JSX.Element {
   const [innerGameName, setInnerGameName] = useState(gameName);
-  const [confirmationOpen, setConfirmationOpen] = useState(false);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const {t} = useTranslation();
 
@@ -123,7 +119,7 @@ export function TopBar({
             open={!!anchorEl}
             onClose={handleClose}
       >
-        <MenuItem onClick={() => onStartNewRound(true)}>
+        <MenuItem onClick={onStartNewRound}>
           <ListItemIcon> <RotateLeftIcon color="primary"/> </ListItemIcon>
           <ListItemText primary={<Typography> {t('headers.newRound')} </Typography>}/>
         </MenuItem>
