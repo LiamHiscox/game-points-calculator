@@ -2,7 +2,6 @@ import type {GameModel} from '../models/game.model';
 import {useEffect, useState} from 'react';
 import Dexie from 'dexie';
 import {useSnackbar} from 'notistack';
-import { useGameState } from './game.store';
 
 export class GamesDatabase extends Dexie {
   public games: Dexie.Table<GameModel, string>;
