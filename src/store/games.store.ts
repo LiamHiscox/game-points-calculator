@@ -24,14 +24,9 @@ export interface GameStateProps {
 }
 
 export const useGamesState = (): GameStateProps => {
-  const [game] = useGameState();
   const [games, setStateGames] = useState<GameModel[]>([]);
   const [db] = useState(new GamesDatabase());
   const {enqueueSnackbar} = useSnackbar();
-
-  useEffect(() => {
-
-  }, [games, game]);
 
   useEffect(() => {
     db.transaction('r', db.games, async () => {

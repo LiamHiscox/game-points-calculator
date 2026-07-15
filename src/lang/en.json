@@ -6,7 +6,8 @@
     "yes": "Yes",
     "no": "No",
     "clear": "Clear",
-    "or": "OR"
+    "or": "OR",
+    "reset": "Reset"
   },
   "headers": {
     "clearPoints": "New Round",

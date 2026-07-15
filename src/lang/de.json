@@ -6,7 +6,8 @@
     "yes": "Ja",
     "no": "Nein",
     "clear": "Löschen",
-    "or": "ODER"
+    "or": "ODER",
+    "reset": "Zurücksetzen"
   },
   "headers": {
     "newRound": "Neue Runde",

@@ -1,6 +1,10 @@
+@use "../../variables";
+
+.reset-item {
+  justify-content: flex-end;
+}
 .new-game-form {
   overflow: auto;
-  height: 100vh;
   display: flex;
   flex-direction: column;
 }

@@ -17,6 +17,7 @@ import {PwaInstallationDialog} from './components/pwa-installation-dialog/PwaIns
 import {SortPlayersDialog} from './components/sort-players-dialog/SortPlayersDialog';
 import { shouldOpenStartUpDialog, StartupActionsDialog } from './components/startup-actions-dialog/StartupActionsDialog';
 import { getGameNames, getPlayerNames } from './util/game-model.util';
+import { useViewportHeightState } from './util/viewport-height.util';
 
 function App(): React.JSX.Element {
   const [game, setGame] = useGameState();
@@ -31,6 +32,7 @@ function App(): React.JSX.Element {
   const [startupActionsOpen, setStartupActionsOpen] = useState(false);
   const [showRows, setShowRows] = useState(!!localStorage.getItem('showRows'));
   const {enqueueSnackbar} = useSnackbar();
+  const {height} = useViewportHeightState();
 
   const gameNames = useMemo(() => getGameNames(games.concat(game)), [games, game]);
   const playerNames = useMemo(() => getPlayerNames(games.concat(game)), [games, game]);
@@ -146,7 +148,7 @@ function App(): React.JSX.Element {
   }
 
   return (
-    <div className="app">
+    <div className="app" style={{height: height }}>
       <TopBar commentField={game.commentFields}
               showStartingPlayer={game.showStartingPlayer}
               gameName={game.name}

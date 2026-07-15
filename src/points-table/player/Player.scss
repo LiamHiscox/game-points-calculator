@@ -1,9 +1,5 @@
 @use "../../variables";
 
-.player-container-padding {
-  padding-bottom: calc(#{variables.$height} - 13rem - env(keyboard-inset-height, 0));
-}
-
 .player-container {
   display: flex;
   flex-direction: column;

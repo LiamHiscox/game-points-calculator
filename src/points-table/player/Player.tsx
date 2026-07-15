@@ -66,7 +66,7 @@ function Player({
   }
 
   return (
-    <div className={readonly ? 'player-container' : 'player-container player-container-padding'}>
+    <div className="player-container">
       {player.points.map((p, i) => (
         <div className="player-points player-input-cell" key={i}>
           <form className="points-input-form" onSubmit={e => e.preventDefault()}>

@@ -26,6 +26,7 @@ import {DraggableList} from '../draggable-list/DraggableList';
 import {useTranslation} from 'react-i18next';
 import DragIndicatorIcon from '@mui/icons-material/DragIndicator';
 import { HelpTooltip } from '../help-tooltip/HelpTooltip';
+import { useViewportHeightState } from '../../util/viewport-height.util';
 
 interface NewGameDialogProps {
   open: boolean;
@@ -45,6 +46,7 @@ export function NewGameDialog({open, gameNames, playerNames, onClose, onSubmit}:
   const [focus, setFocus] = useState<boolean>(false);
   const dialogRef = useRef<HTMLDivElement>(null);
   const {t} = useTranslation();
+  const {height} = useViewportHeightState();
 
   useEffect(() => {
     if (open) {
@@ -86,7 +88,7 @@ export function NewGameDialog({open, gameNames, playerNames, onClose, onSubmit}:
     dialogRef.current?.scrollTo({top, behavior: 'smooth'});
   }
 
-  const handleSubmit = (): void => {
+  const reset = () => {
     setName('');
     setPlayers([{
       id: uuidv4(),
@@ -95,6 +97,10 @@ export function NewGameDialog({open, gameNames, playerNames, onClose, onSubmit}:
     }]);
     setCommentFields(false);
     setShowStartingPlayer(false);
+  }
+
+  const handleSubmit = (): void => {
+    reset();
     onSubmit({id, timestamp, commentFields, name, players, showStartingPlayer});
   } 
 
@@ -104,7 +110,7 @@ export function NewGameDialog({open, gameNames, playerNames, onClose, onSubmit}:
             onClose={onClose}
             slots={{transition: UpTransition}}
     >
-      <div ref={dialogRef} className='new-game-form'>
+      <div ref={dialogRef} className='new-game-form' style={{height: height }}>
         <AppBar position="static">
           <Toolbar className="new-game-toolbar">
             <div/>
@@ -116,6 +122,9 @@ export function NewGameDialog({open, gameNames, playerNames, onClose, onSubmit}:
         </AppBar>
         <div className="new-game-list">
           <List>
+            <ListItem className="reset-item">
+              <Button onClick={reset}>{t('common.reset')}</Button>
+            </ListItem>
             <ListItem>
               <Autocomplete
                 freeSolo

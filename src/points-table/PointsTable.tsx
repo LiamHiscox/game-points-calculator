@@ -82,18 +82,6 @@ export function PointsTable({
     document.getElementById(`comment-input-${newPlayerIndex}-${maxInputIndex}`)?.focus();
   }
 
-/*
-<input className={`player-name ${showStartingPlayer && turn === index ? 'highlighted' : 'non-highlighted'}`}
-        type="text"
-        disabled={readonly}
-        key={index}
-        value={player.name}
-        onBlur={() => handleBlur(player.id)}
-        onChange={(e): void => onPlayerNameChange && handlePlayerNameChange(e.target.value, player.id)}
-        onClick={(e): void => {e.currentTarget.select()}}
-/>
-*/
-
   return (
     <div className="player-table-container" ref={playerTableContainerRef}>
       <div className="player-names">
