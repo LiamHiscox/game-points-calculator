@@ -148,7 +148,7 @@ function App(): React.JSX.Element {
   }
 
   return (
-    <div className="app" style={{height: height }}>
+    <div className="app" style={{height: height}}>
       <TopBar commentField={game.commentFields}
               showStartingPlayer={game.showStartingPlayer}
               gameName={game.name}

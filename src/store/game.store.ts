@@ -25,7 +25,6 @@ export const useGameState = (): [GameModel, (game: GameModel) => void] => {
   const [game, setStateGame] = useState<GameModel>(getStoredGame);
 
   const setGame = (newGame: GameModel): void => {
-    console.log("game updated")
     setStateGame(newGame);
     localStorage.setItem(gameKey, JSON.stringify(newGame));
   }

@@ -10,11 +10,26 @@ function heightToCss() {
 }
 
 export const useViewportHeightState = (): ViewportHeightStateProps => {
-  const [height, setHeight] = useState(heightToCss());
+  const [internalHeight, setInternalHeight] = useState(heightToCss());
+  const [exportedHeight, setExportedHeight] = useState(heightToCss());
+  const [timeoutRef, setTimeoutRef] = useState<number | null>(null);
 
   useEffect(() => {
-    window.visualViewport?.addEventListener('resize', () => setHeight(heightToCss()));
+    const actualHeight = heightToCss();
+    if (actualHeight == internalHeight) {
+      setExportedHeight(actualHeight)
+    }
+  }, [internalHeight]);
+
+  useEffect(() => {
+    window.visualViewport?.addEventListener('resize', () => {
+      clearTimeout(timeoutRef ?? undefined);
+      const ref = setTimeout(() => {
+        setInternalHeight(heightToCss());
+      });
+      setTimeoutRef(ref);
+    });
   }, []);
 
-  return {height};
+  return {height: exportedHeight};
 }

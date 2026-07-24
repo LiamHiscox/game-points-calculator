@@ -3,6 +3,7 @@ import Player from './player/Player';
 import type {PlayerModel, PointModel} from '../models/player.model';
 import React, {useEffect, useRef, useState} from 'react';
 import { Autocomplete } from '@mui/material';
+import { useViewportHeightState } from '../util/viewport-height.util';
 
 interface PointsTableProps {
   players: PlayerModel[];
@@ -29,12 +30,30 @@ export function PointsTable({
   const playerTableContainerRef = useRef<HTMLDivElement>(null);
   const [innerPlayers, setInnerPlayers] = useState<PlayerModel[]>(players);
   const [screenWidth, setScreenWidth] = useState(window.screen.width);
+  const [scrollTimeoutRef, setScrollTimeoutRef] = useState<number | null>(null);
+  const [focusedInput, setFocusedInput] = useState<number | null>(null);
+  const [focusedPlayer, setFocusedPlayer] = useState<number | null>(null);
+  const {height} = useViewportHeightState();
 
   useEffect(() => {
     window.addEventListener('resize', () => setScreenWidth(window.screen.width), true);
   }, [])
 
   useEffect(() => setInnerPlayers(players), [players]);
+
+  useEffect(() => {
+    clearTimeout(scrollTimeoutRef ?? undefined);
+    const ref = setTimeout(() => {
+      window.scrollTo({top: 0});
+      if (focusedInput !== null && focusedPlayer !== null) {
+        const top = 40 * (focusedInput - 1);
+        const center = (window.screen.width / 2) - 50;
+        const left = (focusedPlayer * 100) - center;
+        playerTableContainerRef.current?.scrollTo({left, top, behavior: 'smooth'});
+      }
+    }, 300);
+    setScrollTimeoutRef(ref);
+  }, [height, focusedInput, focusedPlayer]);
 
   const filteredPoints = players
     .map(pl => pl.points.filter(p => typeof p.points === 'number'));
@@ -60,18 +79,13 @@ export function PointsTable({
     }
   }
 
-  const scrollToInput = (index: number): void => {
-    const top = 40 * (index - 1);
-    window.scrollTo({top: 0});
-    playerTableContainerRef.current?.scrollTo({top, behavior: 'smooth'});
-  }
-
   const handleChangePointsFocus = (playerIndex: number, inputIndex: number): void => {
     const newPlayerIndex = (playerIndex + 1) % players.length;
     const isMaxInput = inputIndex === players[playerIndex].points.length - 1;
     const maxIndex = players[newPlayerIndex].points.length - 1;
     const maxInputIndex = !isMaxInput && inputIndex < maxIndex ? inputIndex : maxIndex;
     document.getElementById(`points-input-${newPlayerIndex}-${maxInputIndex}`)?.focus();
+    handleInputFocus(maxInputIndex, newPlayerIndex)
   }
 
   const handleChangeCommentFocus = (playerIndex: number, inputIndex: number): void => {
@@ -80,6 +94,12 @@ export function PointsTable({
     const maxIndex = players[newPlayerIndex].points.length - 1;
     const maxInputIndex = !isMaxInput && inputIndex < maxIndex ? inputIndex : maxIndex;
     document.getElementById(`comment-input-${newPlayerIndex}-${maxInputIndex}`)?.focus();
+    handleInputFocus(maxInputIndex, newPlayerIndex)
+  }
+
+  const handleInputFocus = (inputIndex: number, playerIndex: number) => {
+    setFocusedInput(inputIndex);
+    setFocusedPlayer(playerIndex);
   }
 
   return (
@@ -124,7 +144,7 @@ export function PointsTable({
                     player={player}
                     playerIndex={playerIndex}
                     onPointsChange={(points): void => onPointsChange && onPointsChange(points, player.id)}
-                    onInputFocus={scrollToInput}
+                    onInputFocus={(inputIndex) => handleInputFocus(inputIndex, playerIndex)}
                     handleChangePointsFocus={(inputIndex) => handleChangePointsFocus(playerIndex, inputIndex)}
                     handleChangeCommentFocus={(inputIndex) => handleChangeCommentFocus(playerIndex, inputIndex)}
                     readonly={readonly}
