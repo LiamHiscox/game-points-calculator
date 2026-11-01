@@ -59,6 +59,7 @@
 
 .player-row-placeholder-names {
   height: 2.5rem;
+  min-height: 2.5rem;
   position: sticky;
   top: 0;
   background-color: variables.$secondary;
@@ -66,6 +67,7 @@
 
 .player-row-placeholder-points {
   height: 2.5rem;
+  min-height: 2.5rem;
   position: sticky;
   bottom: 0;
   background-color: variables.$secondary;
@@ -81,6 +83,13 @@
   position: sticky;
   left: 0;
   z-index: 1;
+}
+
+.inner-points-rows-container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }
 
 .rows-open {

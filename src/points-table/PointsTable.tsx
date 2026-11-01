@@ -103,13 +103,18 @@ export function PointsTable({
   return (
     <div className="player-table-container-outer" ref={playerTableContainerRef}>
       <div className="points-rows-container rows-open">
-        <div className="player-row-placeholder-names"/>
-        {rounds.map((_, index) => (
-          <div className="points-row-index" key={index}>
-            {index + 1}
+        <div className='inner-points-rows-container'>
+          <div className="player-row-placeholder-names"/>
+          <div>
+            {rounds.map((_, index) => (
+              <div className="points-row-index" key={index}>
+                {index + 1}
+              </div>
+            ))}
           </div>
-        ))}
-        <div className="player-row-placeholder-points"/>
+          <div style={{flex: '1'}}/>
+          <div className="player-row-placeholder-points"/>
+        </div>
       </div>
       <div className="player-table-container">
         <div className="player-names">
