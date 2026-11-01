@@ -11,7 +11,6 @@ interface PointsTableProps {
   onPlayerNameChange?: (name: string, id: string) => void;
   onPointsChange?: (points: PointModel[], id: string) => void;
   readonly: boolean;
-  showRows: boolean;
   commentFields: boolean;
   showStartingPlayer: boolean;
 }
@@ -22,7 +21,6 @@ export function PointsTable({
                               onPlayerNameChange,
                               onPointsChange,
                               readonly,
-                              showRows,
                               commentFields,
                               showStartingPlayer
                             }: PointsTableProps): React.JSX.Element {
@@ -103,63 +101,65 @@ export function PointsTable({
   }
 
   return (
-    <div className="player-table-container" ref={playerTableContainerRef}>
-      <div className="player-names">
-        <div className={`player-row-placeholder-names ${showRows ? 'placeholder-open' : 'placeholder-closed'}`}/>
-        {innerPlayers.map((player, index) => (
-          <Autocomplete
-            key={player.id}
-            freeSolo
-            inputValue={player.name}
-            onBlur={() => handleBlur(player.id)}
-            onInputChange={(_, value): void => onPlayerNameChange && handlePlayerNameChange(value, player.id)}
-            options={playerNames}
-            disabled={readonly}
-            style={{flex: '1', display: 'flex'}}
-            renderInput={(params) => (
-              <div ref={params.slotProps.input.ref} className='player-name-container'>
-                <input
-                  type="text"
-                  {...params.slotProps.htmlInput}
-                  onClick={(e): void => {e.currentTarget.select()}}
-                  style={{width: `${screenWidth / players.length}px`}}
-                  className={`player-name ${showStartingPlayer && turn === index ? 'highlighted' : 'non-highlighted'}`}
-                />
-              </div>
-            )}
-          />
+    <div className="player-table-container-outer" ref={playerTableContainerRef}>
+      <div className="points-rows-container rows-open">
+        <div className="player-row-placeholder-names"/>
+        {rounds.map((_, index) => (
+          <div className="points-row-index" key={index}>
+            {index + 1}
+          </div>
         ))}
+        <div className="player-row-placeholder-points"/>
       </div>
-      <div className="row-players-container">
-        <div className={`points-rows-container ${showRows ? 'rows-open' : 'rows-closed'}`}>
-          {rounds.map((_, index) => (
-            <div className="points-row-index" key={index}>
-              {index + 1}
-            </div>
-          ))}
-        </div>
-        <div className="player-table">
-          {players.map((player, playerIndex) => (
-            <Player key={playerIndex}
-                    player={player}
-                    playerIndex={playerIndex}
-                    onPointsChange={(points): void => onPointsChange && onPointsChange(points, player.id)}
-                    onInputFocus={(inputIndex) => handleInputFocus(inputIndex, playerIndex)}
-                    handleChangePointsFocus={(inputIndex) => handleChangePointsFocus(playerIndex, inputIndex)}
-                    handleChangeCommentFocus={(inputIndex) => handleChangeCommentFocus(playerIndex, inputIndex)}
-                    readonly={readonly}
-                    commentFields={commentFields}
+      <div className="player-table-container">
+        <div className="player-names">
+          {innerPlayers.map((player, index) => (
+            <Autocomplete
+              key={player.id}
+              freeSolo
+              inputValue={player.name}
+              onBlur={() => handleBlur(player.id)}
+              onInputChange={(_, value): void => onPlayerNameChange && handlePlayerNameChange(value, player.id)}
+              options={playerNames}
+              disabled={readonly}
+              style={{flex: '1', display: 'flex'}}
+              renderInput={(params) => (
+                <div ref={params.slotProps.input.ref} className='player-name-container'>
+                  <input
+                    type="text"
+                    {...params.slotProps.htmlInput}
+                    onClick={(e): void => {e.currentTarget.select()}}
+                    style={{width: `${screenWidth / players.length}px`}}
+                    className={`player-name ${showStartingPlayer && turn === index ? 'highlighted' : 'non-highlighted'}`}
+                  />
+                </div>
+              )}
             />
           ))}
         </div>
-      </div>
-      <div className="player-scores">
-        <div className={`player-row-placeholder-points ${showRows ? 'placeholder-open' : ' placeholder-closed'}`}/>
-        {players.map((player, i) =>
-          <div className="player-score player-header-cell" key={i}>
-            {player.points.reduce((sum: number, model: PointModel) => sum + (model.points || 0), 0)}
+        <div className="row-players-container">
+          <div className="player-table">
+            {players.map((player, playerIndex) => (
+              <Player key={playerIndex}
+                      player={player}
+                      playerIndex={playerIndex}
+                      onPointsChange={(points): void => onPointsChange && onPointsChange(points, player.id)}
+                      onInputFocus={(inputIndex) => handleInputFocus(inputIndex, playerIndex)}
+                      handleChangePointsFocus={(inputIndex) => handleChangePointsFocus(playerIndex, inputIndex)}
+                      handleChangeCommentFocus={(inputIndex) => handleChangeCommentFocus(playerIndex, inputIndex)}
+                      readonly={readonly}
+                      commentFields={commentFields}
+              />
+            ))}
           </div>
-        )}
+        </div>
+        <div className="player-scores">
+          {players.map((player, i) =>
+            <div className="player-score player-header-cell" key={i}>
+              {player.points.reduce((sum: number, model: PointModel) => sum + (model.points || 0), 0)}
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );

@@ -30,7 +30,6 @@ function App(): React.JSX.Element {
   const [sortPlayersOpen, setSortPlayersOpen] = useState(false);
   const [installationOpen, setInstallationOpen] = useState(true);
   const [startupActionsOpen, setStartupActionsOpen] = useState(false);
-  const [showRows, setShowRows] = useState(!!localStorage.getItem('showRows'));
   const {enqueueSnackbar} = useSnackbar();
   const {height} = useViewportHeightState();
 
@@ -118,11 +117,6 @@ function App(): React.JSX.Element {
     });
   }
 
-  const handleToggleRows = (): void => {
-    setShowRows(!showRows);
-    localStorage.setItem('showRows', !showRows ? 'true': '');
-  }
-
   const toggleCommentField = (): void => {
     setGame({
       ...game,
@@ -162,8 +156,6 @@ function App(): React.JSX.Element {
               onNewGame={(): void => setNewGameOpen(true)}
               onOpenHistory={(): void => setHistoryOpen(true)}
               onOpenStats={(): void => setStatsOpen(true)}
-              showRows={showRows}
-              onToggleRows={handleToggleRows}
               onToggleCommentField={toggleCommentField}
               onToggleShowStartingPlayer={toggleShowStartingPlayer}
               onSortPlayers={(): void => setSortPlayersOpen(true)}
@@ -174,7 +166,6 @@ function App(): React.JSX.Element {
                    players={game.players}
                    playerNames={playerNames}
                    readonly={false}
-                   showRows={showRows}
                    commentFields={game.commentFields}
       />
       <DeletePlayersDialog players={game.players}

@@ -42,17 +42,33 @@
   text-align: center;
 }
 
-.player-table-container {
+.player-table-container-outer {
   overflow: auto;
+  display: flex;
+  flex-direction: row;
+  flex: 1;
+  position: relative;
+}
+
+.player-table-container {
   display: flex;
   flex-direction: column;
   flex: 1;
+  position: relative;
 }
 
 .player-row-placeholder-names {
   height: 2.5rem;
+  position: sticky;
+  top: 0;
   background-color: variables.$secondary;
-  transition: min-width .5s, width .5s, color .5s;
+}
+
+.player-row-placeholder-points {
+  height: 2.5rem;
+  position: sticky;
+  bottom: 0;
+  background-color: variables.$secondary;
 }
 
 .placeholder-open {
@@ -60,15 +76,29 @@
   width: 40px;
 }
 
-.placeholder-closed {
-  min-width: 0;
-  width: 0;
+.points-rows-container {
+  background-color: variables.$primary;
+  position: sticky;
+  left: 0;
+  z-index: 1;
 }
 
-.player-row-placeholder-points {
+.rows-open {
+  min-width: 40px;
+  width: 40px;
+  color: white;
+}
+
+.points-row-index {
   height: 2.5rem;
-  background-color: variables.$secondary;
-  transition: min-width .5s, width .5s, color .5s;
+  background-color: variables.$primary;
+  font-weight: bold;
+  box-sizing: border-box;
+  padding: .25rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
 }
 
 .row-players-container {
@@ -76,35 +106,6 @@
   flex: 1;
   flex-direction: row;
   user-select: none;
-
-  .points-row-index {
-    height: 2.5rem;
-    background-color: variables.$primary;
-    font-weight: bold;
-    box-sizing: border-box;
-    padding: .25rem;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-  }
-
-  .points-rows-container {
-    background-color: variables.$primary;
-    transition: min-width .5s, width .5s, color .5s;
-  }
-
-  .rows-open {
-    min-width: 40px;
-    width: 40px;
-    color: white;
-  }
-
-  .rows-closed {
-    min-width: 0;
-    width: 0;
-    color: variables.$primary;
-  }
 }
 
 .player-table {

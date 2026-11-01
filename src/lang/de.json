@@ -19,7 +19,10 @@
     "history": "Verlauf",
     "statistics": "Statistiken",
     "additionalTextField": "Zusätzliches Textfeld",
-    "showStartingPlayer": "Startender Spieler"
+    "showStartingPlayer": "Startender Spieler",
+    "shareGame": "Spiel Teilen",
+    "copiedUrl": "Link in die Zwischenablage kopiert!",
+    "failedCopy": "Link konnte nicht kopiert werden!"
   },
   "confirmationDialog": {
     "saveCurrentGame": "Möchtest du das aktuelle Spiel im Verlauf speichern?",

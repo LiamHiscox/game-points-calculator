@@ -29,3 +29,9 @@
 .version-text {
   padding: 0 1rem;
 }
+.drawer-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+}

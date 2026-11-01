@@ -19,7 +19,10 @@
     "history": "History",
     "statistics": "Statistics",
     "additionalTextField": "Additional Text Field",
-    "showStartingPlayer": "Starting Player"
+    "showStartingPlayer": "Starting Player",
+    "shareGame": "Share Game",
+    "copiedUrl": "Copied link to clipboard!",
+    "failedCopy": "Failed to copy link!"
   },
   "confirmationDialog": {
     "saveCurrentGame": "Do you want to save the current game to the history?",
