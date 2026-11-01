@@ -37,7 +37,6 @@ interface TopBarProps {
   gameNames: string[];
   commentField: boolean;
   showStartingPlayer: boolean;
-  showMenu: boolean;
   onAddPlayer: () => void;
   onStartNewRound: () => void;
   onOpenDelete: () => void;
@@ -56,7 +55,6 @@ export function TopBar({
                          showStartingPlayer,
                          gameName,
                          gameNames,
-                         showMenu,
                          onAddPlayer,
                          onStartNewRound,
                          onOpenDelete,
@@ -128,7 +126,7 @@ export function TopBar({
             </div>
           )}
       />
-        <IconButton onClick={handleClick} style={{opacity: showMenu ? '1' : '0' }}>
+        <IconButton onClick={handleClick}>
           <SettingsIcon className="top-bar-icon"/>
         </IconButton>
       </div>

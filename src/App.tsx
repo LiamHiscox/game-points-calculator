@@ -147,7 +147,6 @@ function App(): React.JSX.Element {
               showStartingPlayer={game.showStartingPlayer}
               gameName={game.name}
               gameNames={gameNames}
-              showMenu={!installationOpen}
               onNameChange={setGameName}
               onAddPlayer={addPlayer}
               onStartNewRound={startNewRound}
