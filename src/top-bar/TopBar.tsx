@@ -10,7 +10,8 @@ import {
   SwipeableDrawer,
   List,
   ListItem,
-  ListItemButton
+  ListItemButton,
+  Divider
 } from '@mui/material';
 import SettingsIcon from '@mui/icons-material/Settings';
 import RotateLeftIcon from '@mui/icons-material/RotateLeft';
@@ -136,58 +137,70 @@ export function TopBar({
       >
         <div className="drawer-container">
           <List>
-            <ListItem disablePadding onClick={onNewGame}>
+            <ListItem onClick={onNewGame}>
               <ListItemButton>
                 <ListItemIcon> <StartIcon color="primary" /> </ListItemIcon>
                 <ListItemText primary={<Typography> {t('headers.newGame')} </Typography>} />
               </ListItemButton>
             </ListItem>
-            <ListItem disablePadding onClick={onStartNewRound}>
+            <ListItem onClick={onStartNewRound}>
               <ListItemButton>
                 <ListItemIcon> <RotateLeftIcon color="primary" /> </ListItemIcon>
                 <ListItemText primary={<Typography> {t('headers.newRound')} </Typography>} />
               </ListItemButton>
             </ListItem>
-            <ListItem disablePadding onClick={onOpenDelete}>
+            <Divider/>
+            <ListItem onClick={onOpenDelete}>
               <ListItemButton>
                 <ListItemIcon> <DeleteIcon color="primary" /> </ListItemIcon>
                 <ListItemText primary={<Typography> {t('headers.removePlayers')} </Typography>} />
               </ListItemButton>
             </ListItem>
-            <ListItem disablePadding onClick={onAddPlayer}>
+            <ListItem onClick={onAddPlayer}>
               <ListItemButton>
                 <ListItemIcon> <AddIcon color="primary" /> </ListItemIcon>
                 <ListItemText primary={<Typography> {t('headers.addPlayer')} </Typography>} />
               </ListItemButton>
             </ListItem>
-            <ListItem disablePadding onClick={onSortPlayers}>
+            <ListItem onClick={onSortPlayers}>
               <ListItemButton>
                 <ListItemIcon> <SortIcon color="primary" /> </ListItemIcon>
                 <ListItemText primary={<Typography> {t('headers.sortPlayers')} </Typography>} />
               </ListItemButton>
             </ListItem>
-            <ListItem disablePadding onClick={onOpenLeaderBoard}>
+            <Divider/>
+            <ListItem onClick={onOpenLeaderBoard}>
               <ListItemButton>
                 <ListItemIcon> <GradeIcon color="primary" /> </ListItemIcon>
                 <ListItemText primary={<Typography> {t('headers.leaderboard')} </Typography>} />
               </ListItemButton>
             </ListItem>
-            <ListItem disablePadding onClick={onOpenHistory}>
+            <ListItem onClick={onOpenHistory}>
               <ListItemButton>
                 <ListItemIcon> <HistoryIcon color="primary" /> </ListItemIcon>
                 <ListItemText primary={<Typography> {t('headers.history')} </Typography>} />
               </ListItemButton>
             </ListItem>
-            <ListItem disablePadding onClick={onOpenStats}>
+            <ListItem onClick={onOpenStats}>
               <ListItemButton>
                 <ListItemIcon> <ShowChartIcon color="primary" /> </ListItemIcon>
                 <ListItemText primary={<Typography> {t('headers.statistics')} </Typography>} />
               </ListItemButton>
             </ListItem>
-            <ListItem disablePadding onClick={handleShare}>
+            <Divider/>
+            <ListItem onClick={handleShare}>
               <ListItemButton>
                 <ListItemIcon> <ShareIcon color="primary" /> </ListItemIcon>
                 <ListItemText primary={<Typography> {t('headers.shareGame')} </Typography>} />
+              </ListItemButton>
+            </ListItem>
+            <ListItem onClick={nextLanguage}>
+              <ListItemButton>
+                <ListItemIcon> <LanguageIcon color="primary"/> </ListItemIcon>
+                <ListItemText primary={<Typography>
+                  {i18n.language.startsWith('de') && 'English'}
+                  {i18n.language.startsWith('en') && 'Deutsch'}
+                </Typography>}/>
               </ListItemButton>
             </ListItem>
           </List>
@@ -215,13 +228,7 @@ export function TopBar({
           }
           <ListItemText primary={<Typography> {t('headers.showStartingPlayer')} </Typography>}/>
         </MenuItem>
-        <MenuItem onClick={nextLanguage}>
-          <ListItemIcon> <LanguageIcon color="primary"/> </ListItemIcon>
-          <ListItemText primary={<Typography>
-            {i18n.language.startsWith('de') && 'English'}
-            {i18n.language.startsWith('en') && 'Deutsch'}
-          </Typography>}/>
-        </MenuItem>
+
       </Menu>
     </>
   );
