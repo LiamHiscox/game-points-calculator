@@ -22,7 +22,9 @@
     "showStartingPlayer": "Startender Spieler",
     "shareGame": "Spiel Teilen",
     "copiedUrl": "Link in die Zwischenablage kopiert!",
-    "failedCopy": "Link konnte nicht kopiert werden!"
+    "failedCopy": "Link konnte nicht kopiert werden!",
+    "showIncrementBefore": "Buttons",
+    "showIncrementAfter": "Anzeigen"
   },
   "confirmationDialog": {
     "saveCurrentGame": "Möchtest du das aktuelle Spiel im Verlauf speichern?",

@@ -25,6 +25,16 @@
   .top-bar-icon {
     color: white;
   }
+  .menu-button {
+    padding-left: 20px;
+  }
+  .setting-button {
+    padding-right: 20px;
+  }
+}
+.increment-text {
+  display: flex;
+  align-items: center;
 }
 .version-text {
   padding: 0 1rem;

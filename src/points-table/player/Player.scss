@@ -5,7 +5,6 @@
   flex-direction: column;
   flex: 1;
   box-sizing: border-box;
-  min-width: variables.$min-width;
   border-right: 1px solid #e6eef5;
   background-color: white;
 
@@ -14,7 +13,6 @@
   }
 
   .player-input-cell {
-    min-width: variables.$min-width;
     text-align: center;
     display: flex;
   }
@@ -28,12 +26,20 @@
       text-align: center;
     }
     .points-input-form {
+      transition: background-color .5s;
+      display: flex;
       flex: 2;
+
+      input {
+        flex: 1;
+      }
     }
     .points-input {
+      transition: background-color .5s;
       @include player-input;
     }
     .comment-input-form {
+      max-width: 40px;
       flex: 1;
     }
     .comment-input {

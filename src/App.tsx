@@ -131,6 +131,13 @@ function App(): React.JSX.Element {
     });
   }
 
+    const toggleShowIncrement = (): void => {
+    setGame({
+      ...game,
+      showIncrement: !game.showIncrement
+    });
+  }
+
   const changePlayerSort = (players: PlayerModel[]): void => {
     setSortPlayersOpen(false);
     setGame({...game, players});
@@ -145,6 +152,7 @@ function App(): React.JSX.Element {
     <div className="app" style={{height: height}}>
       <TopBar commentField={game.commentFields}
               showStartingPlayer={game.showStartingPlayer}
+              showIncrement={game.showIncrement}
               gameName={game.name}
               gameNames={gameNames}
               onNameChange={setGameName}
@@ -157,11 +165,13 @@ function App(): React.JSX.Element {
               onOpenStats={(): void => setStatsOpen(true)}
               onToggleCommentField={toggleCommentField}
               onToggleShowStartingPlayer={toggleShowStartingPlayer}
+              onToggleShowIncrement={toggleShowIncrement}
               onSortPlayers={(): void => setSortPlayersOpen(true)}
       />
       <PointsTable onPlayerNameChange={setPlayerName}
                    onPointsChange={handlePointsChange}
                    showStartingPlayer={game.showStartingPlayer}
+                   showIncrement={game.showIncrement}
                    players={game.players}
                    playerNames={playerNames}
                    readonly={false}

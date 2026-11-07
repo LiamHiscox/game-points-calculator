@@ -1,6 +1,10 @@
 import React from 'react';
 import './Player.scss';
 import type {PlayerModel, PointModel} from '../../models/player.model';
+import { IconButton } from '@mui/material';
+import RemoveIcon from '@mui/icons-material/Remove';
+import AddIcon from '@mui/icons-material/Add';
+import { getWidthClass } from '../../util/width-class.util';
 
 interface PlayerProps {
   player: PlayerModel;
@@ -11,6 +15,7 @@ interface PlayerProps {
   handleChangeCommentFocus: (index: number) => void;
   commentFields: boolean;
   readonly: boolean;
+  showIncrement: boolean;
 }
 
 function Player({
@@ -21,7 +26,8 @@ function Player({
                   handleChangePointsFocus,
                   handleChangeCommentFocus,
                   readonly,
-                  commentFields
+                  commentFields,
+                  showIncrement
                 }: PlayerProps): React.JSX.Element {
 
   if (
@@ -30,6 +36,17 @@ function Player({
     || typeof player.points[player.points.length - 1].comment === 'string'
   ) {
     onPointsChange(player.points.concat({}));
+  }
+
+  const handleRemoveClick = (index: number): void => {
+    const newPoints = player.points.map((p, i) => i === index ? {comment: p.comment, points: (p.points ?? 0) - 1} : p);
+    onPointsChange(trimPoints(newPoints));
+  }
+
+
+  const handleAddClick = (index: number): void => {
+    const newPoints = player.points.map((p, i) => i === index ? {comment: p.comment, points: (p.points ?? 0) + 1} : p);
+    onPointsChange(trimPoints(newPoints));
   }
 
   const handlePointsChange = (e: React.ChangeEvent<HTMLInputElement>, index: number): void => {
@@ -66,10 +83,11 @@ function Player({
   }
 
   return (
-    <div className="player-container">
+    <div className={`player-container ${getWidthClass(showIncrement, commentFields)}`}>
       {player.points.map((p, i) => (
-        <div className="player-points player-input-cell" key={i}>
-          <form className="points-input-form" onSubmit={e => e.preventDefault()}>
+        <div className={`player-points player-input-cell  ${getWidthClass(showIncrement, commentFields)}`} key={i}>
+          <form className={typeof p.points === 'number' ? 'points-input-form' : 'points-input-form empty-input'} onSubmit={e => e.preventDefault()}>
+            {showIncrement && (<IconButton onClick={() => handleRemoveClick(i)}><RemoveIcon/></IconButton>)}
             <input className={typeof p.points === 'number' ? 'points-input' : 'points-input empty-input'}
                   enterKeyHint='go'
                   id={`points-input-${playerIndex}-${i}`}
@@ -84,6 +102,7 @@ function Player({
                   }}
                   disabled={readonly}
             />
+            {showIncrement && (<IconButton onClick={() => handleAddClick(i)}><AddIcon/></IconButton>)}
           </form>
           {commentFields && !(readonly && typeof p.points !== 'number') && (
             <form className="comment-input-form" onSubmit={e => e.preventDefault()}>

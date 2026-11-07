@@ -8,12 +8,21 @@ const getStoredGame = (): GameModel => {
   const storedGame = localStorage.getItem(gameKey);
   if (storedGame) {
     const parsed = JSON.parse(storedGame) as GameModel;
-    return {...parsed, timestamp: new Date(parsed.timestamp)}
+    return {
+      id: parsed.id,
+      commentFields: !!parsed.commentFields,
+      showStartingPlayer: !!parsed.showStartingPlayer,
+      showIncrement: !!parsed.showIncrement,
+      name: parsed.name,
+      players: parsed.players,
+      timestamp: new Date(parsed.timestamp),
+    }
   } else {
     return {
       id: uuidv4(),
       commentFields: false,
       showStartingPlayer: false,
+      showIncrement: false,
       name: 'New Game',
       timestamp: new Date(),
       players: []

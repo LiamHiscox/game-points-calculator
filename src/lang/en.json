@@ -22,7 +22,9 @@
     "showStartingPlayer": "Starting Player",
     "shareGame": "Share Game",
     "copiedUrl": "Copied link to clipboard!",
-    "failedCopy": "Failed to copy link!"
+    "failedCopy": "Failed to copy link!",
+    "showIncrementBefore": "Show",
+    "showIncrementAfter": "Buttons"
   },
   "confirmationDialog": {
     "saveCurrentGame": "Do you want to save the current game to the history?",

@@ -17,6 +17,7 @@ import SettingsIcon from '@mui/icons-material/Settings';
 import RotateLeftIcon from '@mui/icons-material/RotateLeft';
 import DeleteIcon from '@mui/icons-material/Delete';
 import AddIcon from '@mui/icons-material/Add';
+import RemoveIcon from '@mui/icons-material/Remove';
 import GradeIcon from '@mui/icons-material/Grade';
 import HistoryIcon from '@mui/icons-material/History';
 import ShowChartIcon from '@mui/icons-material/ShowChart';
@@ -38,6 +39,7 @@ interface TopBarProps {
   gameNames: string[];
   commentField: boolean;
   showStartingPlayer: boolean;
+  showIncrement: boolean;
   onAddPlayer: () => void;
   onStartNewRound: () => void;
   onOpenDelete: () => void;
@@ -48,6 +50,7 @@ interface TopBarProps {
   onOpenStats: () => void;
   onToggleCommentField: () => void;
   onToggleShowStartingPlayer: () => void;
+  onToggleShowIncrement: () => void;
   onSortPlayers: () => void;
 }
 
@@ -56,6 +59,7 @@ export function TopBar({
                          showStartingPlayer,
                          gameName,
                          gameNames,
+                         showIncrement,
                          onAddPlayer,
                          onStartNewRound,
                          onOpenDelete,
@@ -66,6 +70,7 @@ export function TopBar({
                          onOpenStats,
                          onToggleCommentField,
                          onToggleShowStartingPlayer,
+                         onToggleShowIncrement,
                          onSortPlayers
                        }: TopBarProps): React.JSX.Element {
   const [innerGameName, setInnerGameName] = useState(gameName);
@@ -111,7 +116,7 @@ export function TopBar({
   return (
     <>
       <div className="top-bar">
-        <IconButton onClick={() => setShowDrawer(true)}>
+        <IconButton onClick={() => setShowDrawer(true)} className='menu-button'>
           <MenuIcon className="top-bar-icon"/>
         </IconButton>
         <Autocomplete
@@ -127,7 +132,7 @@ export function TopBar({
             </div>
           )}
       />
-        <IconButton onClick={handleClick}>
+        <IconButton onClick={handleClick} className='setting-button'>
           <SettingsIcon className="top-bar-icon"/>
         </IconButton>
       </div>
@@ -228,7 +233,23 @@ export function TopBar({
           }
           <ListItemText primary={<Typography> {t('headers.showStartingPlayer')} </Typography>}/>
         </MenuItem>
-
+        <MenuItem onClick={onToggleShowIncrement}>
+          {showIncrement ?
+            (<ListItemIcon> <CheckBoxIcon color="primary"/> </ListItemIcon>) :
+            (<ListItemIcon> <CheckBoxOutlineBlankIcon color="primary"/> </ListItemIcon>)
+          }
+          <ListItemText primary={
+              <Typography className='increment-text'>
+                {t('headers.showIncrementBefore')}
+                &nbsp;
+                <AddIcon fontSize='small'/>
+                /
+                <RemoveIcon fontSize='small'/>
+                &nbsp;
+                {t('headers.showIncrementAfter')}
+              </Typography>
+          }/>
+        </MenuItem>
       </Menu>
     </>
   );

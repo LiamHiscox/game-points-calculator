@@ -3,5 +3,43 @@ $primaryText: #ffffff;
 $secondary: #7A9E9F;
 $secondaryText: #ffffff;
 
-$min-width: 100px;
-$min-width-border: 100.8px;
+.hide-increment {
+  transition: min-width .5s;
+  min-width: 100px;
+}
+
+.hide-increment-comment {
+  transition: min-width .5s;
+  min-width: 140px;
+}
+
+.show-increment {
+  transition: min-width .5s;
+  min-width: 140px;
+}
+
+.show-increment-comment {
+  transition: min-width .5s;
+  min-width: 180px;
+}
+
+// border classes
+.hide-increment-border {
+  transition: min-width .5s;
+  min-width: 100.8px;
+}
+
+.hide-increment-comment-border {
+  transition: min-width .5s;
+  min-width: 140.8px;
+}
+
+.show-increment-border {
+  transition: min-width .5s;
+  min-width: 140.8px;
+}
+
+.show-increment-comment-border {
+  transition: min-width .5s;
+  min-width: 180.8px;
+}

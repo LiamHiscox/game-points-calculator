@@ -4,6 +4,7 @@ import type {PlayerModel, PointModel} from '../models/player.model';
 import React, {useEffect, useRef, useState} from 'react';
 import { Autocomplete } from '@mui/material';
 import { useViewportHeightState } from '../util/viewport-height.util';
+import { getWidthBorderClass } from '../util/width-class.util';
 
 interface PointsTableProps {
   players: PlayerModel[];
@@ -13,6 +14,7 @@ interface PointsTableProps {
   readonly: boolean;
   commentFields: boolean;
   showStartingPlayer: boolean;
+  showIncrement: boolean;
 }
 
 export function PointsTable({
@@ -22,12 +24,13 @@ export function PointsTable({
                               onPointsChange,
                               readonly,
                               commentFields,
-                              showStartingPlayer
+                              showStartingPlayer,
+                              showIncrement
                             }: PointsTableProps): React.JSX.Element {
   const [rounds, setRounds] = useState<null[]>([]);
   const playerTableContainerRef = useRef<HTMLDivElement>(null);
   const [innerPlayers, setInnerPlayers] = useState<PlayerModel[]>(players);
-  const [screenWidth, setScreenWidth] = useState(window.screen.width);
+  const [screenWidth, setScreenWidth] = useState(window.screen.width - 40);
   const [scrollTimeoutRef, setScrollTimeoutRef] = useState<number | null>(null);
   const [focusedInput, setFocusedInput] = useState<number | null>(null);
   const [focusedPlayer, setFocusedPlayer] = useState<number | null>(null);
@@ -135,7 +138,7 @@ export function PointsTable({
                     {...params.slotProps.htmlInput}
                     onClick={(e): void => {e.currentTarget.select()}}
                     style={{width: `${screenWidth / players.length}px`}}
-                    className={`player-name ${showStartingPlayer && turn === index ? 'highlighted' : 'non-highlighted'}`}
+                    className={`player-name ${getWidthBorderClass(showIncrement, commentFields)} ${showStartingPlayer && turn === index ? 'highlighted' : 'non-highlighted'}`}
                   />
                 </div>
               )}
@@ -154,13 +157,14 @@ export function PointsTable({
                       handleChangeCommentFocus={(inputIndex) => handleChangeCommentFocus(playerIndex, inputIndex)}
                       readonly={readonly}
                       commentFields={commentFields}
+                      showIncrement={showIncrement}
               />
             ))}
           </div>
         </div>
         <div className="player-scores">
           {players.map((player, i) =>
-            <div className="player-score player-header-cell" key={i}>
+            <div className={`player-score player-header-cell ${getWidthBorderClass(showIncrement, commentFields)}`} key={i}>
               {player.points.reduce((sum: number, model: PointModel) => sum + (model.points || 0), 0)}
             </div>
           )}
