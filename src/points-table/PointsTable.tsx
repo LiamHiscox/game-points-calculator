@@ -95,6 +95,7 @@ export function PointsTable({
   }
 
   const handleChangeCommentFocus = (playerIndex: number, inputIndex: number): void => {
+    console.log('handleChangeCommentFocus', playerIndex, inputIndex)
     const newPlayerIndex = (playerIndex + 1) % players.length;
     const isMaxInput = inputIndex === players[playerIndex].points.length - 1;
     const maxIndex = players[newPlayerIndex].points.length - 1;
@@ -141,7 +142,10 @@ export function PointsTable({
                   <input
                     type="text"
                     {...params.slotProps.htmlInput}
-                    onClick={(e): void => {e.currentTarget.select()}}
+                    onClick={(e): void => {
+                      e.currentTarget.select()
+                      handleInputFocus(0, index)
+                    }}
                     style={{width: `${screenWidth / players.length}px`}}
                     className={`player-name ${getWidthBorderClass(showIncrement, commentFields)} ${showStartingPlayer && turn === index ? 'highlighted' : 'non-highlighted'}`}
                   />
