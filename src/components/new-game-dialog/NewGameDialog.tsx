@@ -44,7 +44,7 @@ export function NewGameDialog({open, gameNames, playerNames, onClose, onSubmit}:
   const [commentFields, setCommentFields] = useState<boolean>(false);
   const [showIncrement, setShowIncrement] = useState<boolean>(false);
   const [showStartingPlayer, setShowStartingPlayer] = useState<boolean>(false);
-  const [stepSize, setStepSize] = useState<number>(1);
+  const [stepSize, setStepSize] = useState<number | null>(1);
   const [name, setName] = useState<string>('');
   const [players, setPlayers] = useState<PlayerModel[]>([{ id: uuidv4(), name: '', points: [] }]);
   const [focus, setFocus] = useState<boolean>(false);
@@ -92,6 +92,18 @@ export function NewGameDialog({open, gameNames, playerNames, onClose, onSubmit}:
     dialogRef.current?.scrollTo({top, behavior: 'smooth'});
   }
 
+  const handleChange = (value: number) => {
+    setStepSize(value > 0 ? value : null)
+  }
+
+  const handleDecrement = () => {
+    setStepSize(stepSize && stepSize > 1 ? stepSize - 1 : 1)
+  }
+
+  const handleIncrement = () => {
+    setStepSize(stepSize ? stepSize + 1 : 1)
+  }
+
   const reset = () => {
     setName('');
     setPlayers([{
@@ -105,7 +117,7 @@ export function NewGameDialog({open, gameNames, playerNames, onClose, onSubmit}:
 
   const handleSubmit = (): void => {
     reset();
-    onSubmit({id, timestamp, commentFields, showIncrement, name, players, showStartingPlayer, stepSize});
+    onSubmit({id, timestamp, commentFields, showIncrement, name, players, showStartingPlayer, stepSize: stepSize ?? 1});
   } 
 
   return (
@@ -180,15 +192,15 @@ export function NewGameDialog({open, gameNames, playerNames, onClose, onSubmit}:
             <ListItem>
               <Collapse in={showIncrement} style={{width: '100%'}}>
                 <div className='step-size-input'>
-                  <Button variant="contained" disableElevation onClick={() => setStepSize(stepSize - 1)}><RemoveIcon/></Button>
+                  <Button variant="contained" disableElevation onClick={handleDecrement}><RemoveIcon/></Button>
                   <TextField label={t('newGame.stepSize')}
                              variant="outlined"
                              type='number'
                              fullWidth
                              value={stepSize}
-                             onChange={(e) => setStepSize(+e.target.value)}
+                             onChange={(e) => handleChange(+e.target.value)}
                   />
-                  <Button variant="contained" disableElevation onClick={() => setStepSize(stepSize + 1)}><AddIcon/></Button>
+                  <Button variant="contained" disableElevation onClick={handleIncrement}><AddIcon/></Button>
                 </div>
               </Collapse>
             </ListItem>
