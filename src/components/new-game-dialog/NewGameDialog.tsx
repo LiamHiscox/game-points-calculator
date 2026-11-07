@@ -40,6 +40,7 @@ export function NewGameDialog({open, gameNames, playerNames, onClose, onSubmit}:
   const [id, setId] = useState<string>('');
   const [timestamp, setTimestamp] = useState<Date>(new Date());
   const [commentFields, setCommentFields] = useState<boolean>(false);
+  const [showIncrement, setShowIncrement] = useState<boolean>(false);
   const [showStartingPlayer, setShowStartingPlayer] = useState<boolean>(false);
   const [name, setName] = useState<string>('');
   const [players, setPlayers] = useState<PlayerModel[]>([{ id: uuidv4(), name: '', points: [] }]);
@@ -101,7 +102,7 @@ export function NewGameDialog({open, gameNames, playerNames, onClose, onSubmit}:
 
   const handleSubmit = (): void => {
     reset();
-    onSubmit({id, timestamp, commentFields, name, players, showStartingPlayer});
+    onSubmit({id, timestamp, commentFields, showIncrement, name, players, showStartingPlayer});
   } 
 
   return (
@@ -160,6 +161,18 @@ export function NewGameDialog({open, gameNames, playerNames, onClose, onSubmit}:
                 />
               </FormGroup>
               <HelpTooltip title={t('newGame.showStartingPlayerHelp')}/>
+            </ListItem>
+            <ListItem>
+              <FormGroup>
+                <FormControlLabel
+                  className="checkbox-form"
+                  control={
+                    <Checkbox checked={showIncrement} onClick={(): void => setShowIncrement(!showIncrement)}/>
+                  }
+                  label={t('newGame.showIncrement')}
+                />
+              </FormGroup>
+              <HelpTooltip title={t('newGame.showIncrementHelp')}/>
             </ListItem>
             <ListItem>
               <Typography style={{fontWeight: 'bold'}}> {t('newGame.players')} </Typography>

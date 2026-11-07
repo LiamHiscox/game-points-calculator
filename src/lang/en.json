@@ -67,6 +67,8 @@
     "showAdditionalTextFieldHelp": "A text box appears next to each score box for additional notes.",
     "showStartingPlayer": "Highlight Starting Player",
     "showStartingPlayerHelp": "Sort the list of players according to your seating arrangement. The first player in the list starts.",
+    "showIncrement": "Show Increment And Decrement Buttons",
+    "showIncrementHelp": "Shows increment and decrement buttons next to all point inputs. Additionally the step size can be configured.",
     "players": "Players",
     "name": "Name",
     "start": "Start"
