@@ -16,6 +16,7 @@ interface PlayerProps {
   commentFields: boolean;
   readonly: boolean;
   showIncrement: boolean;
+  stepSize: number;
 }
 
 function Player({
@@ -27,7 +28,8 @@ function Player({
                   handleChangeCommentFocus,
                   readonly,
                   commentFields,
-                  showIncrement
+                  showIncrement,
+                  stepSize
                 }: PlayerProps): React.JSX.Element {
 
   if (
@@ -39,13 +41,13 @@ function Player({
   }
 
   const handleRemoveClick = (index: number): void => {
-    const newPoints = player.points.map((p, i) => i === index ? {comment: p.comment, points: (p.points ?? 0) - 1} : p);
+    const newPoints = player.points.map((p, i) => i === index ? {comment: p.comment, points: (p.points ?? 0) - stepSize} : p);
     onPointsChange(trimPoints(newPoints));
   }
 
 
   const handleAddClick = (index: number): void => {
-    const newPoints = player.points.map((p, i) => i === index ? {comment: p.comment, points: (p.points ?? 0) + 1} : p);
+    const newPoints = player.points.map((p, i) => i === index ? {comment: p.comment, points: (p.points ?? 0) + stepSize} : p);
     onPointsChange(trimPoints(newPoints));
   }
 

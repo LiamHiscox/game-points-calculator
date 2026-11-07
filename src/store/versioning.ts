@@ -4,7 +4,8 @@ import type {PlayerModel, PointModel} from '../models/player.model';
 import {GamesDatabase} from './games.store';
 import type { UpdateSpec } from 'dexie';
 
-const currentVersion = 2;
+// increment version for new update
+const currentVersion = 3;
 
 export async function migrate(): Promise<void> {
   const version = +(localStorage.getItem('version') || '');
@@ -36,6 +37,22 @@ export async function migrate(): Promise<void> {
       });
     }
   }
+    if (version < 3) {
+    const storedGame = localStorage.getItem(gameKey);
+    if (storedGame) {
+      const parsed = JSON.parse(storedGame) as GameModel;
+      const updated: GameModel = {...parsed, stepSize: 1};
+      localStorage.setItem(gameKey, JSON.stringify(updated));
+      const db = new GamesDatabase();
+      const storedGames = await db.games.orderBy('timestamp').reverse().toArray();
+      storedGames.forEach(game => {
+        const updatedGame = {...game, stepSize: 1};
+        db.games.where('id').equals(game.id).modify(updatedGame);
+      });
+    }
+  }
+  // add new if above for migration
+
   localStorage.setItem('version', '' + currentVersion);
 }
 

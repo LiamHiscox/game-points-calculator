@@ -13,6 +13,7 @@ const getStoredGame = (): GameModel => {
       commentFields: !!parsed.commentFields,
       showStartingPlayer: !!parsed.showStartingPlayer,
       showIncrement: !!parsed.showIncrement,
+      stepSize: parsed.stepSize || 1,
       name: parsed.name,
       players: parsed.players,
       timestamp: new Date(parsed.timestamp),
@@ -23,9 +24,10 @@ const getStoredGame = (): GameModel => {
       commentFields: false,
       showStartingPlayer: false,
       showIncrement: false,
+      stepSize: 1,
       name: 'New Game',
       timestamp: new Date(),
-      players: []
+      players: [],
     };
   }
 }

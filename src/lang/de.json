@@ -24,7 +24,8 @@
     "copiedUrl": "Link in die Zwischenablage kopiert!",
     "failedCopy": "Link konnte nicht kopiert werden!",
     "showIncrementBefore": "Buttons",
-    "showIncrementAfter": "Anzeigen"
+    "showIncrementAfter": "Anzeigen",
+    "editStepSize": "Schrittgröße Bearbeiten"
   },
   "confirmationDialog": {
     "saveCurrentGame": "Möchtest du das aktuelle Spiel im Verlauf speichern?",
@@ -69,9 +70,13 @@
     "showStartingPlayerHelp": "Sortiere die Spielerliste nach ihrer Sitzordnung. Der erste Spieler in der Liste beginnt.",
     "showIncrement": "Erhöhen und Verringern anzeigen",
     "showIncrementHelp": "Zeigt neben allen Punkteingaben Buttons zum Erhöhen und Verringern an. Zudem lässt sich die Schrittgröße konfigurieren.",
+    "stepSize": "Schrittgröße",
     "players": "Spieler",
     "name": "Name",
     "start": "Starten"
+  },
+  "stepSize": {
+    "stepSizeHeader": "Schrittgröße Bearbeiten"
   },
   "leaderboard": {
     "highestFirst": "Höchste zuerst",

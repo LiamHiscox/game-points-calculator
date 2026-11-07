@@ -168,6 +168,7 @@ export function HistoryDialog({open, onClose, onReturnPlaying, onDeleteGame, gam
                      showStartingPlayer={false}
                      showIncrement={false}
                      commentFields={!!game?.commentFields}
+                     stepSize={0}
         />
       </Dialog>
       <StatsDialog open={showStats}

@@ -13,10 +13,12 @@ import {
   FormControlLabel,
   FormGroup,
   Autocomplete,
+  Collapse,
 } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import AddIcon from '@mui/icons-material/Add';
 import CloseIcon from '@mui/icons-material/Close';
+import RemoveIcon from '@mui/icons-material/Remove';
 import React, {useEffect, useRef, useState} from 'react';
 import {v4 as uuidv4} from 'uuid';
 import type {GameModel} from '../../models/game.model';
@@ -42,6 +44,7 @@ export function NewGameDialog({open, gameNames, playerNames, onClose, onSubmit}:
   const [commentFields, setCommentFields] = useState<boolean>(false);
   const [showIncrement, setShowIncrement] = useState<boolean>(false);
   const [showStartingPlayer, setShowStartingPlayer] = useState<boolean>(false);
+  const [stepSize, setStepSize] = useState<number>(1);
   const [name, setName] = useState<string>('');
   const [players, setPlayers] = useState<PlayerModel[]>([{ id: uuidv4(), name: '', points: [] }]);
   const [focus, setFocus] = useState<boolean>(false);
@@ -102,7 +105,7 @@ export function NewGameDialog({open, gameNames, playerNames, onClose, onSubmit}:
 
   const handleSubmit = (): void => {
     reset();
-    onSubmit({id, timestamp, commentFields, showIncrement, name, players, showStartingPlayer});
+    onSubmit({id, timestamp, commentFields, showIncrement, name, players, showStartingPlayer, stepSize});
   } 
 
   return (
@@ -173,6 +176,21 @@ export function NewGameDialog({open, gameNames, playerNames, onClose, onSubmit}:
                 />
               </FormGroup>
               <HelpTooltip title={t('newGame.showIncrementHelp')}/>
+            </ListItem>
+            <ListItem>
+              <Collapse in={showIncrement} style={{width: '100%'}}>
+                <div className='step-size-input'>
+                  <Button variant="contained" disableElevation onClick={() => setStepSize(stepSize - 1)}><RemoveIcon/></Button>
+                  <TextField label={t('newGame.stepSize')}
+                             variant="outlined"
+                             type='number'
+                             fullWidth
+                             value={stepSize}
+                             onChange={(e) => setStepSize(+e.target.value)}
+                  />
+                  <Button variant="contained" disableElevation onClick={() => setStepSize(stepSize + 1)}><AddIcon/></Button>
+                </div>
+              </Collapse>
             </ListItem>
             <ListItem>
               <Typography style={{fontWeight: 'bold'}}> {t('newGame.players')} </Typography>

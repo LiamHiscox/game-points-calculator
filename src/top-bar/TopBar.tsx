@@ -11,7 +11,8 @@ import {
   List,
   ListItem,
   ListItemButton,
-  Divider
+  Divider,
+  Collapse
 } from '@mui/material';
 import SettingsIcon from '@mui/icons-material/Settings';
 import RotateLeftIcon from '@mui/icons-material/RotateLeft';
@@ -22,6 +23,7 @@ import GradeIcon from '@mui/icons-material/Grade';
 import HistoryIcon from '@mui/icons-material/History';
 import ShowChartIcon from '@mui/icons-material/ShowChart';
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
+import EditIcon from '@mui/icons-material/Edit';
 import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
 import MenuIcon from '@mui/icons-material/Menu';
 import LanguageIcon from '@mui/icons-material/Language';
@@ -51,6 +53,7 @@ interface TopBarProps {
   onToggleCommentField: () => void;
   onToggleShowStartingPlayer: () => void;
   onToggleShowIncrement: () => void;
+  onEditStepSize: () => void;
   onSortPlayers: () => void;
 }
 
@@ -71,6 +74,7 @@ export function TopBar({
                          onToggleCommentField,
                          onToggleShowStartingPlayer,
                          onToggleShowIncrement,
+                         onEditStepSize,
                          onSortPlayers
                        }: TopBarProps): React.JSX.Element {
   const [innerGameName, setInnerGameName] = useState(gameName);
@@ -250,6 +254,12 @@ export function TopBar({
               </Typography>
           }/>
         </MenuItem>
+        <Collapse in={showIncrement}>
+          <MenuItem onClick={onEditStepSize}>
+            <ListItemIcon> <EditIcon color="primary"/> </ListItemIcon>
+            <ListItemText primary={<Typography> {t('headers.editStepSize')} </Typography>}/>
+          </MenuItem>
+        </Collapse>
       </Menu>
     </>
   );

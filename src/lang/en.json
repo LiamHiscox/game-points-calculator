@@ -24,7 +24,8 @@
     "copiedUrl": "Copied link to clipboard!",
     "failedCopy": "Failed to copy link!",
     "showIncrementBefore": "Show",
-    "showIncrementAfter": "Buttons"
+    "showIncrementAfter": "Buttons",
+    "editStepSize": "Edit Step Size"
   },
   "confirmationDialog": {
     "saveCurrentGame": "Do you want to save the current game to the history?",
@@ -69,9 +70,13 @@
     "showStartingPlayerHelp": "Sort the list of players according to your seating arrangement. The first player in the list starts.",
     "showIncrement": "Show Increment And Decrement Buttons",
     "showIncrementHelp": "Shows increment and decrement buttons next to all point inputs. Additionally the step size can be configured.",
+    "stepSize": "Step Size",
     "players": "Players",
     "name": "Name",
     "start": "Start"
+  },
+  "stepSize": {
+    "stepSizeHeader": "Edit Step Size"
   },
   "leaderboard": {
     "highestFirst": "Highest First",

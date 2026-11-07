@@ -5,6 +5,7 @@ export interface GameModel {
   commentFields: boolean;
   showStartingPlayer: boolean;
   showIncrement: boolean;
+  stepSize: number;
   timestamp: Date;
   name: string;
   players: PlayerModel[];

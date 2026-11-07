@@ -4,7 +4,7 @@ import type {PlayerModel, PointModel} from '../models/player.model';
 import React, {useEffect, useRef, useState} from 'react';
 import { Autocomplete } from '@mui/material';
 import { useViewportHeightState } from '../util/viewport-height.util';
-import { getWidthBorderClass } from '../util/width-class.util';
+import { getWidth, getWidthBorderClass } from '../util/width-class.util';
 
 interface PointsTableProps {
   players: PlayerModel[];
@@ -15,6 +15,7 @@ interface PointsTableProps {
   commentFields: boolean;
   showStartingPlayer: boolean;
   showIncrement: boolean;
+  stepSize: number;
 }
 
 export function PointsTable({
@@ -25,7 +26,8 @@ export function PointsTable({
                               readonly,
                               commentFields,
                               showStartingPlayer,
-                              showIncrement
+                              showIncrement,
+                              stepSize
                             }: PointsTableProps): React.JSX.Element {
   const [rounds, setRounds] = useState<null[]>([]);
   const playerTableContainerRef = useRef<HTMLDivElement>(null);
@@ -47,9 +49,12 @@ export function PointsTable({
     const ref = setTimeout(() => {
       window.scrollTo({top: 0});
       if (focusedInput !== null && focusedPlayer !== null) {
-        const top = 40 * (focusedInput - 1);
-        const center = (window.screen.width / 2) - 50;
-        const left = (focusedPlayer * 100) - center;
+        const width = getWidth(showIncrement, commentFields);
+        const height = 40;
+        const top = height * (focusedInput - 1);
+        const screenWidth = (window.screen.width / 2) - 20;
+        const center = screenWidth - (width / 2);
+        const left = (focusedPlayer * getWidth(showIncrement, commentFields)) - center;
         playerTableContainerRef.current?.scrollTo({left, top, behavior: 'smooth'});
       }
     }, 300);
@@ -158,6 +163,7 @@ export function PointsTable({
                       readonly={readonly}
                       commentFields={commentFields}
                       showIncrement={showIncrement}
+                      stepSize={stepSize}
               />
             ))}
           </div>

@@ -18,6 +18,7 @@ import {SortPlayersDialog} from './components/sort-players-dialog/SortPlayersDia
 import { shouldOpenStartUpDialog, StartupActionsDialog } from './components/startup-actions-dialog/StartupActionsDialog';
 import { getGameNames, getPlayerNames } from './util/game-model.util';
 import { useViewportHeightState } from './util/viewport-height.util';
+import { EditStepSizeDialog } from './components/edit-step-size-dialog/EditStepSizeDialog';
 
 function App(): React.JSX.Element {
   const [game, setGame] = useGameState();
@@ -30,6 +31,7 @@ function App(): React.JSX.Element {
   const [sortPlayersOpen, setSortPlayersOpen] = useState(false);
   const [installationOpen, setInstallationOpen] = useState(true);
   const [startupActionsOpen, setStartupActionsOpen] = useState(false);
+  const [editStepSizeOpen, setEditStepSizeOpen] = useState(false);
   const {enqueueSnackbar} = useSnackbar();
   const {height} = useViewportHeightState();
 
@@ -131,11 +133,16 @@ function App(): React.JSX.Element {
     });
   }
 
-    const toggleShowIncrement = (): void => {
+  const toggleShowIncrement = (): void => {
     setGame({
       ...game,
       showIncrement: !game.showIncrement
     });
+  }
+
+  const changeGameStepSize = (value: number): void => {
+    setEditStepSizeOpen(false)
+    setGame({...game, stepSize: value});
   }
 
   const changePlayerSort = (players: PlayerModel[]): void => {
@@ -166,6 +173,7 @@ function App(): React.JSX.Element {
               onToggleCommentField={toggleCommentField}
               onToggleShowStartingPlayer={toggleShowStartingPlayer}
               onToggleShowIncrement={toggleShowIncrement}
+              onEditStepSize={(): void => setEditStepSizeOpen(true)}
               onSortPlayers={(): void => setSortPlayersOpen(true)}
       />
       <PointsTable onPlayerNameChange={setPlayerName}
@@ -176,6 +184,7 @@ function App(): React.JSX.Element {
                    playerNames={playerNames}
                    readonly={false}
                    commentFields={game.commentFields}
+                   stepSize={game.stepSize}
       />
       <DeletePlayersDialog players={game.players}
                            open={deleteOpen}
@@ -213,6 +222,11 @@ function App(): React.JSX.Element {
       />
       <PwaInstallationDialog open={installationOpen}
                              onClose={(): void => setInstallationOpen(false)}
+      />
+      <EditStepSizeDialog open={editStepSizeOpen}
+                          stepSize={game.stepSize}
+                          onCancel={() => setEditStepSizeOpen(false)}
+                          onSave={changeGameStepSize}
       />
     </div>
   );

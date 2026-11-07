@@ -1,5 +1,18 @@
 // see variables.scss
-export function getWidthClass(showIncrement: boolean, showComment: boolean) {
+export function getWidth(showIncrement: boolean, showComment: boolean): number {
+    if (showIncrement && showComment) {
+        return 180;
+    }
+    if (showIncrement) {
+        return 140;
+    }
+    if (showComment) {
+        return 140;
+    }
+    return 100;
+}
+
+export function getWidthClass(showIncrement: boolean, showComment: boolean): string {
     if (showIncrement && showComment) {
         return 'show-increment-comment';
     }
@@ -12,7 +25,7 @@ export function getWidthClass(showIncrement: boolean, showComment: boolean) {
     return 'hide-increment';
 }
 
-export function getWidthBorderClass(showIncrement: boolean, showComment: boolean) {
+export function getWidthBorderClass(showIncrement: boolean, showComment: boolean): string {
     if (showIncrement && showComment) {
         return 'show-increment-comment-border';
     }
